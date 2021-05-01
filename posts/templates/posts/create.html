@@ -1,0 +1,13 @@
+{% extends "layout.html"%}
+
+{% block body %} 
+    <div class="container">
+        <h1>Add New Book</h1>
+        <form action='{% url "create" %}' method="post">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <button type="submit">Add Book</button>
+        </form>
+    </div >
+
+{% endblock %}

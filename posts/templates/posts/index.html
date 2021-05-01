@@ -1,0 +1,73 @@
+{% extends "layout.html"%}
+
+{% block body %}
+
+<div class="container">
+    <div class="row pt-5">
+        <div class="col-sm-4 ">
+            <div class="mycard">
+            <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+            <h1>groups</h1>
+
+            {% for group in groups %}
+            <hr>
+            <h5>{{group.name}}</h5>
+            <p><button>visit group</button></p>
+            <hr>
+            {% endfor %}
+
+            </div>
+        </div>
+
+
+    <!-- ----------------------------------------------------------- end side ----------------------------------- -->
+        <div class="col-sm-8 mycard">
+                
+                <div class="post-topbar">
+                    <div class="row">
+                        <div class="col-10">
+                            <input class="post_input " placeholder="What's in your mind?" />
+                        </div>
+                        <div class="col-2">
+                            <a class="post btn" href="#" title="">Post</a>
+                        </div>    
+                        
+                    </div>
+                </div>
+
+                <h5>Feed Posts</h5>
+
+                {% for post in posts %}
+                <hr>
+
+                <div class="card text-center">
+                <div class="card-header">
+                    {{post.owner}}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-text">{{post.content}}</h5>
+                </div>
+                <div class="card-footer text-muted d-flex">
+                    <p >{{post.created_at}}</p>
+                    <div style="width:300px"></div>
+                    <a  href="#" style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg" aria-hidden="true"></i></a>
+                    <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg" aria-hidden="true"></i></a>
+                   
+                </div>
+                </div>
+
+                <hr>
+
+                {% endfor %}
+
+        
+        </div>
+    </div>    
+
+
+
+  
+</div>
+
+{%endblock%}
+
