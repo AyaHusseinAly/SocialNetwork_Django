@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'msg_notifications',
     'groups',
+    'friends'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "socialmedia",
         "USER": "root" ,
-        "PASSWORD": "",
+        "PASSWORD": "1234",
         "HOST": "localhost"
     }
 }

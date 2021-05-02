@@ -1,0 +1,90 @@
+
+nav{
+    background-color: #e44d3a;
+    width:100%;
+    color:white;
+}
+img.navbar-brand {
+    width: 4rem;
+}
+
+img.rounded-circle {
+    border-radius: 50%;
+    width: 3.5rem;
+}
+
+img.icon {
+    width: 1.3rem;
+}
+
+img.icondrop {
+    width: 0.9rem;
+}
+
+.writer {
+    background-color: #FEC7B5;
+    width: 6rem;
+    font-weight: bold
+}
+
+
+
+.mycard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+    padding:20px;
+  }
+  
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+  
+  .mycard button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color:  #e44d3a;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  .mycard button:hover {
+    opacity: 0.7;
+  }
+
+  .post-topbar {
+    float: left;
+    width: 100%;
+    padding: 23px 20px;
+    background-color: #fff;
+    border-top: 6px solid #e44d3a;
+    border-left: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    border-right: 1px solid #e4e4e4;
+    -webkit-box-shadow: 0 0 1px rgb(0 0 0 / 24%);
+    -moz-box-shadow: 0 0 1px rgba(0,0,0,0.24);
+    -ms-box-shadow: 0 0 1px rgba(0,0,0,0.24);
+    -o-box-shadow: 0 0 1px rgba(0,0,0,0.24);
+    box-shadow: 0 0 1px rgb(0 0 0 / 24%);
+    margin-bottom: 20px;
+}
+.post_input{
+    float: left;
+    width:100%;
+    height:50px;
+    border: 1px solid #e44d3a;
+    border-radius: 10px;
+   
+}
+.post {
+    float: left;
+    margin-top: 15px;
+    background-color: #e44d3a;
+    width: 100%;
+}

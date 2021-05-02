@@ -1,0 +1,28 @@
+{% extends "layout.html"%}
+
+{% block body %}
+
+<div class="container">
+    <div class="row pt-5">
+        <!---------------- Show all friends --------------->
+        <div class="col-sm-4 ">
+            <div class="mycard">
+                <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+                <h2>People you may know</h2>
+                {% for user in users %}
+                <hr>
+                <button>
+                <a href="">
+                    <h3>{{user.username}}</h3>
+                </a>
+            </button>
+                <hr>
+                {% endfor %}
+
+            </div>
+        </div>
+        <!-------------------------------------------->
+    </div>
+</div>
+
+{%endblock%}
