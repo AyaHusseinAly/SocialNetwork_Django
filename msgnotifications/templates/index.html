@@ -1,0 +1,91 @@
+{% extends "layout.html"%}
+{% block body %}
+{% load static  %}
+
+<div class="container">
+    <div class="row pt-5">
+        <div class="col-sm-8 mycard d-flex flex-column">
+            <div class=" post-topbar" >
+                                
+
+                    <h6>Messages</h6>
+                    <hr>
+                    <div style="height:400px;overflow-y:scroll" >
+                    {% for message in messages %}
+                    <div class="card text-center">
+                        {% if request.user == message.sender %}
+                            <div class="card-body  bg-light">
+                                <h6 class="card-text"style="text-align:right">{{ message.text}}<span style="color:#e44d3a;"> :{{ message.sender}}</span></h6>
+                            
+                            </div>
+                        {% endif %}
+                        {% if request.user == message.reciever %}
+                            <div class="card-body">
+                                <h6 class="card-text"style="text-align:left;"><span style="color:#e44d3a;">{{ message.sender}}: </span>{{ message.text}}</h6>
+
+                            </div>
+                        {% endif %}
+                    </div>
+                  
+                    {% endfor %}
+                    </div>
+            </div>
+                    <div class="card p-2">
+                        
+                        <form action='{% url "msgPage" %}' method="post">
+                            {% csrf_token %}
+                            <div class="row">    
+                                <div class="col-10">
+                                    {{ form.as_p}}
+                                    <input class="post_input " name="text" placeholder="Enter your message" />
+                                
+                                </div>
+                                <div class="col-2">
+                                    <button class="post btn" type="submit" >send</button>
+                                </div>   
+                            </div> 
+                        </form>     
+                        
+                    </div>
+        </div>
+
+        <!---------------------------------------------------- side ------------------------------------------------------------>
+        <div class="col-sm-4 ">
+
+            <div class="mycard">
+                <form action="" method="GET">
+                    <input type="text" name="q" id="" class="post_input " placeholder="Search for user by name">
+                    <input type="submit" class="btn mt-2" value="Search"></a>
+                </form>
+            </div>    
+
+            <div class="mycard" style="height:500px;overflow-y:scroll" >
+            <h2>Chats</h2>
+
+            {% for friend in friends %}
+            <hr>
+            <a href="#" style="color:black">
+                <div class="d-flex justify-content-center align-items-center" id="chatdiv">
+                    <div class="mx-2">{{friend.name}}</div>
+                    <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
+                </div>
+            </a>    
+            <hr>
+            {% endfor %} 
+
+
+            </div>
+            
+    
+        </div>
+        
+
+    </div>    
+
+
+
+  
+</div>
+
+{%endblock%}
+

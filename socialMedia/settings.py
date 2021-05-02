@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'posts',
     'accounts',
-    'msg_notifications',
+    'msgnotifications',
     'groups',
 ]
 
@@ -59,7 +59,7 @@ ROOT_URLCONF = 'socialMedia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,"templates")],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "socialmedia",
-        "USER": "root" ,
+        "USER": "root",
         "PASSWORD": "",
         "HOST": "localhost"
     }
@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = '/admin/'
+LOGIN_REDIRECT_URL = '/posts/'
 
 
 # Internationalization
@@ -128,4 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
 
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'posts/static/images')

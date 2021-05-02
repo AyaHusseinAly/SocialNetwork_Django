@@ -101,3 +101,10 @@ img.icondrop {
     border: none;
     
 }
+
+
+
+/* Messages */
+#chatdiv:hover{
+    background-color:#f88b7c;
+ }
