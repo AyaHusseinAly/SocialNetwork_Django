@@ -9,7 +9,8 @@ from django.contrib.auth.models import User
 
 #@login_required
 #@permission_required(["books.view_book"],raise_exception=True)
-def index(request,id):
+def index(request):
+    friendId=int(request.GET.get('id',request.user.id))
     query=request.GET.get('q','')
     if(query):
         first_name_query1=User.objects.filter(first_name__contains=str(query))
@@ -22,8 +23,14 @@ def index(request,id):
             "query":query,
         })
     #friends= Friends.objects.all()
-    messages= Message.objects.all()
-    friends=[{'id':1,'name':"Amal Tamam",'img':"exPP3.png"},{'id':2,'name':"Alaa Hesham",'img':"alaa.png"},{'id':3,'name':"Eman Hussein",'img':"eman.png"},{'id':4,'name':"Fatma Tarek",'img':"fatma.png"}]
+    
+    #friends=[{'id':1,'name':"Amal Tamam",'img':"exPP3.png"},{'id':2,'name':"Alaa Hesham",'img':"alaa.png"},{'id':3,'name':"Eman Hussein",'img':"eman.png"},{'id':4,'name':"Fatma Tarek",'img':"fatma.png"}]
+    sender1=User.objects.get(pk=friendId)
+    sender2= User.objects.get(username=request.user.username)
+    reciever1= User.objects.get(pk=friendId)
+    reciever2=User.objects.get(username=request.user.username)
+    messages= Message.objects.filter(reciever=reciever1,sender=sender2) |Message.objects.filter(reciever=reciever2,sender=sender1) 
+    friends=User.objects.exclude(username=request.user.username)
     msg= MsgForm(request.POST or None)
     if msg.is_valid():
         form_text=msg.cleaned_data['text']

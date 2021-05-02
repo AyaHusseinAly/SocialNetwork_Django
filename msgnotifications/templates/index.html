@@ -18,8 +18,8 @@
                                 <h6 class="card-text"style="text-align:right">{{ message.text}}<span style="color:#e44d3a;"> :{{ message.sender}}</span></h6>
                             
                             </div>
-                        {% endif %}
-                        {% if request.user == message.reciever %}
+                        
+                        {% elif request.user == message.reciever %}
                             <div class="card-body">
                                 <h6 class="card-text"style="text-align:left;"><span style="color:#e44d3a;">{{ message.sender}}: </span>{{ message.text}}</h6>
 
@@ -32,7 +32,7 @@
             </div>
                     <div class="card p-2">
                         
-                        <form action='{% url "msgPage" 1 %}' method="post">
+                        <form action='?id={{ request.user.id }}' method="post">
                             {% csrf_token %}
                             <div class="row">    
                                 <div class="col-10">
@@ -64,9 +64,9 @@
 
             {% for friend in friends %}
             <hr>
-            <a href="{% url "msgPage" friend.id%}" style="color:black">
+            <a href="?id={{ friend.id }}" style="color:black">
                 <div class="d-flex justify-content-center align-items-center" id="chatdiv">
-                    <div class="mx-2">{{friend.name}}</div>
+                    <div class="mx-2">{{friend.username}}</div>
                     <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
                 </div>
             </a>    
