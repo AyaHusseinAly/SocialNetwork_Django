@@ -32,12 +32,12 @@
             </div>
                     <div class="card p-2">
                         
-                        <form action='{% url "msgPage" %}' method="post">
+                        <form action='{% url "msgPage" 1 %}' method="post">
                             {% csrf_token %}
                             <div class="row">    
                                 <div class="col-10">
                                     {{ form.as_p}}
-                                    <input class="post_input " name="text" placeholder="Enter your message" />
+                                    <input class="post_input " name="text" placeholder="  Enter your message" />
                                 
                                 </div>
                                 <div class="col-2">
@@ -64,7 +64,7 @@
 
             {% for friend in friends %}
             <hr>
-            <a href="#" style="color:black">
+            <a href="{% url "msgPage" friend.id%}" style="color:black">
                 <div class="d-flex justify-content-center align-items-center" id="chatdiv">
                     <div class="mx-2">{{friend.name}}</div>
                     <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">

@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 class MsgForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = ("text","reciever")
+        fields = ("text",)
 
 
 
