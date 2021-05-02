@@ -6,7 +6,7 @@
         <div class="col-sm-4 ">
             <div class="mycard">
            <form action="" method="GET">
-               <input type="text" name="q" id="" class="post_input " placeholder="Search for user by name" value="{{query}}">
+               <input type="text" name="q" id="" class="post_input " placeholder="Search for user by name">
                <input type="submit" class="btn mt-2" value="Search">
            </form>
        </div>
@@ -21,8 +21,8 @@
                 <hr>
                 <h5>{{user.first_name}} {{user.last_name}}</h5>
                 <div class="d-flex pl-3" style="width:100%">
-                    <a class="btn-secondary btn" href="/profile/{{user.id}}" style="width:50%;">View Profile</a>
-                    <button class="post btn" style="width:50%;"><i class="fas fa-user-plus"></i>Add Friend</button>
+                    <a class="btn" href="/profile/{{user.id}}" style="width:50%">View Profile</a>
+                    <button class="" style="width:50%;background-color:grey"><i class="fas fa-user-plus"></i>Add Friend</button>
                 </div>
                 <hr>
                 {% endfor %}

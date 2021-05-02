@@ -92,3 +92,12 @@ img.icondrop {
     background-color: #e44d3a;
     width: 100%;
 }
+.btn-secondary{
+    background-color: lightgray;
+    padding-top: 13px;
+    margin-top: 15px;
+    width: 100%;
+    color: rgba(0,0,0,0.7);
+    border: none;
+    
+}
