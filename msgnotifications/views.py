@@ -1,5 +1,7 @@
 from django.shortcuts import render , redirect
+from django.urls import reverse
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 #from .models import Friends
 from .models import Message
 from .forms import MsgForm
@@ -34,9 +36,12 @@ def index(request):
     msg= MsgForm(request.POST or None)
     if msg.is_valid():
         form_text=msg.cleaned_data['text']
-        msg_obj=Message.objects.create( text=form_text,sender=request.user,reciever=request.user)
+        msg_obj=Message.objects.create( text=form_text,sender=request.user,reciever=reciever1)
         msg_obj.save()
-        return redirect("msgPage",1)
+        #return redirect("msgPage",id=friendId)
+        #return redirect(reverse('msgPage', kwargs={"id": friendId}))
+        return HttpResponseRedirect(request.path_info+"?id="+str(friendId))
+
     return render(request,"index.html",{
         "friends":friends,
         "messages":messages
