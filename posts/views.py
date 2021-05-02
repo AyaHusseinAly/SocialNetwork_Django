@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from .models import Post
 from groups.models import Group
 from .forms import PostForm
-
+from django.contrib.auth.models import User
+# from groups.models import Group
 #from django.contrib.auth.decorators import login_required, permission_required
 
 
@@ -23,24 +24,41 @@ def index(request):
         "groups":groups
 
     })
+    query=request.GET.get('q','')
+    if(query):
+        first_name_query1=User.objects.filter(first_name__contains=str(query))
+        first_name_query2=User.objects.filter(first_name__in=[query])
+        last_name_query1=User.objects.filter(last_name__contains=str(query))
+        last_name_query2=User.objects.filter(last_name__in=[query])
+        users = first_name_query1.union(first_name_query1,last_name_query1,last_name_query2)
+        return render(request,"users/index.html",{
+        "users":users,
+        })
+    else:
+        posts = Post.objects.all()
+        return render(request,"posts/index.html",{
+        "posts":posts,
+        "groups":groups
 
+        })
 
-def edit(request,id):
-    bookData=Book.objects.get(pk=id)
-    book= BookForm(request.POST or None, instance=bookData)
-    if book.is_valid():
-        book.save()
-        return redirect("index")
-    return render(request,"books/edit.html",{'form':book, "data":bookData})    
 
 def delete(request,id):
     post=Post.objects.get(pk=id)
     post.delete()
     return redirect("index")
 
-def view(request,id):
-    book=Book.objects.get(pk=id)
-    return render(request,"books/view.html",{
-        "book":book
-    })
 
+def edit(request,id):
+    postData=Post.objects.get(pk=id)
+    post= PostForm(request.POST or None, instance=postData)
+    if post.is_valid():
+        post.save()
+        return redirect("index")
+    return render(request,"posts/edit.html",{'form':post, "data":postData})    
+
+def view(request,id):
+    post=Post.objects.get(pk=id)
+    return render(request,"posts/view.html",{
+        "post":post
+    })

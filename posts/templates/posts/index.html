@@ -4,10 +4,19 @@
 
 <div class="container">
     <div class="row pt-5">
+
         <div class="col-sm-4 ">
+
+            <div class="mycard">
+                <form action="" method="GET">
+                    <input type="text" name="q" id="" class="post_input " placeholder="Search for user by name">
+                    <input type="submit" class="btn mt-2" value="Search">
+                </form>
+            </div>    
+
             <div class="mycard">
             <i class="fa fa-users fa-4x" aria-hidden="true"></i>
-            <h1>groups</h1>
+            <h2>your groups</h2>
 
             {% for group in groups %}
             <hr>
@@ -18,11 +27,14 @@
             </div>
             
             <hr>
-            {% endfor %}
+            {% endfor %} 
+
 
             </div>
+            
+    
         </div>
-
+        
 
     <!-- ----------------------------------------------------------- end side ----------------------------------- -->
         <div class="col-sm-8 mycard">

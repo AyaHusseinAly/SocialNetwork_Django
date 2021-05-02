@@ -14,7 +14,7 @@
 
     <div class="row" style="margin-right: -120px">
         
-        <div class="col-md-2  d-flex  align-items-center pl-5">
+        <div class="col-md-2  d-flex  align-items-center">
 
             {% if request.user.is_authenticated %}
             <p> Welcome {{request.user}}</p>
@@ -26,15 +26,14 @@
         </div>
    
         <div class="col-lg-5 col-sm-9 col-xs-8 d-flex align-items-center justify-content-around ">
-            <a  href="/posts/" id="navLink"><i class="fa fa-home" aria-hidden="true" ></i><p>Home</p></a>
-            <a  href="/groups/" id="navLink"><i class="fa fa-users" aria-hidden="true"></i><p>groups</p></a>
-            <a  href="#" id="navLink"><i class="fa fa-user-friends" aria-hidden="true"></i><p>Friends</p></a>
-            <a  href="#" id="navLink"><i class="fa fa-comments" aria-hidden="true"></i><p>Messages</p></a>
-            <a  href="#" id="navLink"><i class="fa fa-bell" aria-hidden="true"></i><p>Notifications</p></a>
-
+            <a  href="#" ><i class="fa fa-home" aria-hidden="true" ></i><p>Home</p></a>
+            <a  href="#" ><i class="fa fa-user-friends" aria-hidden="true"></i><p>Friends</p></a>
+            <a  href="/groups/" ><i class="fa fa-users" aria-hidden="true"></i><p>Groups</p></a>
+            <a  href="#" ><i class="fa fa-comments" aria-hidden="true"></i><p>Messages</p></a>
+            <a  href="#" ><i class="fa fa-bell" aria-hidden="true"></i><p>Notifications</p></a>
             <div >
-                <a  href="#" id="navLink"><img  class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png'%}"  ></a>
-                <a  href="#" id="navLink"><img  class=" m-1 icondrop"  src="{% static 'images/iconDropdownWhite.png' %}"  ></a>
+                <a  href="#" ><img  class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png'%}"  ></a>
+                <a  href="#" ><img  class=" m-1 icondrop"  src="{% static 'images/iconDropdownWhite.png' %}"  ></a>
             </div>
         </div>  
 
