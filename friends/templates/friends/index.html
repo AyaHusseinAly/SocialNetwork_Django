@@ -11,11 +11,9 @@
                 <h2>People you may know</h2>
                 {% for user in users %}
                 <hr>
-                <button>
                 <a href="{% url 'profile' user.id %}">
                     <h3>{{user.username}}</h3>
                 </a>
-            </button>
                 <hr>
                 {% endfor %}
 
