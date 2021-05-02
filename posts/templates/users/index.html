@@ -41,16 +41,16 @@
                     </div>
                 </div>
 
-                <h5>Feed Posts</h5>
+                <h5>Users</h5>
 
-                {% for post in posts %}
+                {% for user in users %}
                 <hr>
 
                 <div class="card text-center">
                 <div class="card-header">
-                    {{post.owner}}
+                    {{user.first_name}} {{user.last_name}}
                 </div>
-                <div class="card-body">
+                <!-- <div class="card-body">
                     <h5 class="card-text">{{post.content}}</h5>
                 </div>
                 <div class="card-footer text-muted d-flex">
@@ -59,7 +59,7 @@
                     <a  href="#" style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg" aria-hidden="true"></i></a>
                     <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg" aria-hidden="true"></i></a>
                    
-                </div>
+                </div> -->
                 </div>
 
                 <hr>
