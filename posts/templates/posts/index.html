@@ -3,7 +3,7 @@
 {% block body %}
 
 <div class="container">
-    <div class="row pt-5">
+    <div class="row pt-1">
 
         <div class="col-sm-4 ">
 
@@ -65,13 +65,15 @@
                 <hr>
 
                 <div class="card text-center">
-                <div class="card-header row">
-                    <p class="col-5 tex-left "><span style="color:#e44d3a;">Post from:</span> {{post.owner}}</p>
-                    <div class="col-2"></div>
-                    <div class="col-5">
-                        <a href="{% url "view" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                        <a href="{% url "edit" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
-                        <a href="{% url "delete" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <div class="card-header">
+                    <div class="row">
+                        <p class="col-5 tex-left "><span style="color:#e44d3a;">Post from:</span> {{post.owner}}</p>
+                        <div class="col-2"></div>
+                        <div class="col-5">
+                            <a href="{% url "view" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="{% url "edit" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
+                            <a href="{% url "delete" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
