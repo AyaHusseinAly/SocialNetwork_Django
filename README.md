@@ -1,6 +1,6 @@
-# SocialNetwork_Django
+# SocialNetwork_Django Project Preview
 
-## Home NewsFeed
+## Home News Feed
 ![](preview/homeFeed.PNG)
 
 ## Groups
