@@ -3,37 +3,61 @@
 {% block body %}
 
 <div class="container">
-    <div class="row pt-5">
+    <div class="row pt-1">
+
         <div class="col-sm-4 ">
+
+            <div class="mycard">
+                <form action="" method="GET">
+                    <input type="text" name="q" id="" class="post_input " placeholder="Search for user by name">
+                    <input type="submit" class="btn mt-2" value="Search">
+                </form>
+            </div>    
+
             <div class="mycard">
             <i class="fa fa-users fa-4x" aria-hidden="true"></i>
-            <h1>groups</h1>
+            <h2>your groups</h2>
 
             {% for group in groups %}
             <hr>
             <h5>{{group.name}}</h5>
-            <p><button>visit group</button></p>
+            <div class="d-flex pl-3">
+                <p><button class="mx-2">visit group</button></p>
+                <p><button class="mx-2" style="background-color:grey">leave group</button></p>
+            </div>
+            
             <hr>
-            {% endfor %}
+            {% endfor %} 
+
 
             </div>
+            
+    
         </div>
-
+        
 
     <!-- ----------------------------------------------------------- end side ----------------------------------- -->
         <div class="col-sm-8 mycard">
                 
                 <div class="post-topbar">
-                    <div class="row">
-                        <div class="col-10">
-                            <input class="post_input " placeholder="What's in your mind?" />
-                        </div>
-                        <div class="col-2">
-                            <a class="post btn" href="#" title="">Post</a>
-                        </div>    
+                    
+                    <form action='{% url "index" %}' method="post">
+                        {% csrf_token %}
+                        <div class="row">    
+                            <div class="col-10">
+                                {{ form.as_p}}
+                                <input class="post_input " name="content" placeholder="What's in your mind?" />
+                            
+                            </div>
+                            <div class="col-2">
+                                <button class="post btn" type="submit" >Post</button>
+                            </div>   
+                        </div> 
+                        </form>
                         
-                    </div>
+                    
                 </div>
+                 
 
                 <h5>Feed Posts</h5>
 
@@ -42,7 +66,15 @@
 
                 <div class="card text-center">
                 <div class="card-header">
-                    {{post.owner}}
+                    <div class="row">
+                        <p class="col-5 tex-left "><span style="color:#e44d3a;">Post from:</span> {{post.owner}}</p>
+                        <div class="col-2"></div>
+                        <div class="col-5">
+                            <a href="{% url "view" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="{% url "edit" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
+                            <a href="{% url "delete" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <h5 class="card-text">{{post.content}}</h5>
@@ -50,8 +82,8 @@
                 <div class="card-footer text-muted d-flex">
                     <p >{{post.created_at}}</p>
                     <div style="width:300px"></div>
-                    <a  href="#" style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg" aria-hidden="true"></i></a>
-                    <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg" aria-hidden="true"></i></a>
+                    <a href="{% url "view" post.id%}" style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg " aria-hidden="true"></i></a>
+                    <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a>
                    
                 </div>
                 </div>

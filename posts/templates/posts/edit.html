@@ -6,7 +6,7 @@
         <form action="{% url "edit" data.id %}" method="post">
             {% csrf_token %}
             {{ form.as_p}}
-            <button type="submit">Update Book</button>
+            <button type="submit">Update Post</button>
         </form>
     </div>
 

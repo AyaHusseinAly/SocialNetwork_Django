@@ -22,7 +22,6 @@ urlpatterns = [
     path("", include("accounts.urls")),
     path('admin/', admin.site.urls),
     path('posts/',include("posts.urls")),
+    path('groups/',include("groups.urls")),
     path('friends/',include("friends.urls"))
-
-
 ]
