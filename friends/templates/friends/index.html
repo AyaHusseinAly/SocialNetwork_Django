@@ -12,7 +12,7 @@
                 {% for user in users %}
                 <hr>
                 <button>
-                <a href="">
+                <a href="{% url 'profile' user.id %}">
                     <h3>{{user.username}}</h3>
                 </a>
             </button>

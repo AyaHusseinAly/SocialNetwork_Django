@@ -32,7 +32,6 @@ def index(request):
     return render(request,"posts/index.html",{
         "posts":posts,
         "groups":groups,
-        "users":users
 
     })
     
