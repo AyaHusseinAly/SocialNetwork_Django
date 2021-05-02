@@ -24,3 +24,23 @@ def index(request):
 
     })
 
+
+def edit(request,id):
+    bookData=Book.objects.get(pk=id)
+    book= BookForm(request.POST or None, instance=bookData)
+    if book.is_valid():
+        book.save()
+        return redirect("index")
+    return render(request,"books/edit.html",{'form':book, "data":bookData})    
+
+def delete(request,id):
+    post=Post.objects.get(pk=id)
+    post.delete()
+    return redirect("index")
+
+def view(request,id):
+    book=Book.objects.get(pk=id)
+    return render(request,"books/view.html",{
+        "book":book
+    })
+
