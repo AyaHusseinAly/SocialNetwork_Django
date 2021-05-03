@@ -27,24 +27,26 @@ def index(request):
     #friends= Friends.objects.all()
     
     #friends=[{'id':1,'name':"Amal Tamam",'img':"exPP3.png"},{'id':2,'name':"Alaa Hesham",'img':"alaa.png"},{'id':3,'name':"Eman Hussein",'img':"eman.png"},{'id':4,'name':"Fatma Tarek",'img':"fatma.png"}]
+    friends=User.objects.exclude(username=request.user.username)
+
     sender1=User.objects.get(pk=friendId)
     sender2= User.objects.get(username=request.user.username)
     reciever1= User.objects.get(pk=friendId)
     reciever2=User.objects.get(username=request.user.username)
     messages= Message.objects.filter(reciever=reciever1,sender=sender2) |Message.objects.filter(reciever=reciever2,sender=sender1) 
-    friends=User.objects.exclude(username=request.user.username)
+
     msg= MsgForm(request.POST or None)
     if msg.is_valid():
         form_text=msg.cleaned_data['text']
         msg_obj=Message.objects.create( text=form_text,sender=request.user,reciever=reciever1)
         msg_obj.save()
-        #return redirect("msgPage",id=friendId)
-        #return redirect(reverse('msgPage', kwargs={"id": friendId}))
         return HttpResponseRedirect(request.path_info+"?id="+str(friendId))
 
     return render(request,"index.html",{
         "friends":friends,
-        "messages":messages
+        "messages":messages,
+        "msgto":sender1.username
+
 
     })
     
