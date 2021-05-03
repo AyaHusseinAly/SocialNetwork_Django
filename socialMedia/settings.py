@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'posts',
     'accounts',
-    'msg_notifications',
+    'msgnotifications',
     'groups',
 ]
 
@@ -82,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "socialmedia",
-        "USER": "root",
-        "PASSWORD": "shrook",
+        "USER": "root1",
+        "PASSWORD": "",
         "HOST": "localhost"
     }
 }
@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = '/admin/'
+LOGIN_REDIRECT_URL = '/posts/'
 
 
 # Internationalization

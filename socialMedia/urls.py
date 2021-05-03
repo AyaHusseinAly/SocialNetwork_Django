@@ -24,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include("posts.urls")),
     path('groups/', include("groups.urls")),
+    path('messages/', include("msgnotifications.urls")),
+
 
 
 ]
