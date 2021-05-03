@@ -6,6 +6,9 @@
 ## Messages
 ![](preview/messages.PNG)
 
+## Group Page
+![](preview/groupPage.PNG)
+
 ## Groups
 ![](preview/groups.PNG)
 
