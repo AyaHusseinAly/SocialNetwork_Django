@@ -15,13 +15,31 @@ Including another URLconf
 """
 from django.contrib import admin
 
-from django.urls import path ,include
+from django.conf.urls.static import static
+from django.conf import settings
+from django.urls import path, include
 
 urlpatterns = [
     path("", include("django.contrib.auth.urls")),
     path("", include("accounts.urls")),
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('posts/',include("posts.urls")),
     path('groups/',include("groups.urls")),
     path('friends/',include("friends.urls"))
+=======
+    path('posts/', include("posts.urls")),
+    path('groups/', include("groups.urls")),
+    path('messages/', include("msgnotifications.urls")),
+
+
+
+    
+
+>>>>>>> 722a845c1c40e01435c47bdd8880919ffb1df6c8
 ]
+
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+
+

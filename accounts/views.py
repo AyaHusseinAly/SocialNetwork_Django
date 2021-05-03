@@ -35,7 +35,7 @@ def index(request):
 
 def signup(request):
     form = UserCreationForm(request.POST or None) 
-    profile_form = UserProfileForm(request.POST or None)
+    profile_form = UserProfileForm(request.POST,request.FILES or None)
 
     if form.is_valid() and profile_form.is_valid():
             form.save()
@@ -49,12 +49,13 @@ def signup(request):
             profile.save()
             if user:
                 login(request , user)
-                return redirect("/admin/")
+                return redirect("/posts/")
             
     context = {'profile_form' : profile_form ,'form' : form }
     return render(request , "registration/signup.html", context)
 
 def profile(request,id):
+<<<<<<< HEAD
     context ={}
     account= User.objects.get(id=id)
     if  account:
@@ -113,3 +114,26 @@ def profile(request,id):
    # return render(request,'profile.html',{
    #     "user":user,
    # })
+
+def about(request,id):
+    user = User.objects.get(pk=id)
+    return render(request,'about.html',{
+        "user":user,
+    })
+def edit(request, id):
+    user = User.objects.get(pk=id)
+    form = UserCreationForm(request.POST or None, instance=user)
+    profile_form = UserProfileForm(request.POST,request.FILES or None, instance=user)
+
+    if form.is_valid() and profile_form.is_valid():
+        form.save()
+        profile = profile_form.save(commit = False)
+        profile.user = user
+        profile.save()
+        return redirect('index')
+    return render(request, 'accounts/edit.html', {
+        'form': form,
+        'profile':profile_form,
+        'user': user
+    })
+

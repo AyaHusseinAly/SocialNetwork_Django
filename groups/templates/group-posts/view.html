@@ -1,0 +1,17 @@
+{% extends "layout.html"%}
+
+{% block body %} 
+<div class="container">
+
+    <h4>Content: </h4><p> {{post.content}}</p>
+    <h4>Date: </h4><p>{{post.created_at}}</p>
+    <h4>Author: </h4><p>{{post.owner}}</p>
+
+    
+    <hr>
+        <input class="post_input " name="content" placeholder="Add Comment" />            
+        <button class="post btn" type="submit" >Comment</button>
+
+
+</div>
+{% endblock %} 
