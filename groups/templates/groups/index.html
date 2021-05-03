@@ -1,38 +1,54 @@
-{% extends "layout.html"%}
-
-{% block body %}
-
+{% extends "layout.html"%} {% block body %}
 
 <div class="container">
-    <div class="row pt-5">
-        <div class="col-sm-4 ">
-                 <div class="mycard">
-                <form action="" method="GET">
-                    <input type="text" name="q" id="" class="post_input " placeholder="Search for group by name">
-                    <input type="submit" class="btn mt-2" value="Search">
-                </form>
-            </div>
-            
-        </div>
-        <div class="col-sm-8">
-            
-            <div class="mycard">
-                <i class="fa fa-users fa-4x" aria-hidden="true"></i>
-                <h3>groups</h3>
-
-                {% for group in groups %}
-                <hr>
-                <h5>{{group.name}}</h5>
-                <div class="d-flex pl-3" style="width:100%">
-                    <button class=""  style="width:50%">visit group</button>
-                    <button class="" style="width:50%;background-color:grey">leave group</button>
-                </div>
-                <hr>
-                {% endfor %}
-
-
-            </div>
-        </div>
+  <div class="row pt-5">
+    <div class="col-sm-4">
+      <div class="mycard">
+        <form action="" method="GET">
+          <input
+            type="text"
+            name="q"
+            id=""
+            class="post_input"
+            placeholder="Search for group by name"
+          />
+          <input type="submit" class="btn mt-2" value="Search" />
+        </form>
+      </div>
     </div>
+    <div class="col-sm-8">
+      <div class="mycard">
+        <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+        <h3>groups</h3>
+
+        {% for group in groups %} {% comment %}
+        <h5>{{group.name}}</h5>
+        <div class="d-flex pl-3" style="width: 100%">
+          <button class="" style="width: 50%">visit group</button>
+          <button class="" style="width: 50%; background-color: grey">
+            leave group
+          </button>
+        </div>
+        {% endcomment %}
+        <div
+          style=" background-image: url({{group.cover.url}});width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
+          onclick="location.href='{% url "show" group.id %}';" 
+        >
+          <h2 style="color: white">{{group.name}}</h2>
+          <p style="color: white">{{group.description}}</p>
+          <div class="d-flex pl-3" style="width: 100%">
+            {% comment %}
+            <button class="" style="width: 50%">visit group</button>
+            <button class="" style="width: 50%; background-color: grey">
+              leave group
+            </button>
+            {% endcomment %}
+          </div>
+        </div>
+
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 </div>
 {%endblock%}

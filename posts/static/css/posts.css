@@ -91,6 +91,7 @@ img.icondrop {
     margin-top: 15px;
     background-color: #e44d3a;
     width: 100%;
+    color: seashell;
 }
 .btn-secondary{
     background-color: lightgray;
@@ -101,8 +102,11 @@ img.icondrop {
     border: none;
     
 }
-
-
+small {
+    display: block;
+    line-height: 1.428571429;
+    color: #999;
+    }
 
 /* Messages */
 #chatdiv:hover{
