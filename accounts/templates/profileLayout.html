@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% load active_link_tags %}
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar">
+                <div class="profile-userpic" style="display: flex;justify-content: center;">
+                    <img src="{{user.userprofile.avatar.url}}" class="img-responsive" alt="">
+                </div>
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        {{user.first_name}} {{user.last_name}}
+
+                    </div>
+                    <div class="profile-usertitle-job">
+                    </div>
+                </div>
+                <div class="profile-userbuttons">
+                    <button class="post btn btn-sm"><i class="fas fa-user-plus"></i>Add Friend</button>
+                    <button type="button" class="btn btn-secondary btn-sm"><i class="fas fa-envelope"> </i>
+                        Message</button>
+                </div>
+                <div class="profile-usermenu">
+                    <ul style="list-style: none;">
+                        <li class="{% active_link 'profile' 'active' strict=True %}">
+                            <a href="/profile/{{user.id}}" >
+                                <i class="fas fa-home"></i>
+                                Posts </a>
+                        </li>
+
+                        <li class="{% active_link 'about' 'active' strict=True %}">
+                            <a href="/profile/{{user.id}}/about">
+                                <i class="fas fa-user"></i>
+                                About </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

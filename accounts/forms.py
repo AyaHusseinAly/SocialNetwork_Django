@@ -8,4 +8,4 @@ from .models import UserProfile
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('location' , 'age')
+        fields = ('country' , 'birthdate','avatar','about')
