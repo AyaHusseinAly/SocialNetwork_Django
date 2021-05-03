@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'accounts',
     'msg_notifications',
     'groups',
-    'friends'
+    'friends',
+    'friend'
 ]
 
 MIDDLEWARE = [
