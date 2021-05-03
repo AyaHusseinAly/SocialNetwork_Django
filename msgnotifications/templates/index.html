@@ -7,21 +7,23 @@
         <div class="col-sm-8 mycard d-flex flex-column">
             <div class=" post-topbar" >
                                 
-
-                    <h6>Messages</h6>
+                    <h6>Chatting with<span style="color:#e44d3a;"> :{{ msgto}}</span></h6>
                     <hr>
                     <div style="height:400px;overflow-y:scroll" >
                     {% for message in messages %}
                     <div class="card text-center">
                         {% if request.user == message.sender %}
-                            <div class="card-body  bg-light">
+                            <div class="card-body  bg-light"style="padding-bottom:0px">
                                 <h6 class="card-text"style="text-align:right">{{ message.text}}<span style="color:#e44d3a;"> :{{ message.sender}}</span></h6>
-                            
+                                <p style="text-align:left;color:gray;font-size:12px;margin:0px">{{ message.created_at}}</p>
+
                             </div>
+
                         
                         {% elif request.user == message.reciever %}
-                            <div class="card-body">
+                            <div class="card-body"style="padding-bottom:0px">
                                 <h6 class="card-text"style="text-align:left;"><span style="color:#e44d3a;">{{ message.sender}}: </span>{{ message.text}}</h6>
+                                <p style="text-align:right;color:gray;font-size:12px;margin:0px">{{ message.created_at}}</p>
 
                             </div>
                         {% endif %}
@@ -54,7 +56,7 @@
 
             <div class="mycard">
                 <form action="" method="GET">
-                    <input type="text" name="q" id="" class="post_input " placeholder="Search for user by name">
+                    <input type="text" name="q" id="" class="post_input " placeholder=" Search for user by name">
                     <input type="submit" class="btn mt-2" value="Search"></a>
                 </form>
             </div>    
@@ -64,12 +66,22 @@
 
             {% for friend in friends %}
             <hr>
-            <a href="?id={{ friend.id }}" style="color:black">
-                <div class="d-flex justify-content-center align-items-center" id="chatdiv">
-                    <div class="mx-2">{{friend.username}}</div>
-                    <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
-                </div>
-            </a>    
+                {% if msgto == friend.username %}
+                    <a href="?id={{ friend.id }}" style="color:black;">
+                    <div class="d-flex justify-content-center align-items-center" style="background-color:#f88b7c;"id="chatdiv">
+                        <div class="mx-2">{{friend.username}}</div>
+                        <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
+                    </div>
+                     </a> 
+                {% else %}
+                    <a href="?id={{ friend.id }}" style="color:black;">
+                    <div class="d-flex justify-content-center align-items-center" id="chatdiv">
+                        <div class="mx-2">{{friend.username}}</div>
+                        <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
+                    </div>
+                     </a>
+                {% endif %}  
+              
             <hr>
             {% endfor %} 
 

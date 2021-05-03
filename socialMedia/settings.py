@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "socialmedia",
-        "USER": "root",
+        "USER": "root1",
         "PASSWORD": "",
         "HOST": "localhost"
     }
