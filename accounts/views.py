@@ -6,6 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from .forms import UserProfileForm
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -75,4 +77,10 @@ def edit(request, id):
         'form': form,
         'profile':profile_form,
         'user': user
+    })
+@login_required(login_url="/login")
+def userProfile(request):
+    user=User.objects.get(pk=request.user.id)
+    return render(request,'profile.html',{
+        "user":user,
     })
