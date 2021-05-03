@@ -19,6 +19,7 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
+    email=models.EmailField(max_length=255)
     country = models.CharField(max_length=30,null=True,blank=True)
     avatar=models.ImageField(null=True,blank=True)
     birthdate = models.DateField(auto_now=False, auto_now_add=False,null=False,blank=False)
