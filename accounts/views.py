@@ -10,6 +10,7 @@ from .forms import UserProfileForm
 from django.conf import settings
 from friend.friend_request_status import FriendRequestStatus
 from friend.models import FriendList, FriendRequest
+from friend.utils import get_friend_request_or_false
 
 
 
@@ -55,21 +56,21 @@ def signup(request):
     return render(request , "registration/signup.html", context)
 
 def profile(request,id):
-<<<<<<< HEAD
     context ={}
     account= User.objects.get(id=id)
     if  account:
         context['id'] = account.id
         context['username'] = account.username
         context['email'] = account.email
+        context['avatar'] = account.userprofile.avatar
         #context['location'] = account.userprofile.location
         #context['age'] = account.userprofile.age
 
     try:
-        friend_list = FriendList.objects.get(user=account)
+            friend_list = FriendList.objects.get(user=account)
     except FriendList.DoesNotExist:
-        friend_list = FriendList.objects.get(user=account)
-        friend_list.save()
+            friend_list = FriendList(user=account)
+            friend_list.save()
     friends = friend_list.friends.all()
     context['friends'] = friends
 

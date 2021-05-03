@@ -23,20 +23,14 @@ urlpatterns = [
     path("", include("django.contrib.auth.urls")),
     path("", include("accounts.urls")),
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
-    path('posts/',include("posts.urls")),
-    path('groups/',include("groups.urls")),
-    path('friends/',include("friends.urls"))
-=======
+
+    path('friends/',include("friends.urls")),
+
     path('posts/', include("posts.urls")),
     path('groups/', include("groups.urls")),
     path('messages/', include("msgnotifications.urls")),
 
 
-
-    
-
->>>>>>> 722a845c1c40e01435c47bdd8880919ffb1df6c8
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
