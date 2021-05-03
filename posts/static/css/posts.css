@@ -110,14 +110,13 @@ img.icondrop {
     margin-right: 10px;
 }
 .comments{
-    width: 160px;
+    width: 120px;
     height: 2px;
     background-color: #e44d3a;
 }
 .add-comment{
     color:  #e44d3a;
 }
-
 .comment-btn{
     background-color: #e44d3a;
     border-radius: 20px;
@@ -125,3 +124,4 @@ img.icondrop {
     padding: 10px;
     font-size: 15px;
 }
+

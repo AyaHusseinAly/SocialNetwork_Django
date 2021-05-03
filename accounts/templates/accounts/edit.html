@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% block title %} edit {% endblock %}
+
+{% block body %}
+    <form action="{% url 'edit' user.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{profile.as_p}}
+        <button type="submit">Update Account</button>
+    </form>
+{% endblock %}

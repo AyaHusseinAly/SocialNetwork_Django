@@ -19,7 +19,8 @@ def index(request):
         first_name_query2=User.objects.filter(first_name__in=[query])
         last_name_query1=User.objects.filter(last_name__contains=str(query))
         last_name_query2=User.objects.filter(last_name__in=[query])
-        users = first_name_query1.union(first_name_query1,last_name_query1,last_name_query2)
+        username_query=User.objects.filter(username__in=[query])
+        users = first_name_query1.union(first_name_query1,last_name_query1,last_name_query2,username_query)
         return render(request,"users/index.html",{
             "usersResult":users,
             "query":query,
@@ -68,10 +69,11 @@ def AddCommentView(request,id):
     post = Post.objects.get(pk=id)
     form = CommentForm(request.POST or None)
     if form.is_valid():
-        # form_content=form.cleaned_data['content']
-        # comment_obj=Comment.objects.create( content=form_content,owner=request.user,post_id=post.id)
-        # comment_obj.save()
-        form.save()
+        
+        form_content=form.cleaned_data['content']
+        comment_obj=Comment.objects.create( content=form_content,owner=request.user,post=post)
+        comment_obj.save()
+        # form.save()
         return redirect("view",post.id)
 
     return render(request,"posts/add_comment.html",{

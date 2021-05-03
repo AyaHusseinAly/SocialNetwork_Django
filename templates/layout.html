@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'css/posts.css'%}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/profile.css'%}" type="text/css">
 
 </head>
 <body>
@@ -29,12 +30,12 @@
             <a  href="/posts/" id="navLink"><i class="fa fa-home" aria-hidden="true" ></i><p>Home</p></a>
             <a  href="/groups/" id="navLink"><i class="fa fa-users" aria-hidden="true"></i><p>groups</p></a>
             <a  href="#" id="navLink"><i class="fa fa-user-friends" aria-hidden="true"></i><p>Friends</p></a>
-            <a  href="#" id="navLink"><i class="fa fa-comments" aria-hidden="true"></i><p>Messages</p></a>
+            <a  href="/messages" id="navLink"><i class="fa fa-comments" aria-hidden="true"></i><p>Messages</p></a>
             <a  href="#" id="navLink"><i class="fa fa-bell" aria-hidden="true"></i><p>Notifications</p></a>
 
             <div >
                 <a  href="#" id="navLink"><img  class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png'%}"  ></a>
-                <a  href="#" id="navLink"><img  class=" m-1 icondrop"  src="{% static 'images/iconDropdownWhite.png' %}"  ></a>
+                <a  href="/logout/" id="navLink">logout</a>
             </div>
         </div>  
 

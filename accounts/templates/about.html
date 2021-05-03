@@ -1,0 +1,22 @@
+{% extends "profileLayout.html" %}
+
+{% block content %}
+<div class="profile-content">
+	<h2>Information about {{user.first_name}}:</h2>
+    <br>
+    <h4 class="profile-about">Country: </h4>
+    {{user.userprofile.country}}
+    <br>
+    <br>
+    <h4 class="profile-about">Birthdate: </h4>
+    {{user.userprofile.birthdate}}
+    <br>
+    
+    <br>
+    <br><br>
+    <hr>
+    <h4 class="profile-about">About: </h4>
+    {{user.userprofile.about}}
+
+</div>
+{% endblock %}

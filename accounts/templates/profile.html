@@ -1,11 +1,44 @@
-<!DOCTYPE html >
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title> profile {{user.id}}</title>
-    </head>
-<body>
-    <h1>profile</h1>
+{% extends "profileLayout.html" %}
 
-</body>
-</html>
+{% block content %}
+<div class="profile-content">
+	<h5>Feed Posts</h5>
+
+	{% for post in posts %}
+	<hr>
+
+	<div class="card text-center">
+		<div class="card-header">
+			<div class="row">
+				<p class="col-5 tex-left "><span style="color:#e44d3a;">Post from:</span> {{post.owner}}</p>
+				<div class="col-2"></div>
+				<div class="col-5">
+					<a href="{% url " view" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye"
+							aria-hidden="true"></i></a>
+					<a href="{% url " edit" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen"
+							aria-hidden="true"></i></a>
+					<a href="{% url " delete" post.id%}" style="color:grey;" class="mx-3"><i
+							class="fa fa-trash" aria-hidden="true"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<h5 class="card-text">{{post.content}}</h5>
+		</div>
+		<div class="card-footer text-muted d-flex">
+			<p>{{post.created_at}}</p>
+			<div style="width:300px"></div>
+			<a href="{% url " view" post.id%}" style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg "
+					aria-hidden="true"></i></a>
+			<a href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg "
+					aria-hidden="true"></i></a>
+
+		</div>
+	</div>
+
+	<hr>
+
+	{% endfor %}
+
+</div>
+{% endblock %}

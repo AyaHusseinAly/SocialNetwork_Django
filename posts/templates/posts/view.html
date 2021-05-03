@@ -3,10 +3,12 @@
 {% block body %} 
 <div class="container">
 
-    <h4>Content: </h4><p> {{post.content}}</p>
-    <h4>Date: </h4><p>{{post.created_at}}</p>
-    <h4>Author: </h4><p>{{post.owner}}</p>
-
+    <div  style="margin-bottom: 50px;margin-top: 20px;border-radius: 20px;border: 2px solid #e44d3a;padding: 40px;">
+    
+    <strong><h5 style="display: inline-block;font-size: 20px;">{{post.owner}}</h5></strong> -{{post.created_at}}
+    <div style="width: 300px;height: 2px;background-color: #e44d3a;"></div>
+    <p style="margin-top: 20px;">{{post.content}}</p>
+     </div>
     
     <hr>
         <!-- <input class="post_input " name="content" placeholder="Add Comment" />            
@@ -16,7 +18,8 @@
         <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a>
         <br>
         <hr>
-        <h2>Comments</h2>
+        <h4>Comments</h4>
+        <div style="margin-bottom: 50px;">
         <div class="comments"></div>
         {% if not post.comments.all %} 
         <br>
@@ -31,11 +34,13 @@
                <br>
                {{comment.content}}
                <br><br>
+               {% if request.user == comment.owner %}
                <a href="{% url 'del_comment' comment.id %}" class="add-comment">delete</a>
+               {% endif %}
                <hr>
                {% endfor %} 
         {% endif %} 
-
+    </div>
         
 
 

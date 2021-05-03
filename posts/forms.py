@@ -13,9 +13,9 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         # fields = "__all__"
-        # fields = ("owner_id","content",)
+        fields = ("content",)
         # fields = ("owner","content",)
-        fields = "__all__"
+        # fields = "__all__"
         # widgets={
         #     'owner':forms.TextInput(attrs={'value':'','id':'eldr'})
         # }
