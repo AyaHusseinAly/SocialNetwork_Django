@@ -107,3 +107,8 @@ small {
     line-height: 1.428571429;
     color: #999;
     }
+
+/* Messages */
+#chatdiv:hover{
+    background-color:#f88b7c;
+ }

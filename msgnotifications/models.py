@@ -9,7 +9,7 @@ class Notification(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.sender+" to "+ self.reciever)
+        return str(self.sender) +" to "+ str(self.reciever)
 
 class Message(models.Model):
     sender=models.ForeignKey(User,on_delete=models.CASCADE,related_name="messageSender")
@@ -18,4 +18,4 @@ class Message(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.sender+" to "+ self.reciever)
+        return str(self.sender)+" to "+ str(self.reciever)
