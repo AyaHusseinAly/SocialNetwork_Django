@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from groups.models import Group
-from posts.models import Post
 # class UserCreateForm(UserCreationForm):
 #     avatar = forms.CharField(required=True)
 #     email= forms.CharField(required=True)
@@ -25,8 +23,8 @@ class UserProfile(models.Model):
     avatar=models.ImageField(null=True,blank=True)
     birthdate = models.DateField(auto_now=False, auto_now_add=False,null=False,blank=False)
     about=models.TextField(max_length=500,null=True,blank=True)
-    groups=models.ManyToManyField(Group,blank=True,null=True)
-    posts=models.ManyToManyField(Post,blank=True,null=True)
+    # groups=models.ManyToManyField(Group,blank=True,null=True)
+    # posts=models.ManyToManyField(Post,blank=True,null=True)
 
 
 
