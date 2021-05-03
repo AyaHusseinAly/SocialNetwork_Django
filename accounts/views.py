@@ -62,20 +62,17 @@ def about(request,id):
     })
 def edit(request, id):
     user = User.objects.get(pk=id)
-    form = UserCreationForm(request.POST or None, instance=book)
-    profile_form = UserProfileForm(request.POST,request.FILES or None)
+    form = UserCreationForm(request.POST or None, instance=user)
+    profile_form = UserProfileForm(request.POST,request.FILES or None, instance=user)
 
     if form.is_valid() and profile_form.is_valid():
         form.save()
         profile = profile_form.save(commit = False)
-        username = form.cleaned_data.get("username")
-        password = form.cleaned_data.get("password1")
-        user = authenticate(username=username , password=password)
         profile.user = user
         profile.save()
         return redirect('index')
     return render(request, 'accounts/edit.html', {
         'form': form,
-        'profile':profile,
+        'profile':profile_form,
         'user': user
     })
