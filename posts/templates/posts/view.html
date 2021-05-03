@@ -9,8 +9,34 @@
 
     
     <hr>
-        <input class="post_input " name="content" placeholder="Add Comment" />            
-        <button class="post btn" type="submit" >Comment</button>
+        <!-- <input class="post_input " name="content" placeholder="Add Comment" />            
+        <button class="post btn" type="submit" >Comment</button> -->
+        
+        <div class="likes"><strong> likes </strong></div> 0 likes 
+        <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a>
+        <br>
+        <hr>
+        <h2>Comments</h2>
+        <div class="comments"></div>
+        {% if not post.comments.all %} 
+        <br>
+        No Comments Yet ....  <a href="{% url 'add_comment' post.pk %}" class="add-comment"><strong>add one</strong></a>
+        {% else %} 
+        <br>
+        <a href="{% url 'add_comment' post.pk %}" class="add-comment"><strong>add comment</strong></a>
+            <br>
+            <br> 
+           {% for comment in post.comments.all %} 
+               <strong> {{comment.owner}} -- {{comment.created_at}} </strong>
+               <br>
+               {{comment.content}}
+               <br><br>
+               <a href="{% url 'del_comment' comment.id %}" class="add-comment">delete</a>
+               <hr>
+               {% endfor %} 
+        {% endif %} 
+
+        
 
 
 </div>
