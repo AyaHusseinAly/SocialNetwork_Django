@@ -36,8 +36,8 @@
                     <div class="card m-2 p-4">
                         <div class="d-flex flex-row align-items-center">
                             <span class="friend-text align-items-center mr-2">Accept Friend Request</span>
-                            <span id="id_cancel_{{id}}">cancel</span>
-                            <span id="id_confirm_{{id}}">check</span>
+					        <span id="id_cancel_{{id}}" >cancel</span>
+  					        <span id="id_confirm_{{account.id}}" class="confirm-friend-request material-icons p-1" onclick='triggerAcceptFriendRequest("{{account.id}}")'>check</span>
                         </div>
                     </div>
                     {% endif %}
@@ -82,45 +82,33 @@
                     </div>
                 </div>
                 <!------------------- ONE OF THEM SHOULD BE DELETED  ----------->
-                {% if checker.friend_requests %}
-                <div class="profile-userbuttons">
 
-                    <!-- Friend requests -->
-                    <div class="d-flex flex-column pt-4">
-                        <a>
-                            <div class="d-flex flex-row align-items-center justify-content-center icon-container">
-                                <span class="material-icons mr-2 person-add-icon">person_add</span><span
-                                    class="friend-text">Friend Requests </span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                {% endif %}
                 <!------    SECOND OF THEM SHOULD BE DELETED   --------------->
-                {% if friend_requests %}
+                {% if checker.friend_requests %}
+                
                 <div class="card m-2 px-4 pb-4">
                     <!-- Friend requests -->
                     <div class="d-flex flex-column pt-4">
-                        <a href="#">
+                        <a href="{% url 'friend:friend-requests' user_id=user.id %}">
                             <div class="d-flex flex-row align-items-center justify-content-center icon-container">
                                 <span class="material-icons mr-2 person-add-icon">person_add</span><span
                                     class="friend-text">Friend Requests ({{friend_requests|length}})</span>
                             </div>
                         </a>
                     </div>
-
                 </div>
+                
                 {% endif %}
                 <!------->
 
-                {% if checker.is_friend %}
+                {#% if checker.is_friend %#}
                 <div class="d-flex flex-row align-items-center btn btn-primary m-2 px-4">
                     <span class="material-icons m-auto">
                         message
                     </span>
                     <span class="message-btn-text m-auto pl-2">Message</span>
                 </div>
-                {% endif %}
+                {#% endif %#}
                 <!----------------------------------------------------------------------------------------------------------------------------->
                 <div class="profile-usermenu">
                     <ul style="list-style: none;">
@@ -169,6 +157,10 @@
 
     }
 
+    function onFriendRequestAccepted(){
+		location.reload();
+	}
+
     var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
     if (sendFriendRequestBtn != null) {
         sendFriendRequestBtn.addEventListener("click", function () {
@@ -176,7 +168,9 @@
         })
     }
 
-
+    function triggerAcceptFriendRequest(friend_request_id){
+		acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
+	}
 
 
     function sendFriendRequest(id, uiUpdateFunction) {
@@ -208,6 +202,32 @@
                 uiUpdateFunction()
             }
         });
+    }
+
+    function acceptFriendRequest(friend_request_id, uiUpdateFunction){
+        var url = "{% url 'friend:friend-request-accept' friend_request_id=453452554545456465454465 %}".replace("453452554545456465454465",friend_request_id )
+        $.ajax({
+			type: 'GET',
+			dataType: "json",
+			url: url,
+			timeout: 5000,
+		    success: function(data) {
+			 	console.log("SUCCESS", data)
+			 	if(data['response'] == "Friend request accepted."){
+					// ui is updated
+			 	}
+			 	else if(data['response'] != null){
+			 		alert(data['response'])
+			 	}
+			 },
+			// error: function(data) {
+			// 	console.error("ERROR...", data)
+			// 	alert("Something went wrong.")
+			// },
+			complete: function(data){
+				uiUpdateFunction()
+			}
+		});
     }
 
 
