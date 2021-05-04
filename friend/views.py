@@ -131,5 +131,10 @@ def cancel_friend_request(request, *args, **kwargs):
          payload['response'] = "You must be authenticated to cancel a friend request."
     return HttpResponse(json.dumps(payload), content_type="application/json")
 
+def friend_list_view(request, *args, **kwargs):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        user =  request.user
 
             
