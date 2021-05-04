@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+
 # class UserCreateForm(UserCreationForm):
 #     avatar = forms.CharField(required=True)
 #     email= forms.CharField(required=True)
@@ -17,8 +18,12 @@ from django.contrib.auth.forms import UserCreationForm
 #         return user
 
 # Create your models here.
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
+    first_name=models.CharField(max_length=50,null=False,blank=False)
+    last_name=models.CharField(max_length=50,null=False,blank=False)
     email=models.EmailField(max_length=255)
     country = models.CharField(max_length=30,null=True,blank=True)
     avatar=models.ImageField(null=True,blank=True)
@@ -26,6 +31,7 @@ class UserProfile(models.Model):
     about=models.TextField(max_length=500,null=True,blank=True)
     # groups=models.ManyToManyField(Group,blank=True,null=True)
     # posts=models.ManyToManyField(Post,blank=True,null=True)
+    
 
 
 
