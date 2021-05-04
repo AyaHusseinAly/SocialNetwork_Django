@@ -85,9 +85,9 @@
                         <p class="col-5 tex-left "><span style="color:#e44d3a;">Post from:</span> {{post.owner}}</br><span style="color:#e44d3a;">Group :</span> {{group.name}}</p>
                         <div class="col-2"></div>
                         <div class="col-5">
-                            <a href="{% url "group.view" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a href="{% url "group.edit" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
-                            <a href="{% url "group.delete" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="/posts/view/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="/posts/edit/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
+                            <a href="/posts/delete/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                 <div class="card-footer text-muted d-flex">
                     <p >{{post.created_at}}</p>
                     <div style="width:300px"></div>
-                    <a href="{% url "view" post.id%}" style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg " aria-hidden="true"></i></a>
+                    <a href="/posts/view/{{post.id}}"  style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg " aria-hidden="true"></i></a>
                     <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a>
                    
                 </div>

@@ -63,40 +63,40 @@ def accept_friend_request(request, *args, **kwargs):
     payload = {}
     if request.method == "GET" and user.is_authenticated:
         friend_request_id = kwargs.get("friend_request_id")
-        if friend_request_id:
-            friend_request = FriendRequest.objects.get(pk= friend_request_id)
+        # if friend_request_id:
+        friend_request = FriendRequest.objects.get(pk= friend_request_id)
             # confirm that is the correct request 
-           #if friend_request.receiver == user:
-            if friend_request:
+            # if friend_request.receiver == user:
+        # if friend_request:
                     # found the request. Not accept it.
-                friend_request.accept()
-                payload['response'] = "Friend request accepted."
-            else:
-                payload['response'] = "Something went wrong"
-            #else:
-            #    payload['response'] = "That is not your request to accept."
-        else:
-            payload['response'] = "Unable to accept that friend request."
+        friend_request.accept()
+        payload['response'] = "Friend request accepted."
+        # else:
+        #         payload['response'] = "Something went wrong"
+            # else:
+            #     payload['response'] = "That is not your request to accept."
+        # else:
+        #     payload['response'] = "Unable to accept that friend request."
     return HttpResponse(json.dumps(payload), content_type="application/json")
 
 
 def decline_friend_request(request,*args,**kwargs):
-    user=request.user
+    # user=request.user
     payload={}
-    if request.method == 'GET' and user.is_authenticated:
+    if request.method == "GET":
         friend_request_id=kwargs.get("friend_request_id")
-        if friend_request_id:
-            friend_request=FriendRequest.objects.get(pk=friend_request_id)
-            if friend_request:
-                if friend_request.receiver == user : #checking that the request is mine to decline
-                    friend_request.decline()
-                    payload['response']= "Request Declined."
-                else:
-                    payload['response']="Not your request to decline."
-            else:
-                payload['response']="something went wrong."
+        # if friend_request_id:
+        friend_request=FriendRequest.objects.get(id=friend_request_id)
+        if not friend_request.DoesNotExist:
+        # if friend_request.receiver == user : #checking that the request is mine to decline
+            friend_request.decline()
+            payload['response']= "Request Declined."
         else:
-            payload['response']="unable to decline that request"
+            payload['response']="no" 
+        # else:
+        #     payload['response']="something went wrong."
+        # else:
+        #     payload['response']="unable to decline that request"
     else:
         payload['response']="please log in to decline"
     return HttpResponse(json.dumps(payload), content_type="application/json")

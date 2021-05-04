@@ -20,41 +20,27 @@
     </div>
     
     <div class="col-sm-8">
-      <div class="mycard">
+      <div class="mycard container">
         <i class="fa fa-users fa-4x" aria-hidden="true"></i>
         <h3>Groups</h3>
+        <div class="row pl-5">
+          {% for group in groups %} 
 
-        {% for group in groups %} {% comment %}
-        <h5>{{group.name}}</h5>
-        <div class="d-flex pl-3" style="width: 100%">
-          <button class="" style="width: 50%">visit group</button>
-          <button class="" style="width: 50%; background-color: grey">
-            leave group
-          </button>
-        </div>
+          <div 
+            style=" background-image: {% if group.cover != '' %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
+            onclick="location.href='{% url "show" group.id %}';"
+            class="col-md-3 m-2"
+            >
 
-        {% endcomment %} 
-        <div
-          style=" background-image: {% if group.cover != '' %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
-          onclick="location.href='{% url "show" group.id %}';" 
-        > 
-        <div 
-          style=" background-image: {% if group.cover != '' %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
-          onclick="location.href='{% url "show" group.id %}';">
-
-          <h2 style="color: white">{{group.name}}</h2>
-          <p style="color: white">{{group.description}}</p>
-          <div class="d-flex pl-3" style="width: 100%">
-            {% comment %}
-            <button class="" style="width: 50%">visit group</button>
-            <button class="" style="width: 50%; background-color: grey">
-              leave group
-            </button>
-            {% endcomment %}
+            <h2 style="color: white; -webkit-text-stroke: 0.4px black;">{{group.name}}</h2>
+            <p style="color: white; -webkit-text-stroke: 0.25px black;">{{group.description}}</p>
+            <div class="d-flex pl-3" style="width: 100%">
+          
+            </div>
           </div>
-        </div>
 
-        {% endfor %}
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <script type="text/javascript">
-    function declineFriendRequest(friend_requests_id,uiUpdateFunction){
-        var url = "{% url 'friend:friend-request-decline' id=123 %}".replace("123",friend_request_id)
+    function declineFriendRequest(friend_request_id,uiUpdateFunction){
+        var url = "{% url 'friend:friend-request-decline' id=453452554545456465454465 %}".replace("453452554545456465454465",friend_request_id)
 
         $.ajax({
             type:"GET",
@@ -11,7 +11,7 @@
                 if (data.response == "Request Declined."){
 
                 }
-                else if(data.response != null){
+                else if(data.response == 'no'){
                     alert(data.response)
                 }
             },

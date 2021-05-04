@@ -21,24 +21,24 @@ from friend.utils import get_friend_request_or_false
 
 
 # Create your views here.
-def index(request):
-    query=request.GET.get('q','')
-    if(query):
-        first_name_query1=User.objects.filter(first_name__contains=str(query))
-        first_name_query2=User.objects.filter(first_name__in=[query])
-        last_name_query1=User.objects.filter(last_name__contains=str(query))
-        last_name_query2=User.objects.filter(last_name__in=[query])
-        users = first_name_query1.union(first_name_query1,last_name_query1,last_name_query2)
-        return render(request,"searchResult.html",{
-            "usersResult":users,
-        })
-    users=User.objects.all()
+# def index(request):
+#     query=request.GET.get('q','')
+#     if(query):
+#         first_name_query1=UserProfile.objects.filter(first_name__contains=str(query))
+#         first_name_query2=UserProfile.objects.filter(first_name__in=[query])
+#         last_name_query1=UserProfile.objects.filter(last_name__contains=str(query))
+#         last_name_query2=UserProfile.objects.filter(last_name__in=[query])
+#         users = first_name_query1.union(first_name_query1,last_name_query1,last_name_query2)
+#         return render(request,"searchResult.html",{
+#             "usersResult":users,
+#         })
+#     users=User.objects.all()
 
-    return render(request,"searchResult.html",{
+#     return render(request,"searchResult.html",{
         
-        "usersResult":users,
+#         "usersResult":users,
 
-    })
+#     })
 
 def signup(request):
     form = UserCreationForm(request.POST or None) 
@@ -71,25 +71,7 @@ def about(request,id):
     return render(request,'about.html',{
         "user":user,
     })
-'''   
-def edit(request, id):
-    user = User.objects.get(pk=id)
-    form = UserCreationForm(request.POST or None, instance=user)
-    profile_form = UserProfileForm(request.POST,request.FILES or None, instance=user)
 
-    if form.is_valid() and profile_form.is_valid():
-        form.save()
-        profile = profile_form.save(commit = False)
-        profile.user = user
-        profile.save()
-        return redirect('index')
-    return render(request, 'accounts/edit.html', {
-        'form': form,
-        'profile':profile_form,
-        'user': user
-    })
-
-'''
 
 def edit(request, id):
     user = User.objects.get(pk=id)
