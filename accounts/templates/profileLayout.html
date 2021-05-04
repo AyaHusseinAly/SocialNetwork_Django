@@ -49,7 +49,7 @@
                     <!-- You sent them a request -->
                     {% if checker.request_sent == 1 %}
                     <div class="profile-userbuttons">
-                        <button class="post btn btn-sm"><i class="fas fa-user-plus"></i>
+                        <button class="post btn btn-sm"  id="id_cancel_friend_request_btn"><i class="fas fa-user-plus"></i>
                             Cancel Friend Request
                         </button>
                     </div>
@@ -166,6 +166,14 @@
 		location.reload();
 	}
 
+    function onFriendRequestCancelled(){
+		location.reload();
+	}
+
+    function onFriendRequestDeclined(){
+		location.reload();
+	}
+
     var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
     if (sendFriendRequestBtn != null) {
         sendFriendRequestBtn.addEventListener("click", function () {
@@ -183,22 +191,32 @@
 		acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
 	}
 
+    var cancelFriendRequestBtn = document.getElementById("id_cancel_friend_request_btn")
+	if(cancelFriendRequestBtn != null){
+		cancelFriendRequestBtn.addEventListener("click", function(){
+			cancelFriendRequest("{{account.id}}", onFriendRequestCancelled)
+		})
+	}
+
 
     
     function triggerDeclineFriendRequest(friend_request_id){
         alert(friend_request_id)
-        declineFriendRequest(friend_request_id,uiReload)
+        declineFriendRequest(friend_request_id, onFriendRequestDeclined)
     }
 
     
 
     
 
+ 
+
 </script>
 {% include 'friend/snippets/send_friend_request.html' %}
 {% include 'friend/snippets/decline_friend_request.html' %}
 {% include 'friend/snippets/accept_friend_request.html' %}
 {% include 'friend/snippets/remove_friend.html' %}
+{% include 'friend/snippets/cancel_friend_request.html' %}
 
 
 {% endblock %}

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'msgnotifications',
     'groups',
     'friend',
-    'active_link'
+    'active_link',
+    'profanitycustom',
 ]
 
 MIDDLEWARE = [

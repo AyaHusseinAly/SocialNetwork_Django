@@ -86,7 +86,6 @@ def AddCommentView(request, id):
     post = Post.objects.get(pk=id)
     form = CommentForm(request.POST or None)
     if form.is_valid():
-
         form_content = form.cleaned_data['content']
         comment_obj = Comment.objects.create(
             content=form_content, owner=request.user, post=post)
