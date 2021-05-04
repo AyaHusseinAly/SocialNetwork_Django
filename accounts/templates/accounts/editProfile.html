@@ -2,7 +2,7 @@
 {% block title %} edit {% endblock %}
 
 {% block body %}
-    <form  method="post"  action="{% url "profile"  user.id "me"  %}" enctype="multipart/form-data">
+    <form  method="post"  action="{% url  "editProfile" user.id   %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         {{profile.as_p}}
