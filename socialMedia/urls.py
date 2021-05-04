@@ -23,13 +23,12 @@ urlpatterns = [
     path("", include("django.contrib.auth.urls")),
     path("", include("accounts.urls")),
     path('admin/', admin.site.urls),
+    path('friend/',include("friend.urls")),
+
     path('posts/', include("posts.urls")),
     path('groups/', include("groups.urls")),
     path('messages/', include("msgnotifications.urls")), #route for messages and notifications
 
-
-
-    
 
 ]
 

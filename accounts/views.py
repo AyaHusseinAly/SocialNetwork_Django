@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
 from posts.models import Post
+from .models import UserProfile
 
 
 
@@ -63,6 +64,7 @@ def about(request,id):
     return render(request,'about.html',{
         "user":user,
     })
+'''   
 def edit(request, id):
     user = User.objects.get(pk=id)
     form = UserCreationForm(request.POST or None, instance=user)
@@ -79,6 +81,31 @@ def edit(request, id):
         'profile':profile_form,
         'user': user
     })
+
+'''
+
+def edit(request, id):
+    user = User.objects.get(pk=id)
+    user_profile = UserProfile.objects.get(user=id)
+    form = UserCreationForm(request.POST or None, instance=user)
+    profile_form = UserProfileForm(request.POST or None,request.FILES or None, instance=user_profile)
+
+    if form.is_valid() and profile_form.is_valid():
+        form.save()
+        profile = profile_form.save(commit = False)
+        profile.user = user
+        profile.save()
+        return redirect('about',pk=id)
+    return render(request, 'accounts/editProfile.html', {
+        'form': form,
+        'profile':profile_form,
+        'user': user
+        
+    })
+
+    
+
+
 @login_required(login_url="/login")
 def userProfile(request):
     user=User.objects.get(pk=request.user.id)

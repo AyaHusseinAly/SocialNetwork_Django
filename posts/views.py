@@ -12,9 +12,9 @@ from django import forms
 # from groups.models import Group
 #from django.contrib.auth.decorators import login_required, permission_required
 
+#@login_required
+#@permission_required(["books.view_book"],raise_exception=True)
 
-# @login_required
-# @permission_required(["books.view_book"],raise_exception=True)
 def index(request):
     query = request.GET.get('q', '')
     if(query):
@@ -30,22 +30,22 @@ def index(request):
             "usersResult": users,
             "query": query,
         })
+
     posts = Post.objects.all()
     groups = Group.objects.all()
     post = PostForm(request.POST, request.FILES or None)
+
     if post.is_valid():
         form_content=post.cleaned_data['content']
-        #print(request.FILES)
-        if request.FILES:
-            if request.FILES['image']:
-                form_image = request.FILES['image']
-        else:
-            form_image = None
+        form_image=None
+        if 'image' in request.FILES:
+            form_image = request.FILES['image']
 
         post_obj = Post.objects.create(
             content=form_content, owner=request.user, image=form_image)
         post_obj.save()
         return redirect("index")
+
     return render(request, "posts/index.html", {
         "posts": posts,
         "groups": groups
