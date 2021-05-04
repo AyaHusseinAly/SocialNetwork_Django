@@ -1,17 +1,4 @@
-<!DOCTYPE html >
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title> signup </title>
-    </head>
-<body>
-<!-- <form action="{% url "signup" %}"  method="post" enctype="multipart/form-data" >
-    {% csrf_token %}
-    {{form.as_table}}
-    <br>
-    {{profile_form.as_table}}
-    <button type="submit">Sign Up</button>
-</form> -->
+
 <form method="post" action="{% url "signup" %}" enctype="multipart/form-data" >
     {% csrf_token %}
     <table>
@@ -23,6 +10,69 @@
        </tr>
     </table>
 </form>
+-->
 
+
+
+
+<!DOCTYPE html>
+    {% load static  %}
+    <html>
+    <head>
+    <title>Social Media</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/posts.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/profile.css'%}" type="text/css">
+    <title> signup </title>
+    <style>
+   
+    </style>
+    
+    </head>
+<body>
+
+    <nav class="nav">
+        <nav class="py-1">
+        
+            <div class="row" style="margin-right: -120px">
+                
+                <div class="col-md-4  d-flex  align-items-center pl-5"></div>
+        
+                    
+                    <h3 style="text-align: center;"> Welcome  to our Social Media Website  </h3>
+                          
+                </div>
+        
+                <div class="col-md-4 " id="nav-padding-div">
+                
+                </div>
+           
+               
+        
+            </div>
+        
+        </nav>
+        
+        
+        </nav>
+        <div class="container">
+            <form method="post" action="{% url "signup" %}" enctype="multipart/form-data" >
+                {% csrf_token %}
+                <table>
+                   {{ form}}
+                   {{ profile_form.as_table }}
+                    <tr>
+                       <td></td>
+                       <td><input type="submit" name="submit" value="Register" /></td>
+                   </tr>
+                </table>
+                </form>
+
+        </div>
+    
 </body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://
 </html>
