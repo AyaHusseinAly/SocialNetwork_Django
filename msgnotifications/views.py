@@ -58,7 +58,7 @@ def index(request):
 ################################################## Notififcations #####################################################################    
 def notify(request):
 
-    notifications= Notification.objects.filter(reciever=request.user)
+    notifications= Notification.objects.filter(reciever=request.user).order_by('-created_at')
 
 
 

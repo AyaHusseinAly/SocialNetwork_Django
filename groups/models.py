@@ -21,3 +21,15 @@ class Group(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class GroupInvite(models.Model):
+    created_at=models.DateTimeField(auto_now_add=True)
+    inviteFrom=models.ForeignKey(User,on_delete=models.CASCADE,related_name="groupinvitefrom")
+    inviteTo=models.ForeignKey(User,on_delete=models.CASCADE,related_name="groupinviteto")
+    group=models.ForeignKey(Group,on_delete=models.CASCADE,related_name="groupinvitegroup")
+    def __str__(self):
+        return str(self.inviteFrom) + " invited " + str(self.inviteTo) + " to join " + str(self.group.name)
+
+
+

@@ -9,6 +9,11 @@ class PostForm(forms.ModelForm):
         fields = ("content","image")
         #fields = "__all__"
 
+class PostEditForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ("content",)
+        #fields = "__all__"
 
 class CommentForm(forms.ModelForm):
     class Meta:

@@ -12,7 +12,7 @@
             <p style="margin-top: 20px;">{{post.content}}</p>
         </div>
         <div class="col-6">
-        {% if post.image != null %}
+        {% if post.image != null and  post.image != ""%}
             <img src="/images/{{post.image }}" width="400px"/>
         {% endif %}
         </div>
