@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
+from posts.models import Post
 
 
 
@@ -84,3 +85,11 @@ def userProfile(request):
     return render(request,'profile.html',{
         "user":user,
     })
+@login_required(login_url="/login")
+def redirecting(request):
+    posts=Post.objects.all()
+    return render(request,'posts/index.html',{
+        "posts":posts,
+    })
+
+

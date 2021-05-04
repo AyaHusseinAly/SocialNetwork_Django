@@ -91,7 +91,6 @@ img.icondrop {
     margin-top: 15px;
     background-color: #e44d3a;
     width: 100%;
-    color: seashell;
 }
 .btn-secondary{
     background-color: lightgray;
@@ -102,13 +101,27 @@ img.icondrop {
     border: none;
     
 }
-small {
-    display: block;
-    line-height: 1.428571429;
-    color: #999;
-    }
+.likes{
+    background-color: #e44d3a;
+    color: #f8f9fa;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+.comments{
+    width: 120px;
+    height: 2px;
+    background-color: #e44d3a;
+}
+.add-comment{
+    color:  #e44d3a;
+}
+.comment-btn{
+    background-color: #e44d3a;
+    border-radius: 20px;
+    color: #f8f9fa;
+    padding: 10px;
+    font-size: 15px;
+}
 
-/* Messages */
-#chatdiv:hover{
-    background-color:#f88b7c;
- }

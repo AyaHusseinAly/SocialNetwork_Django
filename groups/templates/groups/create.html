@@ -2,8 +2,7 @@
 
 <div class="container p-5 m-5 b"style="border: 5px solid #e44d3a;">
   <form method="POST" enctype="multipart/form-data" action="{% url "create" %}" >
-        {% csrf_token %}
-     
+        {% csrf_token %}    
          {{ form.as_p }}
         <button type="submit" style="background-color:#e44d3a;">Done</button>
    </from>
