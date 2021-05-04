@@ -103,14 +103,14 @@
                 {% endif %}
                 <!------->
 
-                {#% if checker.is_friend %#}
+                {% if checker.is_friend %}
                 <div class="d-flex flex-row align-items-center btn btn-primary m-2 px-4">
                     <span class="material-icons m-auto">
                         message
                     </span>
                     <span class="message-btn-text m-auto pl-2">Message</span>
                 </div>
-                {#% endif %#}
+                {% endif %}
                 <!----------------------------------------------------------------------------------------------------------------------------->
                 <div class="profile-usermenu">
                     <ul style="list-style: none;">
