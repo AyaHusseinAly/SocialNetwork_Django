@@ -1,20 +1,4 @@
 
-<form method="post" action="{% url "signup" %}" enctype="multipart/form-data" >
-    {% csrf_token %}
-    <table>
-       {{ form}}
-       {{ profile_form.as_table }}
-        <tr>
-           <td></td>
-           <td><input type="submit" name="submit" value="Register" /></td>
-       </tr>
-    </table>
-</form>
--->
-
-
-
-
 <!DOCTYPE html>
     {% load static  %}
     <html>
@@ -30,44 +14,43 @@
     </style>
     
     </head>
-<body>
+<body style="overflow-x:hidden">
 
     <nav class="nav">
-        <nav class="py-1">
-        
-            <div class="row" style="margin-right: -120px">
-                
-                <div class="col-md-4  d-flex  align-items-center pl-5"></div>
-        
-                    
-                    <h3 style="text-align: center;"> Welcome  to our Social Media Website  </h3>
-                          
+        <nav class="p-2">
+
+            <div class="row">
+                <div class="col-4"></div>
+
+                <div class="col-4">
+                    <h3 style="text-align: center;"class="m-4"> Welcome  to our Social Media Website  </h3>
+
                 </div>
-        
-                <div class="col-md-4 " id="nav-padding-div">
-                
+                <div class="col-4">
+                    <h4 style="text-align:right;  text-decoration: underline;"class="mr-5 mt-2"><a  href="/login/" id="navLink">Login</a></h4>   
                 </div>
-           
-               
-        
+
             </div>
         
         </nav>
         
         
         </nav>
-        <div class="container">
-            <form method="post" action="{% url "signup" %}" enctype="multipart/form-data" >
-                {% csrf_token %}
-                <table>
-                   {{ form}}
-                   {{ profile_form.as_table }}
-                    <tr>
-                       <td></td>
-                       <td><input type="submit" name="submit" value="Register" /></td>
-                   </tr>
-                </table>
+        <div class="container pt-2 ">
+            <div class="post-topbar">
+                <form method="post" action="{% url "signup" %}" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <table>
+                    {{ form}}
+                    {{ profile_form.as_table }}
+                        <tr>
+                        <td></td>
+                        <td><input type="submit" name="submit" value="Register" /></td>
+                    </tr>
+                    </table>
                 </form>
+            </div>
+
 
         </div>
     

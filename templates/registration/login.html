@@ -35,21 +35,18 @@
     <nav class="nav">
         <nav class="py-1">
         
-            <div class="row" style="margin-right: -120px">
-                 <div class="col-md-1" >
-                 </div>
+            <div class="row">
+                <div class="col-4"></div>
 
+                <div class="col-4">
+                    <h3 style="text-align: center;"class="m-4"> Welcome  to our Social Media Website  </h3>
 
-                 <div class="col-md-5" >
-                    <h4 > Welcome  to our Social Media Website  </h4>
+                </div>
+                <div class="col-4">
+                    <h4 style="text-align:right;  text-decoration: underline;"class="mr-5 mt-2"><a  href="/" id="navLink">signup</a></h4>   
+                </div>
 
-                     </div>
-                     <div class="col-md-4" >
-                    </div>
-                     <div class="col-md-2 d-flex  align-items-right pl-5" >
-                        <a  href="/signup" id="navLink">signup</a>
-    
-                         </div>
+            </div>
 
                 
                 
@@ -62,12 +59,15 @@
         
         
         </nav>
-        <div class="container">
-            <form action="{% url "login" %}"  method="post" >
-                {% csrf_token %}
-                {{form.as_p}}
-                <button type="submit">login</button>
-            </form>
+        <div class="container p-5">
+            <div style="height:150px"></div>
+            <div class="m-5 mycard post-topbar" >
+                <form action="{% url "login" %}"  method="post" >
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit" style="width:300px">login</button>
+                </form>
+            </div>
 
         </div>
     

@@ -6,7 +6,7 @@ from groups.models import Group
 class Post(models.Model):
     content=models.CharField(max_length=2000)
     created_at=models.DateTimeField(auto_now_add=True)
-    image=models.CharField(max_length=50,blank=True,null=True)
+    image=models.ImageField(null=True, blank=True)
     owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name="post")
     group=models.ForeignKey(Group,on_delete=models.CASCADE, null=True,blank=True,related_name="post")
     # likes=
