@@ -49,7 +49,7 @@
                     <!-- You sent them a request -->
                     {% if checker.request_sent == 1 %}
                     <div class="profile-userbuttons">
-                        <button class="post btn btn-sm"><i class="fas fa-user-plus"></i>
+                        <button class="post btn btn-sm"  id="id_cancel_friend_request_btn"><i class="fas fa-user-plus"></i>
                             Cancel Friend Request
                         </button>
                     </div>
@@ -163,6 +163,10 @@
 		location.reload();
 	}
 
+    function onFriendRequestCancelled(){
+		location.reload();
+	}
+
     var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
     if (sendFriendRequestBtn != null) {
         sendFriendRequestBtn.addEventListener("click", function () {
@@ -172,6 +176,13 @@
 
     function triggerAcceptFriendRequest(friend_request_id){
 		acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
+	}
+
+    var cancelFriendRequestBtn = document.getElementById("id_cancel_friend_request_btn")
+	if(cancelFriendRequestBtn != null){
+		cancelFriendRequestBtn.addEventListener("click", function(){
+			cancelFriendRequest("{{account.id}}", onFriendRequestCancelled)
+		})
 	}
 
 
@@ -237,6 +248,37 @@
 		});
     }
 
+
+    function cancelFriendRequest(id, uiUpdateFunction){
+        payload = {
+            "csrfmiddlewaretoken": "{{ csrf_token }}",
+            "receiver_user_id": id,
+        }
+        $.ajax({
+            type: 'POST',
+			dataType: "json",
+			url: "{% url 'friend:friend-request-cancel' %}",
+            data: payload,
+			timeout: 5000,
+            success: function(data) {
+				console.log("SUCCESS", data)
+				if(data['response'] == "Friend request cancelled."){
+					// ui is updated
+				}
+				else if(data['response'] != null){
+					alert(data['response'])
+				}
+			},
+			error: function(data) {
+				console.error("ERROR...", data)
+				alert("Something went wrong.")
+			},
+			complete: function(data){
+				uiUpdateFunction()
+			}
+            
+        });
+    }
 
 </script>
 {% include 'friend/snippets/decline_friend_request.html' %}

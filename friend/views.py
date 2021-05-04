@@ -66,15 +66,15 @@ def accept_friend_request(request, *args, **kwargs):
         if friend_request_id:
             friend_request = FriendRequest.objects.get(pk= friend_request_id)
             # confirm that is the correct request 
-            if friend_request.receiver == user:
-                if friend_request:
+           #if friend_request.receiver == user:
+            if friend_request:
                     # found the request. Not accept it.
-                    friend_request.accept()
-                    payload['response'] = "Friend request accepted"
-                else:
-                    payload['response'] = "Something went wrong"
+                friend_request.accept()
+                payload['response'] = "Friend request accepted."
             else:
-                payload['response'] = "That is not your request to accept."
+                payload['response'] = "Something went wrong"
+            #else:
+            #    payload['response'] = "That is not your request to accept."
         else:
             payload['response'] = "Unable to accept that friend request."
     return HttpResponse(json.dumps(payload), content_type="application/json")
@@ -101,3 +101,33 @@ def decline_friend_request(request,*args,**kwargs):
         payload['response']="please log in to decline"
     return HttpResponse(json.dumps(payload), content_type="application/json")
 
+
+def cancel_friend_request(request, *args, **kwargs):
+    user = request.user
+    payload= {}
+    if request.method == "POST" and user.is_authenticated:
+        user_id = request.POST.get("receiver_user_id")
+        if user_id:
+            receiver = User.objects.get(pk=user_id)
+            try:
+                friend_requests = FriendRequest.objects.filter(sender=user, receiver= receiver, is_active=True)
+            except Exception as e:
+                payload['response'] = "Nothing to cancel. Friend request does not exist."
+            # There should only ever be a single active friend request at any given time
+            # Cancel them all just in case.
+            if len(friend_requests) > 1:
+                for request in friend_requests:
+                    request.cancel()
+                payload['response'] = "Friend request cancelled."
+            else:
+                # found the request. Now cancel it.
+                friend_requests.first().cancel()
+                payload['response'] = "Friend request cancelled."
+        else:
+            payload['response'] = "Unable to cancel that friend request."
+    else:
+         payload['response'] = "You must be authenticated to cancel a friend request."
+    return HttpResponse(json.dumps(payload), content_type="application/json")
+
+
+            
