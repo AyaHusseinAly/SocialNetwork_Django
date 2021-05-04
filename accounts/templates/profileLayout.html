@@ -170,6 +170,10 @@
 		location.reload();
 	}
 
+    function onFriendRequestDeclined(){
+		location.reload();
+	}
+
     var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
     if (sendFriendRequestBtn != null) {
         sendFriendRequestBtn.addEventListener("click", function () {
@@ -192,7 +196,7 @@
     
     function triggerDeclineFriendRequest(friend_request_id){
         alert(friend_request_id)
-        declineFriendRequest(friend_request_id,uiReload)
+        declineFriendRequest(friend_request_id, onFriendRequestDeclined)
     }
 
     
