@@ -14,12 +14,15 @@
           />
           <input type="submit" class="btn mt-2" value="Search" />
         </form>
+          <button type="button" class="btn btn-outline-danger"onclick="location.href='{% url "create" %}';">Create Group</button>
       </div>
+    
     </div>
+    
     <div class="col-sm-8">
       <div class="mycard">
         <i class="fa fa-users fa-4x" aria-hidden="true"></i>
-        <h3>groups</h3>
+        <h3>Groups</h3>
 
         {% for group in groups %} {% comment %}
         <h5>{{group.name}}</h5>
@@ -29,11 +32,16 @@
             leave group
           </button>
         </div>
-        {% endcomment %}
+
+        {% endcomment %} 
         <div
-          style=" background-image: url({{group.cover.url}});width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
+          style=" background-image: {% if group.cover != '' %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
           onclick="location.href='{% url "show" group.id %}';" 
-        >
+        > 
+        <div 
+          style=" background-image: {% if group.cover != '' %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
+          onclick="location.href='{% url "show" group.id %}';">
+
           <h2 style="color: white">{{group.name}}</h2>
           <p style="color: white">{{group.description}}</p>
           <div class="d-flex pl-3" style="width: 100%">

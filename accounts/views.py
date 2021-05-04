@@ -12,6 +12,7 @@ from friend.friend_request_status import FriendRequestStatus
 from friend.models import FriendList, FriendRequest
 from friend.utils import get_friend_request_or_false
 from django.contrib.auth.decorators import login_required
+from posts.models import Post
 
 
 
@@ -153,5 +154,12 @@ def userProfile(request):
     user=User.objects.get(pk=request.user.id)
     return render(request,'profile.html',{
         "user":user,
+    })
+
+@login_required(login_url="/login")
+def redirecting(request):
+    posts=Post.objects.all()
+    return render(request,'posts/index.html',{
+        "posts":posts,
     })
 
