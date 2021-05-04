@@ -69,9 +69,9 @@
                         <button class="btn btn-secondary " type="button" id="id_friends_toggle">
                             Friends
                         </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item">Unfriend</a>
-                        </div>
+                        <!-- <div class="dropdown-menu"> -->
+                            <button class="dropdown-item" id="id_unfriend_btn">Unfriend</button>
+                        <!-- </div> -->
                     </div>
                     {% endif %}
                     <!--------- need more implementation ------------>
@@ -163,13 +163,19 @@
 		location.reload();
 	}
     function uiReload(){
-		// location.reload();
+		location.reload();
 	}
 
     var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
     if (sendFriendRequestBtn != null) {
         sendFriendRequestBtn.addEventListener("click", function () {
             sendFriendRequest("{{account.id}}", onFriendRequestSent)
+        })
+    }
+    var removeFriendBtn = document.getElementById("id_unfriend_btn")
+    if (removeFriendBtn != null) {
+        removeFriendBtn.addEventListener("click", function () {
+            removeFriend("{{account.id}}", uiReload)
         })
     }
 
@@ -192,6 +198,7 @@
 {% include 'friend/snippets/send_friend_request.html' %}
 {% include 'friend/snippets/decline_friend_request.html' %}
 {% include 'friend/snippets/accept_friend_request.html' %}
+{% include 'friend/snippets/remove_friend.html' %}
 
 
 {% endblock %}

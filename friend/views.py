@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 from accounts.models import UserProfile
-from friend.models import FriendRequest
+from friend.models import FriendRequest,FriendList
 
 def friend_requests(request, *args, **kwargs):
     context = {}
@@ -101,3 +101,21 @@ def decline_friend_request(request,*args,**kwargs):
         payload['response']="please log in to decline"
     return HttpResponse(json.dumps(payload), content_type="application/json")
 
+def remove_friend(request,*args,**kwargs):
+    user=request.user
+    payload={}
+    if request.method == "POST" and user.is_authenticated:
+        user_id=request.POST.get("reciever_user_id")
+        if user_id:
+            try:
+                removee = User.objects.get(pk=user_id)
+                friend_list=FriendList.objects.get(user=user)
+                friend_list.unfriend(removee)
+                payload['response']="Friend Removed."
+            except Exception as e:
+                payload['response']= f"something went wronghu: {str(e)}"
+        else:
+            payload['response']="Unable to remove that friend"
+    else:
+        payload['response']="You must be signed in"
+    return HttpResponse(json.dumps(payload), content_type="application/json")
