@@ -5,6 +5,8 @@ from groups.models import Group
 from .forms import PostForm 
 from .forms import CommentForm
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
+
 # from django.views.generic import CreateView
 # from groups.models import Group
 #from django.contrib.auth.decorators import login_required, permission_required
@@ -27,10 +29,14 @@ def index(request):
         })
     posts= Post.objects.all()
     groups= Group.objects.all()
-    post= PostForm(request.POST or None)
+    post= PostForm(request.POST, request.FILES or None)
     if post.is_valid():
         form_content=post.cleaned_data['content']
-        post_obj=Post.objects.create( content=form_content,owner=request.user)
+        form_image = request.FILES['image']
+        #fs = FileSystemStorage()
+        #filename = fs.save(form_image.name,form_image)
+        #uploaded_file_url = fs.url(filename)
+        post_obj=Post.objects.create( content=form_content,owner=request.user,image=form_image)
         post_obj.save()
         return redirect("index")
     return render(request,"posts/index.html",{

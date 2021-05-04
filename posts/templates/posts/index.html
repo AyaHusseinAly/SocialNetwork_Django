@@ -41,19 +41,21 @@
                 
                 <div class="post-topbar">
                     
-                    <form action='{% url "index" %}' method="post">
+                    <form action='{% url "index" %}' method="post" enctype="multipart/form-data" >
                         {% csrf_token %}
                         <div class="row">    
                             <div class="col-10">
                                 {{ form.as_p}}
                                 <input class="post_input " name="content" placeholder="  What's in your mind?" />
+                                <input class="mt-2 " type="file" name="image"/>
+
                             
                             </div>
                             <div class="col-2">
                                 <button class="post btn" type="submit" >Post</button>
                             </div>   
                         </div> 
-                        </form>
+                    </form>
                         
                     
                 </div>
@@ -85,6 +87,10 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-text">{{post.content}}</h5>
+                         {% if post.image != null %}
+                            <img src="/images/{{post.image }}" width="400px"/>
+                        {% endif %}
+
                 </div>
                 <div class="card-footer text-muted d-flex">
                     <p style="text-align:left;color:gray;font-size:12px;margin:0px">{{post.created_at}}</p>

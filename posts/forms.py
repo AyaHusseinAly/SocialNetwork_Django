@@ -6,7 +6,8 @@ from django.core.exceptions import ValidationError
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("content",)
+        fields = ("content","image")
+        #fields = "__all__"
 
 
 class CommentForm(forms.ModelForm):
