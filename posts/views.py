@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Post, Comment
 from groups.models import Group
-from .forms import PostForm
+from .forms import PostForm,PostEditForm
 from .forms import CommentForm
 from django.contrib.auth.models import User
 from django import forms
@@ -61,7 +61,7 @@ def delete(request, id):
 
 def edit(request, id):
     postData = Post.objects.get(pk=id)
-    post = PostForm(request.POST or None, instance=postData)
+    post = PostEditForm(request.POST or None, instance=postData)
     if post.is_valid():
         post.save()
         return redirect("index")
