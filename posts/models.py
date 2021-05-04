@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from groups.models import Group
+from profanitycustom.validators import validate_is_profane
+
 
 
 class Post(models.Model):
-    content=models.CharField(max_length=2000)
+    content=models.CharField(max_length=2000 , validators=[validate_is_profane])
     created_at=models.DateTimeField(auto_now_add=True)
     image=models.ImageField(null=True, blank=True)
     owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name="post")
@@ -14,7 +16,7 @@ class Post(models.Model):
         return str(self.content[0:15]+"...")
 
 class Comment(models.Model):
-    content=models.CharField(max_length=1000)
+    content=models.CharField(max_length=1000 , validators=[validate_is_profane])
     created_at=models.DateTimeField(auto_now_add=True)
     owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name="comments")
     post=models.ForeignKey(Post,on_delete=models.CASCADE,related_name="comments")
