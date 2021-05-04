@@ -8,4 +8,5 @@ from .models import UserProfile
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('country' , 'birthdate','avatar','about')
+        fields = "__all__"
+        exclude=('user',)

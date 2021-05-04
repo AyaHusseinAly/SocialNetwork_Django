@@ -32,11 +32,12 @@
             leave group
           </button>
         </div>
-        {% endcomment %}
-        {% comment %} <div
-          style=" background-image: url({{group.cover.url}});width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
+
+        {% endcomment %} 
+        <div
+          style=" background-image: {% if group.cover != '' %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
           onclick="location.href='{% url "show" group.id %}';" 
-        > {% endcomment %}
+        > 
         <div 
           style=" background-image: {% if group.cover != '' %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
           onclick="location.href='{% url "show" group.id %}';">
