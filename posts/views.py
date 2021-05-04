@@ -34,7 +34,7 @@ def index(request):
     post= PostForm(request.POST, request.FILES or None)
     if post.is_valid():
         form_content=post.cleaned_data['content']
-        if request.POST.image:
+        if request.FILES['image']:
             form_image = request.FILES['image']
         else:
             form_image=None
