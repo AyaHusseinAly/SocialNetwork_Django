@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.http import HttpResponse
 from .models import Group
 from itertools import chain
@@ -6,6 +7,7 @@ from .forms import GroupForm
 from posts.models import Post
 from groups.models import Group
 from posts.forms import PostForm
+from accounts.models import UserProfile
 from django.contrib.auth.models import User
 
 
@@ -28,7 +30,14 @@ def create(request):
     # request.POST or None means ==>take request form if get it or do nothing
     form = GroupForm(request.POST, request.FILES or None)
     if form.is_valid():
-        form.save()  # means send it to model and save it
+        print(form)
+        name = form.cleaned_data['name']
+        privacy = form.cleaned_data['privacy']
+        description = form.cleaned_data['description']
+        cover = form.cleaned_data['cover']
+        group = Group.objects.create(
+            name=name, privacy=privacy, description=description, cover=cover, owner=request.user)
+        # form.save()  # means send it to model and save it
         return redirect("group")
     return render(request, "groups/create.html", {
         "form": form
@@ -52,6 +61,7 @@ def show(request, id):
         })
     posts = Post.objects.filter(group=group)
     groups = Group.objects.all()
+    # accounts = UserProfile.objects.all()
     post = PostForm(request.POST or None)
     if post.is_valid():
         form_content = post.cleaned_data['content']
@@ -90,5 +100,16 @@ def view(request, id):
     })
 
 
-def invite(request):
-    return redirect("group")
+def invite(request, id):
+    # friends = Group.objects.filter(id=id)[0].members.values_list()
+    # # print(friends[0].members)
+    # print(len(friends))
+    # query = UserProfile.objects
+    # inviteUsers = UserProfile.objects.filter(~Q(id=friends[0][0]))
+    # print(query)
+    invites = UserProfile.objects.filter(~Q(groups=id)).values()
+    # friends =UserProfile.objects.filter()
+    print(invites)
+    return render(request, "groups/invite.html", {
+        "invites": invites
+    })
