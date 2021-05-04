@@ -7,46 +7,141 @@
         <div class="col-md-3">
             <div class="profile-sidebar">
                 <div class="profile-userpic" style="display: flex;justify-content: center;">
+                    {% if checker.is_self == False %}
+                    <img src="{{account.userprofile.avatar.url}}" class="img-responsive" alt="">
+                    {% else %}
                     <img src="{{user.userprofile.avatar.url}}" class="img-responsive" alt="">
+                    {% endif %}
+
                 </div>
                 <div class="profile-usertitle">
+                    {% if checker.is_self == False %}
+                    <div class="profile-usertitle-name">
+                        {{account.first_name}} {{account.last_name}}
+
+                    </div>
+                    {% else %}
                     <div class="profile-usertitle-name">
                         {{user.first_name}} {{user.last_name}}
 
                     </div>
+                    {% endif %}
                     <div class="profile-usertitle-job">
                     </div>
                 </div>
-                <div class="profile-userbuttons">
-                    <button class="post btn btn-sm"><i class="fas fa-user-plus"></i>Add Friend</button>
-                    <button type="button" class="btn btn-secondary btn-sm"><i class="fas fa-envelope"> </i>
-                        Message</button>
+ <!---------------------------------------------------------------------------------------------------------------------------->
+                <div>
+                    <!-- THEM to YOU -->
+                    {% if checker.request_sent == 0 %}
+                    <div class="card m-2 p-4">
+                        <div class="d-flex flex-row align-items-center">
+                            <span class="friend-text align-items-center mr-2">Accept Friend Request</span>
+                            <span id="id_cancel_{{id}}">cancel</span>
+                            <span id="id_confirm_{{id}}">check</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <!------------------>
+                    <!-- Cancel Friend Request / Send Friend Request / Remove Friend -->
+                    {% if checker.is_friend == False and checker.is_self == False %}
+                    <!-- You sent them a request -->
+                    {% if checker.request_sent == 1 %}
+                    <div class="profile-userbuttons">
+                        <button class="post btn btn-sm"><i class="fas fa-user-plus"></i>
+                            Cancel Friend Request
+                        </button>
+                    </div>
+                    {% endif %}
+                    <!-- No requests have been sent -->
+                    {% if checker.request_sent == -1 %}
+                    <div class="profile-userbuttons">
+                        <button class="post btn btn-sm"><i class="fas fa-user-plus"></i>
+                            Send Friend Request
+                        </button>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+
+                    {% if checker.is_friend %}
+                    <div class="profile-userbuttons">
+                        <button class="btn btn-secondary " type="button" id="id_friends_toggle">
+                            Friends
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item">Unfriend</a>
+                        </div>
+                    </div>
+                    {% endif %}
+            <!--------- need more implementation ------------>
+                    <!-- Friend list link -->
+                    <div class="profile-userbuttons">
+                        <a>
+                            <div class="d-flex flex-row align-items-center justify-content-center icon-container">
+                            </div>
+                        </a>
+                    </div>
                 </div>
+                <!------->
+                {% if checker.friend_requests %}
+                <div class="profile-userbuttons">
+                    <!-- Friend requests -->
+                    <div class="d-flex flex-column pt-4">
+                        <a>
+                            <div class="d-flex flex-row align-items-center justify-content-center icon-container">
+                                <span class="material-icons mr-2 person-add-icon">person_add</span><span
+                                    class="friend-text">Friend Requests </span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                <!------->
+
+                {% if checker.is_friend %}
+                <div class="d-flex flex-row align-items-center btn btn-primary m-2 px-4">
+                    <span class="material-icons m-auto">
+                        message
+                    </span>
+                    <span class="message-btn-text m-auto pl-2">Message</span>
+                </div>
+                {% endif %}
+<!----------------------------------------------------------------------------------------------------------------------------->
                 <div class="profile-usermenu">
                     <ul style="list-style: none;">
+                        {% if checker.is_self == False %}
+                        <li class="{% active_link 'profile' 'active' strict=True %}">
+                            <a href="/profile/{{account.id}}">
+                                <i class="fas fa-home"></i>
+                                Posts </a>
+                        </li>
+                        <li class="{% active_link 'about' 'active' strict=True %}">
+                            <a href="/profile/{{account.id}}/about">
+                                <i class="fas fa-user"></i>
+                                About </a>
+                        </li>
+                        {% else %}
                         <li class="{% active_link 'profile' 'active' strict=True %}">
                             <a href="/profile/{{user.id}}">
                                 <i class="fas fa-home"></i>
                                 Posts </a>
                         </li>
-
                         <li class="{% active_link 'about' 'active' strict=True %}">
                             <a href="/profile/{{user.id}}/about">
                                 <i class="fas fa-user"></i>
                                 About </a>
                         </li>
 
+                        {% endif %}
+
                     </ul>
                 </div>
                 <!------------------------------------------------------>
-              
-                    <!------------------------------------------------------>
 
-                </div>
-            </div>
-            <div class="col-md-9">
-                {% block content %}{% endblock %}
             </div>
         </div>
+        <div class="col-md-9">
+            {% block content %}{% endblock %}
+        </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}

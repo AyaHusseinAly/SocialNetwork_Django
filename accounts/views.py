@@ -77,7 +77,7 @@ def profile(request,id):
     context['friends'] = friends
 
     #define template variables
-    id_self = True
+    is_self = True
     is_friend = False
     request_sent =  FriendRequestStatus.NO_REQUEST_SENT.value # range: ENUM -> friend/friend_request_status.FriendRequestStatus
     friend_requests = None
@@ -102,6 +102,7 @@ def profile(request,id):
             is_self = False
     else:
         try:
+            is_self = True
             # You look at your own profile
             friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
         except:
@@ -113,7 +114,13 @@ def profile(request,id):
     context['request_sent'] = request_sent
     context['friend_requests'] = friend_requests
     #context['BASE_URL'] = settings.BASE_URL
-    return render(request, "profile.html", context)
+    #return render(request, "profile.html", context)
+    return render(request, "profile.html",{
+       "user":user,
+       "account":account,
+       "checker":context
+   })
+
    # return render(request,'profile.html',{
    #     "user":user,
    # })
