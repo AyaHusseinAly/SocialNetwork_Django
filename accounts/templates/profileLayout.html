@@ -36,8 +36,10 @@
                     <div class="card m-2 p-4">
                         <div class="d-flex flex-row align-items-center">
                             <span class="friend-text align-items-center mr-2">Accept Friend Request</span>
+
 					        <span id="id_cancel_{{id}}" >cancel</span>
   					        <span id="id_confirm_{{account.id}}" class="confirm-friend-request material-icons p-1" onclick='triggerAcceptFriendRequest("{{account.id}}")'>check</span>
+
                         </div>
                     </div>
                     {% endif %}
@@ -203,6 +205,11 @@
             }
         });
     }
+    function triggerDeclineFriendRequest(friend_request_id){
+        declineFriendRequest(friend_request_id,onFriendRequestDeclined)
+    }
+
+    
 
     function acceptFriendRequest(friend_request_id, uiUpdateFunction){
         var url = "{% url 'friend:friend-request-accept' friend_request_id=453452554545456465454465 %}".replace("453452554545456465454465",friend_request_id )
@@ -232,5 +239,6 @@
 
 
 </script>
+{% include 'friend/snippets/decline_friend_request.html' %}
 
 {% endblock %}

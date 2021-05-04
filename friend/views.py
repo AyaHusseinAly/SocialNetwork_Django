@@ -2,7 +2,6 @@ from django.shortcuts import render , redirect
 from django.http import HttpResponse
 import json
 from django.contrib.auth.models import User
-from django import forms
 
 
 from accounts.models import UserProfile
@@ -81,4 +80,24 @@ def accept_friend_request(request, *args, **kwargs):
     return HttpResponse(json.dumps(payload), content_type="application/json")
 
 
+def decline_friend_request(request,*args,**kwargs):
+    user=request.user
+    payload={}
+    if request.method == 'GET' and user.is_authenticated:
+        friend_request_id=kwargs.get("friend_request_id")
+        if friend_request_id:
+            friend_request=FriendRequest.objects.get(pk=friend_request_id)
+            if friend_request:
+                if friend_request.receiver == user : #checking that the request is mine to decline
+                    friend_request.decline()
+                    payload['response']= "Request Declined."
+                else:
+                    payload['response']="Not your request to decline."
+            else:
+                payload['response']="something went wrong."
+        else:
+            payload['response']="unable to decline that request"
+    else:
+        payload['response']="please log in to decline"
+    return HttpResponse(json.dumps(payload), content_type="application/json")
 
