@@ -102,12 +102,12 @@ def edit(request, id):
         profile = profile_form.save(commit = False)
         profile.user = user
         profile.save()
-        return redirect('about',pk=id)
+        return redirect('profile',id)
     return render(request, 'accounts/editProfile.html', {
         'form': form,
         'profile':profile_form,
         'user': user
-        
+
     })
 
     
