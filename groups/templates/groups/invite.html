@@ -1,0 +1,10 @@
+{% extends "layout.html"%} {% block body %}
+
+<div class="container mycard p-5 m-5" style="width: 80%">
+  <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+  <h3>Invite Friends</h3>
+  {% for invite in invites %}
+  <div class="mycard">{{invite.avatar}}</div>
+  {% endfor %}
+</div>
+{%endblock%}

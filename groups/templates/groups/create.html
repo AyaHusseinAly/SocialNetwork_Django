@@ -1,11 +1,47 @@
 {% extends "layout.html"%} {% block body %}
 
-<div class="container p-5 m-5 b"style="border: 5px solid #e44d3a;">
+<div class="container mycard p-5 m-5 d-flex justify-content-around"style="width:80%">
+  <div>
+  <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+ <h3>Create Group</h3>
+  </div>
   <form method="POST" enctype="multipart/form-data" action="{% url "create" %}" >
+  
         {% csrf_token %}
-     
-         {{ form.as_p }}
-        <button type="submit" style="background-color:#e44d3a;">Done</button>
+        {% comment %} {{ form.non_field_errors }} {% endcomment %}
+        <label for="{{ form.name.id_for_label }}" style="color: #e44d3a">Group Name:</label>
+        {{ form.name }}
+        {% if form.name.error%}
+        <div class="alert alert-danger mt-6 mb-2" role="alert">
+        {{ form.name.errors }}
+        </div>
+        {%endif%} 
+        </br>
+        <label for="{{ form.privacy.id_for_label }}"style="color: #e44d3a">Group privacy:</label>
+        {{ form.privacy }}
+        {% if form.privacy.error%}
+        <div class="alert alert-danger mt-6 mb-2" role="alert">
+        {{ form.privacy.errors }}
+        </div>
+        {%endif%}
+        </br>
+        <label for="{{ form.description.id_for_label }}"style="color: #e44d3a">Description:</label>
+        {{ form.description }}
+        {% if form.description.error%}
+        <div class="alert alert-danger mt-6 mb-2" role="alert">
+        {{ form.description.errors }}
+        </div>
+        {%endif%}
+        </br>
+        <label for="{{ form.cover.id_for_label }}"style="color: #e44d3a">Group cover:</label>
+        {{ form.cover }}
+        {% if form.cover.error%}
+        <div class="alert alert-danger mt-6 mb-2 "role="alert">
+        {{ form.cover.errors }}
+         </div> 
+         {%endif%}
+         </br>
+        <button type="submit" class="btn btn-outline-danger">Done</button>
    </from>
 </div>
 {%endblock%}
