@@ -5,7 +5,6 @@ from groups.models import Group
 from .forms import PostForm
 from .forms import CommentForm
 from django.contrib.auth.models import User
-from django.core.files.storage import FileSystemStorage
 from django import forms
 
 
@@ -36,13 +35,13 @@ def index(request):
     post = PostForm(request.POST, request.FILES or None)
     if post.is_valid():
         form_content=post.cleaned_data['content']
-        if request.FILES['image']:
-            form_image = request.FILES['image']
+        #print(request.FILES)
+        if request.FILES:
+            if request.FILES['image']:
+                form_image = request.FILES['image']
         else:
             form_image = None
-        #fs = FileSystemStorage()
-        #filename = fs.save(form_image.name,form_image)
-        #uploaded_file_url = fs.url(filename)
+
         post_obj = Post.objects.create(
             content=form_content, owner=request.user, image=form_image)
         post_obj.save()

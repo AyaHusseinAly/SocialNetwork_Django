@@ -7,8 +7,8 @@ from .models import Comment
 @receiver(post_save, sender=Comment)
 def after_comment_creation(sender,instance,created,*args,**kwargs):
     if created:
-        text=str("comment from" + instance.owner.username+": "+instance.content[0:10])
-        notify_instance = Notification.objects.create(sender=instance.owner, reciever=instance.post.owner,text=text)
+        text=str("comment from " + instance.owner.username+": "+instance.content[0:30])
+        notify_instance = Notification.objects.create(sender=instance.owner, reciever=instance.post.owner,text=text, notifyType="postView",instance_id=instance.post.id)
         notify_instance.save()
     else:
         print("Updating..")
