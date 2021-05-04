@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#LOGIN_REDIRECT_URL = '/posts/'
+LOGIN_REDIRECT_URL = '/posts/'
 
 
 # Internationalization
