@@ -98,6 +98,7 @@ def profile(request,id):
             # CASE3: No request sent from YOU or THEM: FriendRequestStatus.NO_REQUEST_SENT
             else:
                 request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
+                
     elif not user.is_authenticated:
             is_self = False
     else:
