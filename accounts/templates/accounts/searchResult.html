@@ -6,7 +6,7 @@
         <div class="col-sm-4 ">
             <div class="mycard">
            <form action="" method="GET">
-               <input type="text" name="q" id="" class="post_input " placeholder="Search for user by name">
+               <input type="text" name="q" id="" class="post_input " placeholder="Search for user by name or username">
                <input type="submit" class="btn mt-2" value="Search">
            </form>
        </div>
@@ -17,6 +17,7 @@
             <div class="mycard">
                 <i class="fa fa-users fa-4x" aria-hidden="true"></i>
                 <h1>Results: </h1>
+                
                 {% for user in usersResult %}
                 <hr>
                 <h5>{{user.first_name}} {{user.last_name}}</h5>
@@ -27,7 +28,7 @@
                 <hr>
                 {% endfor %}
 
-
+                {% endif %}
             </div>
         </div>
     </div>

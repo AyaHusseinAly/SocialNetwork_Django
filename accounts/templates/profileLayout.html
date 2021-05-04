@@ -17,12 +17,12 @@
                 <div class="profile-usertitle">
                     {% if checker.is_self == False %}
                     <div class="profile-usertitle-name">
-                        {{account.first_name}} {{account.last_name}}
+                        {{account.userprofile.first_name}} {{account.userprofile.last_name}}
 
                     </div>
                     {% else %}
                     <div class="profile-usertitle-name">
-                        {{user.first_name}} {{user.last_name}}
+                        {{user.userprofile.first_name}} {{user.userprofile.last_name}}
 
                     </div>
                     {% endif %}
@@ -36,8 +36,10 @@
                     <div class="card m-2 p-4">
                         <div class="d-flex flex-row align-items-center">
                             <span class="friend-text align-items-center mr-2">Accept Friend Request</span>
-                            <span id="id_cancel_{{id}}" class="decline-friend-request material-icons p-1" onclick='triggerDeclineFriendRequest("{{pending_friend_request_id}}")'>cancel</span>
-                            <span id="id_confirm_{{id}}">check</span>
+
+					        <span id="id_cancel_{{id}}" onclick='triggerDeclineFriendRequest("{{checker.pending_friend_request_id}}")'>cancel</span>
+  					        <span id="id_confirm_{{account.id}}" class="confirm-friend-request material-icons p-1" onclick='triggerAcceptFriendRequest("{{checker.pending_friend_request_id}}")'>check</span>
+
                         </div>
                     </div>
                     {% endif %}
@@ -82,34 +84,22 @@
                     </div>
                 </div>
                 <!------------------- ONE OF THEM SHOULD BE DELETED  ----------->
-                {% if checker.friend_requests %}
-                <div class="profile-userbuttons">
 
-                    <!-- Friend requests -->
-                    <div class="d-flex flex-column pt-4">
-                        <a>
-                            <div class="d-flex flex-row align-items-center justify-content-center icon-container">
-                                <span class="material-icons mr-2 person-add-icon">person_add</span><span
-                                    class="friend-text">Friend Requests </span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                {% endif %}
                 <!------    SECOND OF THEM SHOULD BE DELETED   --------------->
-                {% if friend_requests %}
+                {% if checker.friend_requests %}
+                
                 <div class="card m-2 px-4 pb-4">
                     <!-- Friend requests -->
                     <div class="d-flex flex-column pt-4">
-                        <a href="#">
+                        <a href="{% url 'friend:friend-requests' user_id=user.id %}">
                             <div class="d-flex flex-row align-items-center justify-content-center icon-container">
                                 <span class="material-icons mr-2 person-add-icon">person_add</span><span
                                     class="friend-text">Friend Requests ({{friend_requests|length}})</span>
                             </div>
                         </a>
                     </div>
-
                 </div>
+                
                 {% endif %}
                 <!------->
 
@@ -169,6 +159,13 @@
 
     }
 
+    function onFriendRequestAccepted(){
+		location.reload();
+	}
+    function uiReload(){
+		// location.reload();
+	}
+
     var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
     if (sendFriendRequestBtn != null) {
         sendFriendRequestBtn.addEventListener("click", function () {
@@ -176,48 +173,25 @@
         })
     }
 
+    function triggerAcceptFriendRequest(friend_request_id){
+		acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
+	}
 
 
-
-    // function sendFriendRequest(id, uiUpdateFunction) {
-    //     //alert(id);
-    //     payload = {
-    //         "csrfmiddlewaretoken": "{{ csrf_token }}",
-    //         "receiver_user_id": id,
-    //     }
-    //     $.ajax({
-    //         type: 'POST',
-    //         dataType: "json",
-    //         url: "{% url 'friend:friend-request' %}",
-    //         timeout: 5000,
-    //         data: payload,
-    //         success: function (data) {
-    //             console.log("SUCCESS", data)
-    //             if (data['response'] == "Friend request sent.") {
-    //                 // ui is updated
-    //             }
-    //             else if (data['response'] != null) {
-    //                 alert(data['response'])
-    //             }
-    //         },
-    //         error: function (data) {
-    //             console.error("ERROR...", data)
-    //             alert("Something went wronghhhhhh.")
-    //         },
-    //         complete: function (data) {
-    //             uiUpdateFunction()
-    //         }
-    //     });
-    // }
+    
     function triggerDeclineFriendRequest(friend_request_id){
-        declineFriendRequest(friend_request_id,onFriendRequestDeclined)
+        alert(friend_request_id)
+        declineFriendRequest(friend_request_id,uiReload)
     }
 
     
 
+    
 
 </script>
 {% include 'friend/snippets/send_friend_request.html' %}
 {% include 'friend/snippets/decline_friend_request.html' %}
+{% include 'friend/snippets/accept_friend_request.html' %}
+
 
 {% endblock %}

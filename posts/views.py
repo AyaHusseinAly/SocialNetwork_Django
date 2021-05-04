@@ -5,6 +5,7 @@ from groups.models import Group
 from .forms import PostForm
 from .forms import CommentForm
 from django.contrib.auth.models import User
+from accounts.models import UserProfile
 from django import forms
 
 
@@ -18,16 +19,17 @@ from django import forms
 def index(request):
     query = request.GET.get('q', '')
     if(query):
-        first_name_query1 = User.objects.filter(
-            first_name__contains=str(query))
-        first_name_query2 = User.objects.filter(first_name__in=[query])
-        last_name_query1 = User.objects.filter(last_name__contains=str(query))
-        last_name_query2 = User.objects.filter(last_name__in=[query])
+        first_name_query1 = User.objects.filter(userprofile__first_name__contains=str(query))
+        first_name_query2 = User.objects.filter(userprofile__first_name__in=[query])
+        last_name_query1 = User.objects.filter(userprofile__last_name__contains=str(query))
+        last_name_query2 = User.objects.filter(userprofile__last_name__in=[query])
         username_query = User.objects.filter(username__in=[query])
         users = first_name_query1.union(
-            first_name_query1, last_name_query1, last_name_query2, username_query)
+            first_name_query1, last_name_query1, last_name_query2,username_query)
+        
         return render(request, "users/index.html", {
             "usersResult": users,
+           
             "query": query,
         })
 
