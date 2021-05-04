@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 #from .models import Friends
-from .models import Message
+from .models import Message, Notification
 from .forms import MsgForm
 from django.contrib.auth.models import User
 #from django.contrib.auth.decorators import login_required, permission_required
@@ -50,8 +50,19 @@ def index(request):
 
     })
     
+#def delete(request,id):
+#    msg=Message.objects.get(pk=id)
+#    msg.delete()
+#    return redirect("index")
 
-def delete(request,id):
-    msg=Message.objects.get(pk=id)
-    msg.delete()
-    return redirect("index")
+################################################## Notififcations #####################################################################    
+def notify(request):
+
+    notifications= Notification.objects.filter(reciever=request.user)
+
+
+
+    return render(request,"notificationIndex.html",{
+
+        "notifications":notifications
+    })
