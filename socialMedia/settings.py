@@ -55,7 +55,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'accounts.middleware.AnonymousMiddleWare',
+    # 'accounts.middleware.AnonymousMiddleWare',
+
+    
 ]
 
 ROOT_URLCONF = 'socialMedia.urls'
@@ -112,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_REDIRECT_URL = '/posts/'
-LOGIN_URL='/posts/'
+# LOGIN_URL='/posts/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

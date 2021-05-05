@@ -123,7 +123,6 @@ def redirecting(request):
         "posts":posts,
     })
 
-@login_required(login_url="/login")
 def profile(request,id):
     context ={}
     posts={}

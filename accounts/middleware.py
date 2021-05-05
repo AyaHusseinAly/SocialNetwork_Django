@@ -7,8 +7,8 @@ class AnonymousMiddleWare:
 
     def __call__(self, request):
         
-        if request.path == "logout":
-            return redirect('profile')
+        if request.path == "/admin/login/?next=/admin/":
+            return redirect('')
             
         return self.get_response(request)
             # return HttpResponseForbidden("NO")

@@ -8,13 +8,14 @@ from django.contrib.auth.models import User
 from accounts.models import UserProfile
 from django import forms
 from friend.models import FriendList
+from django.contrib.auth.decorators import login_required
+
 
 
 # from django.views.generic import CreateView
 # from groups.models import Group
 #from django.contrib.auth.decorators import login_required, permission_required
 
-#@login_required
 #@permission_required(["books.view_book"],raise_exception=True)
 
 def index(request):
@@ -34,7 +35,10 @@ def index(request):
             "usersResult": users,
             "query": query,
         })
-    posts=Post.objects.filter(owner=request.user)
+    try:
+        posts=Post.objects.filter(owner=request.user)
+    except:
+        pass
     try:
         # friends = []
         friend_list = FriendList.objects.get(user=request.user)
