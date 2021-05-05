@@ -160,7 +160,7 @@ def profile(request,id):
     else:
         try:
             is_self = True
-            posts=Post.objects.filter(owner_id=user.id)
+            posts=Post.objects.filter(owner_id=user.id).order_by('-created_at')
             # You look at your own profile
             friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
         except:

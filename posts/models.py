@@ -10,7 +10,7 @@ import datetime
 class Post(models.Model):
     content=models.CharField(max_length=2000 , validators=[validate_is_profane])
     #created_at=models.DateTimeField(auto_now_add=True)
-    created_at=datetime.datetime.now()
+    created_at=models.DateTimeField(auto_now_add=True)
     image=models.ImageField(null=True, blank=True)
     owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name="post")
     group=models.ForeignKey(Group,on_delete=models.CASCADE, null=True,blank=True,related_name="post")

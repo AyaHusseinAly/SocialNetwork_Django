@@ -33,7 +33,7 @@ def index(request):
             "query": query,
         })
 
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-created_at')
     groups = Group.objects.all()
     post = PostForm(request.POST, request.FILES or None)
 
