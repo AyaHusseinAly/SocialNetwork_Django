@@ -29,11 +29,10 @@ def index(request):
         
         return render(request, "users/index.html", {
             "usersResult": users,
-           
             "query": query,
         })
 
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-created_at')
     groups = Group.objects.all()
     post = PostForm(request.POST, request.FILES or None)
 

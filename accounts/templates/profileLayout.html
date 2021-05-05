@@ -130,7 +130,10 @@
                                 <i class="fas fa-user"></i>
                                 About </a>
                         </li>
+                        
+                        
                         {% else %}
+                        
                         <li class="{% active_link 'profile' 'active' strict=True %}">
                             <a href="/profile/{{user.id}}">
                                 <i class="fas fa-home"></i>
@@ -140,6 +143,11 @@
                             <a href="/profile/{{user.id}}/about">
                                 <i class="fas fa-user"></i>
                                 About </a>
+                        </li>
+                        <li class="{% active_link 'list' 'active' strict=True %}">
+                            <a href="{% url 'friend:list' %}">
+                                <i class="fa fa-user-friends" aria-hidden="true"></i>
+                                Friends </a>
                         </li>
                         <li class="{% active_link 'about' 'active' strict=True %}">
                             <a href="/profile/{{user.id}}/edit">
@@ -156,6 +164,8 @@
             </div>
         </div>
         <div class="col-md-9">
+            
+
             {% block content %}{% endblock %}
         </div>
     </div>

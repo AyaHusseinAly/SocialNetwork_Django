@@ -17,7 +17,7 @@
             <div class="mycard">
                 <i class="fa fa-users fa-4x" aria-hidden="true"></i>
                 <h1>Results: </h1>
-                {% if usersResult%}
+                {% if usersResult %}
                 {% for user in usersResult %}
                 <hr>
                 <h5>{{user.userprofile.first_name}} {{user.userprofile.last_name}}</h5>

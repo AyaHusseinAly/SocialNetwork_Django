@@ -40,9 +40,9 @@
 
 <div class="container">
 	
-	<div >
-		<h2>Friends of {{user.username}}</h2>
-		<!--<div class="d-flex flex-row flex-wrap">-->
+	<!-- <div > -->
+		<!-- <h2>Friends of {{user.username}}</h2>
+		<div class="d-flex flex-row flex-wrap">
 			{% for friend in friends %}
 			<div class="card" col-lg-4 >
 				<a class="profile-link" >
@@ -56,13 +56,40 @@
 					</div>
 				</a>
 				
-				<!--<div class="card-center px-2">-->
-					
-					
-				<!--</div>-->
 				{% endfor %}	
 	</div>
-	
+	 -->
+	 <div>
+		<h2>Friends of {{user.username}}</h2>
+		<!--<div class="d-flex flex-row flex-wrap">-->
+		{% if friends|length > 0 %}
+		{% for friend in friends %}
+		<div class="mycard col-lg-8 d-flex justify-content-center">
+			<a class="profile-link" href="/profile/{{friend.userprofile.user_id}}">
+				<div class="card-image m-2 col-lg-4">
+					<img class="img-fluid profile-image " src="{% if friend.userprofile.avatar %}{{friend.userprofile.avatar.url}} {% else %} /images/avatars/profile.jpeg {% endif %}" alt="">
+					<br>
+					<br>
+					<a class="profile-link" style="display: inline;">
+						<h4 class="card-title">{{friend.username|truncatechars:50}}
+							{{friend.last_name|truncatechars:50}}</h4>
+					</a>
+					<div class="d-flex justify-content-space-beween align-items-center">
+					<a href="/messages/?id={{friend.0.id}}" class="post btn btn-sm">Send a Message</a>
+					</div>
+				</div>
+			</a>
+
+			<!--<div class="card-center px-2">-->
+
+		</div>
+			<!--</div>-->
+			{% endfor %}
+			{% else %}
+			<h3>You have no friends, add friends first. </h3>
+			{% endif %}
+		
 </div>
+
 
 {% endblock %}
