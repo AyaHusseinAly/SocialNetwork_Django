@@ -1,8 +1,5 @@
 {% extends "profileLayout.html" %}
-
 {% block content %}
-
-
 <style type="text/css">
 	.profile-image{
 		max-height: 100px;
@@ -42,72 +39,28 @@
 </style>
 
 <div class="container">
-	<div class="card p-2">
-
-		{% if checker.friends %}
-		<div class="d-flex flex-row flex-wrap">
-		{% for friend in friends %}
-		<div class="card flex-row flex-grow-1 p-2 mx-2 my-2 align-items-center">
-			<a class="profile-link" href="{% url 'profile' user_id=friend.0.pk %}">
-				<div class="card-image m-2">
-					<img class="img-fluid profile-image" src="{{friend.0.profile_image.url}}" alt="">
-				</div>
-			</a>
-			
-			<div class="card-center px-2">
-				<a class="profile-link" href="{% url 'profile' user_id=friend.0.pk %}">
-					<h4 class="card-title">{{friend.0.username|truncatechars:50}}</h4>
+	
+	<div >
+		<h2>Friends of {{user.username}}</h2>
+		<!--<div class="d-flex flex-row flex-wrap">-->
+			{% for friend in friends %}
+			<div class="card" col-lg-4 >
+				<a class="profile-link" >
+					<div class="card-image m-2 col-lg-4">
+						<img class="img-fluid profile-image" src="{{friend.0.userprofile.avatar.url}}" alt="">
+						<a class="profile-link" style="display: inline;" >
+							<h4 class="card-title">{{friend.0.username|truncatechars:50}}  {{friend.0.last_name|truncatechars:50}}</h4>
+						</a>
+						<button class="post btn btn-sm"><a href="#">Send a Message</a></button>
+						
+					</div>
 				</a>
-				{% if friend.1 %}
-				<a href="#" onclick="createOrReturnPrivateChat('{{friend.0.id}}')">Send a Message</a>
-				{% endif %}
 				
-			</div>
-			
-			<div class="d-flex flex-row card-right flex-grow-1 justify-content-end mx-2">
-				{% if friend.1 %}
-					<div class="d-flex flex-row friends-text-container p-3">
-						<p class="friends-text m-auto">
-							Friends 
-						</p>
-						<span class="material-icons checkmark-icon m-auto pl-2">
-						check_circle_outline
-						</span>
-					</div>
-				{% else %}
-					{% if friend.0 !=  request.user %}
-						<div class="d-flex flex-row friends-text-container p-3">
-							<p class="friends-text m-auto">
-								Not Friends 
-							</p>
-							<span class="material-icons cancel-icon m-auto pl-2">cancel</span>
-						</div>
-					{% endif %}
-				{% endif %}
-				{% if friend.0 == request.user %}
-					<div class="d-flex flex-row friends-text-container p-3">
-						<p class="friends-text m-auto">
-							This is you 
-						</p>
-						<span class="material-icons m-auto pl-2">
-						person_pin
-						</span>
-					</div>
-				{% endif %}
-			</div>
-		</div>
-		{% if forloop.counter|divisibleby:2 %}
-		</div><div class="d-flex flex-row flex-wrap">
-		{% endif %}
-		
-		{% endfor %}
-		
-		{% else %} <!-- If no friends -->
-		<div class="d-flex flex-row flex-grow-1 justify-content-center align-items-center p-4">
-			<p>No friends :(</p>
-		</div>
-		{% endif %}
-		</div>
+				<!--<div class="card-center px-2">-->
+					
+					
+				<!--</div>-->
+				{% endfor %}	
 	</div>
 	
 </div>
