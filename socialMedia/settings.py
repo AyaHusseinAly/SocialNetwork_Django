@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'groups',
     'friends',
     'friend',
-    'active_link'
+    'active_link',
+    'profanitycustom',
 ]
 
 MIDDLEWARE = [
