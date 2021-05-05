@@ -38,7 +38,7 @@
             <a  href="/messages/notifications" id="navLink"><i class="fa fa-bell" aria-hidden="true"></i><p>Notifications</p></a>
 
             <div >
-                <a  href="{% url 'userProfile' %}" id="navLink"><img  class="  m-1 rounded-circle"  src="{% if user.is_authenticated  and request.user.userprofile.avatar.url %} {{request.user.userprofile.avatar.url}} {% else %} /images/avatars/profile.jpeg {% endif %}"  ></a>
+                <a  href="{% url 'profile' user.id %}" id="navLink"><img  class="  m-1 rounded-circle"  src="{% if user.is_authenticated  and request.user.userprofile.avatar.url %} {{request.user.userprofile.avatar.url}} {% else %} /images/avatars/profile.jpeg {% endif %}"  ></a>
                 {% if user.is_authenticated %}
                 <a  href="/logout/" id="navLink">Logout</a>
                 {% else %}
