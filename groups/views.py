@@ -5,7 +5,7 @@ from .models import Group
 from itertools import chain
 from .forms import GroupForm
 from posts.models import Post
-from groups.models import Group
+from groups.models import Group, GroupInvite
 from posts.forms import PostForm
 from accounts.models import UserProfile
 from django.contrib.auth.models import User
@@ -60,7 +60,16 @@ def show(request, id):
             "query": query,
         })
     posts = Post.objects.filter(group=group)
+
     groups = Group.objects.all()
+    users_in_group = UserProfile.objects.filter(Q(groups=id))
+
+    invited=GroupInvite.objects.filter(inviteTo=request.user).filter(group=group)
+   
+    members = []
+    for user in users_in_group:
+        members.append(user.user)
+    #print(users_in_group)
     # accounts = UserProfile.objects.all()
     post = PostForm(request.POST or None)
     if post.is_valid():
@@ -73,12 +82,10 @@ def show(request, id):
         "posts": posts,
         "groups": groups,
         "group": group,
+        "users_in_group":members,
+        "invited":invited
 
     })
-
-def viewOutside(request, id):
-    group = Group.objects.get(id=id)
-    return render(request, "groups/showOutside.html",{"group":group})
 
 def delete(request, id):
     post = Post.objects.get(pk=id)
@@ -104,17 +111,27 @@ def view(request, id):
 
 
 def invite(request, id):
-    # friends = Group.objects.filter(id=id)[0].members.values_list()
-    # # print(friends[0].members)
-    # print(len(friends))
-    # query = UserProfile.objects
-    # inviteUsers = UserProfile.objects.filter(~Q(id=friends[0][0]))
-    # print(query)
-    invites = UserProfile.objects.filter(~Q(groups=id)).values()
-    # friends =UserProfile.objects.filter()
-    print(invites)
+
+    users = UserProfile.objects.filter(~Q(groups=id))
+    print(users[0].user.id)
+    print(users[0].first_name)
+    notMember = []
+    for user in users:
+        notMember.append(user.user.id)
+    invites = User.objects.filter(id__in=notMember)
     return render(request, "groups/invite.html", {
-        "invites": invites
+        "invites": invites,
+        "id": id
     })
 
+def groupRequest(request, id):
+    # print(dict(request.POST)["groupRequest"])
+    group = Group.objects.get(id=id)
+    for user_id in dict(request.POST)["groupRequest"]:
+        user = User.objects.get(id=user_id)
+        # UserProfile.objects.get(user=user)
+        invite = GroupInvite.objects.create(
+            inviteFrom=request.user, inviteTo=user, group=group)
+        invite.save()
 
+    return redirect("group")

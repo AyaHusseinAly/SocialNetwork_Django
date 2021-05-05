@@ -25,7 +25,7 @@
                      </a>
                 {% endif %}   
                 {% if notification.notifyType == "groupView"%}
-                    <a href="{% url "group.viewInvitation" notification.instance_id%}" style="color:black;">
+                    <a href="{% url "show" notification.instance_id%}" style="color:black;">
                     <div class="mycard d-flex justify-content-center align-items-center" id="chatdiv">
                         <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">{{ notification.created_at}}</p>
                         <div class="mx-2">{{notification.text}}</div>

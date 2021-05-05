@@ -1,10 +1,21 @@
 {% extends "layout.html"%} {% block body %}
-
 <div class="container mycard p-5 m-5" style="width: 80%">
   <i class="fa fa-users fa-4x" aria-hidden="true"></i>
   <h3>Invite Friends</h3>
-  {% for invite in invites %}
-  <div class="mycard">{{invite.avatar}}</div>
-  {% endfor %}
+  <form method="POST" enctype="multipart/form-data" action="{% url "group.sendrequest" id %}">
+  {% csrf_token %}
+    <select name="groupRequest" id="groupRequest" multiple> 
+      {% for invite in invites %}
+      <option value="{{invite.id}}" class="mycard">
+        {% if invite.avatar %}
+        <img class="m-1 rounded-circle" src="/images/{{invite.UserProfile.avatar}}" />
+        {% else%}
+        <img class="m-1 rounded-circle" src="/images/avatars/profile.jpeg" />
+        {%endif%} {{invite.username}} 
+      </option> 
+      {% endfor %}
+    </select> 
+    <input type="submit" value="Invite">
+  </form>
 </div>
 {%endblock%}
