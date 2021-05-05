@@ -4,42 +4,7 @@
 {% block body %}
 
 
-<style type="text/css">
-	.profile-image{
-		max-height: 100px;
-		max-width: 100px;
-	}
-	.profile-image{
-		border-radius: 12px;
-	}
-	.card{
-		border-radius: 12px;
-	}
-	.dropdown-toggle::after { 
-		content: none; 
-	}
-	.profile-link{
-		color: #000;
-	}
-	.material-icons{
-		font-size: 30px;
-	}
-	.material-icons:hover{
-		cursor: pointer;
-	}
-	.confirm-friend-request{
-		color: green;
-	}
-	.confirm-friend-request:hover {
-		opacity: 0.3;
-	}
-	.decline-friend-request:hover {
-		opacity: 0.3;
-	}
-	.decline-friend-request{
-		color: red;
-	}
-</style>
+
 
 <div class="container">
 	<div class="card p-2">
@@ -59,8 +24,8 @@
 				</div>
 			</a>
 			<div class="d-flex flex-row card-right flex-grow-1 justify-content-end mx-2">
-	  			<span id="id_cancel_{{request.sender.id}}" onclick='triggerDeclineFriendRequest("{{request.id}}")'>cancel</span>
-	  			<span id="id_confirm_{{request.sender.id}}" onclick='triggerAcceptFriendRequest("{{request.id}}")'>check</span>
+	  			<span class="decline-friend-request" onclick='triggerDeclineFriendRequest("{{request.id}}")'><i class="fas fa-times-circle fa-2x"></i></span>
+	  			<span class="confirm-friend-request" onclick='triggerAcceptFriendRequest("{{request.id}}")'><i class="fas fa-check-circle fa-2x"></i></span>
 			</div>
 		</div>
 		{% if forloop.counter|divisibleby:2 %}
