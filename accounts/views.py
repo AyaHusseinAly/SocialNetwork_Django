@@ -64,25 +64,7 @@ def about(request,id):
     return render(request,'about.html',{
         "user":user,
     })
-'''   
-def edit(request, id):
-    user = User.objects.get(pk=id)
-    form = UserCreationForm(request.POST or None, instance=user)
-    profile_form = UserProfileForm(request.POST,request.FILES or None, instance=user)
 
-    if form.is_valid() and profile_form.is_valid():
-        form.save()
-        profile = profile_form.save(commit = False)
-        profile.user = user
-        profile.save()
-        return redirect('index')
-    return render(request, 'accounts/edit.html', {
-        'form': form,
-        'profile':profile_form,
-        'user': user
-    })
-
-'''
 
 def edit(request, id):
     user = User.objects.get(pk=id)
