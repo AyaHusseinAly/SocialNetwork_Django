@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'accounts',
     'msgnotifications',
     'groups',
-    'friends',
     'friend',
-    'active_link'
+    'active_link',
+    'profanitycustom',
 ]
 
 MIDDLEWARE = [
@@ -131,7 +131,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/image/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]

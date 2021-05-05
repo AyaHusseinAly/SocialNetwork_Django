@@ -12,5 +12,4 @@ urlpatterns = [
     path("view/<int:id>", views.view, name="group.view"),
     path("viewInvitation/<int:id>", views.viewOutside, name="group.viewInvitation"),
 
-
 ]

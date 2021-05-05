@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    function removeFriend(id,uiUpadateFunction){
+        payload ={
+            "csrfmiddlewaretoken" : "{{csrf_token}}",
+            "reciever_user_id":id,
+        }
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            timeout:5000,
+            url: "{% url 'friend:remove-friend' %}",
+            data:payload,
+            success: function(data){
+                if(data.response == "Friend Removed."){
+
+                }
+                else if (data.response != null){
+                    alert(data.response)
+                }
+
+            },
+            error: function(data){
+                alert("uh oh ")
+            },
+            complete: function(data){
+                uiUpadateFunction()
+            },
+
+        })
+    }
+
+</script>
