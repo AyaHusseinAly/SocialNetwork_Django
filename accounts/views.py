@@ -96,7 +96,7 @@ def edit(request, id):
         profile.user = user
         profile.save()
         return redirect('about',pk=id)
-    return render(request, 'accounts/edit.html', {
+    return render(request, 'accounts/editProfile.html', {
         'form': form,
         'profile':profile_form,
         'user': user
