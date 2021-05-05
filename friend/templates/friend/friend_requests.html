@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'layout.html' %}
 {% load static %}
 
-{% block content %}
+{% block body %}
 
 
 <style type="text/css">
@@ -48,19 +48,19 @@
 		<div class="d-flex flex-row flex-wrap">
 		{% for request in friend_requests %}
 		<div class="card flex-row flex-grow-1 p-2 mx-2 my-2 align-items-center">
-			<a class="profile-link" href="{% url 'account:view' user_id=request.sender.id %}">
+			<a class="profile-link" href="{% url 'profile' id=request.sender.id %}">
 				<div class="card-image m-2">
-					<img class="img-fluid profile-image" src="{{request.sender.profile_image.url}}" alt="">
+					<img class="img-fluid profile-image" src="{% if request.sender.userprofile.avatar %} {{request.sender.userprofile.avatar.url}}{% else %} {% static 'images/avatars/profile.jpeg' %} {% endif %}" >
 				</div>
 			</a>
-			<a class="profile-link" href="{% url 'account:view' user_id=request.sender.id %}">
+			<a class="profile-link" href="{% url 'profile' id=request.sender.id %}">
 				<div class="card-center px-2">
 					<h4 class="card-title">{{request.sender.username}}</h4>
 				</div>
 			</a>
 			<div class="d-flex flex-row card-right flex-grow-1 justify-content-end mx-2">
-	  			<span id="id_cancel_{{request.sender.id}}">cancel</span>
-	  			<span id="id_confirm_{{request.sender.id}}">check</span>
+	  			<span id="id_cancel_{{request.sender.id}}" onclick='triggerDeclineFriendRequest("{{request.id}}")'>cancel</span>
+	  			<span id="id_confirm_{{request.sender.id}}" onclick='triggerAcceptFriendRequest("{{request.id}}")'>check</span>
 			</div>
 		</div>
 		{% if forloop.counter|divisibleby:2 %}
@@ -81,22 +81,21 @@
 
 <script type="text/javascript">
 
-	function onFriendRequestAccepted(){
+	function uiReload(){
 		location.reload();
 	}
 
-	function onFriendRequestDeclined(){
-		location.reload();
-	}
+	
 
 	function triggerAcceptFriendRequest(friend_request_id){
-		//acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
+		alert(friend_request_id)
+		acceptFriendRequest(friend_request_id, uiReload)
 	}
 
 	function triggerDeclineFriendRequest(friend_request_id){
-		//declineFriendRequest(friend_request_id, onFriendRequestDeclined)
+		declineFriendRequest(friend_request_id, uiReload)
 	}
 </script>
-{#% include 'friend/snippets/accept_friend_request.html' %#}
-{#% include 'friend/snippets/decline_friend_request.html' %#}
-{% endblock content %}
+{% include 'friend/snippets/accept_friend_request.html' %}
+{% include 'friend/snippets/decline_friend_request.html' %}
+{% endblock %}

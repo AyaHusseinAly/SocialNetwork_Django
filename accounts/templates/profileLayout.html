@@ -89,7 +89,7 @@
                         <a href="{% url 'friend:friend-requests' user_id=user.id %}">
                             <div class="d-flex flex-row align-items-center justify-content-center icon-container">
                                 <span class="material-icons mr-2 person-add-icon">person_add</span><span
-                                    class="friend-text">Friend Requests ({{friend_requests|length}})</span>
+                                    class="friend-text">Friend Requests ({{checker.friend_requests|length}})</span>
                             </div>
                         </a>
                     </div>

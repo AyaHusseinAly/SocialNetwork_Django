@@ -61,11 +61,11 @@ def signup(request):
     context = {'profile_form' : profile_form ,'form' : form }
     return render(request , "registration/signup.html", context)
 
-def profile(request,id):
-    user = User.objects.get(pk=id)
-    return render(request,'profile.html',{
-        "user":user,
-    })
+# def profile(request,id):
+#     user = User.objects.get(pk=id)
+#     return render(request,'profile.html',{
+#         "user":user,
+#     })
 def about(request,id):
     user = User.objects.get(pk=id)
     return render(request,'about.html',{
@@ -96,25 +96,26 @@ def edit(request, id):
 
 
 @login_required(login_url="/login")
-def userProfile(request):
-    user=User.objects.get(pk=request.user.id)
-    return render(request,'profile.html',{
-        "user":user,
-    })
+# def userProfile(request):
+#     user=User.objects.get(pk=request.user.id)
+#     return render(request,'profile.html',{
+#         "user":user,
+#     })
 @login_required(login_url="/login")
 def redirecting(request):
     posts=Post.objects.all()
     return render(request,'posts/index.html',{
         "posts":posts,
     })
-
+    
+@login_required(login_url="/login")
 def profile(request,id):
     context ={}
     account= User.objects.get(id=id)
     if  account:
         context['id'] = account.id
         context['username'] = account.username
-        context['email'] = account.email
+        context['email'] = account.userprofile.email
         context['avatar'] = account.userprofile.avatar
         #context['location'] = account.userprofile.location
         #context['age'] = account.userprofile.age
