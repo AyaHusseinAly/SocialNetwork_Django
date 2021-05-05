@@ -28,6 +28,7 @@ def index(request):
         })
     
     #friends= Friends.objects.all()
+    flag = 0 # check to see if friendID doesn't exist in my friend list
     
     #friends=[{'id':1,'name':"Amal Tamam",'img':"exPP3.png"},{'id':2,'name':"Alaa Hesham",'img':"alaa.png"},{'id':3,'name':"Eman Hussein",'img':"eman.png"},{'id':4,'name':"Fatma Tarek",'img':"fatma.png"}]
     # friends=User.objects.exclude(username=request.user.username)
@@ -41,7 +42,11 @@ def index(request):
     for friend in friend_list.friends.all():
         # friends.append((friend, auth_user_friend_list.is_mutual_friend(friend)))
         friends.append((friend))
-        
+        if friendId == friend.id or friendId==request.user.id:
+            flag=1
+    if flag == 0:
+        return redirect('/profile/'+str(friendId))
+
     usersforAvatar  = UserProfile.objects.filter(user__in=friends)   
 
 

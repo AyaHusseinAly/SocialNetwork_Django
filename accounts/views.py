@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from .forms import UserProfileForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from posts.models import Post
 from .models import UserProfile
 from posts.forms import PostForm
@@ -111,7 +111,6 @@ def edit(request, id):
     
 
 
-@login_required(login_url="/login")
 # def userProfile(request):
 #     user=User.objects.get(pk=request.user.id)
 #     return render(request,'profile.html',{
@@ -123,7 +122,7 @@ def redirecting(request):
     return render(request,'posts/index.html',{
         "posts":posts,
     })
-    
+
 @login_required(login_url="/login")
 def profile(request,id):
     context ={}

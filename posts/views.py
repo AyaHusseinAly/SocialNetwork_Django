@@ -7,6 +7,7 @@ from .forms import CommentForm
 from django.contrib.auth.models import User
 from accounts.models import UserProfile
 from django import forms
+from friend.models import FriendList
 
 
 # from django.views.generic import CreateView
@@ -19,22 +20,44 @@ from django import forms
 def index(request):
     query = request.GET.get('q', '')
     if(query):
-        first_name_query1 = User.objects.filter(userprofile__first_name__contains=str(query))
+        first_name_query1 = User.objects.filter(userprofile__first_name__icontains=str(query))
         first_name_query2 = User.objects.filter(userprofile__first_name__in=[query])
-        last_name_query1 = User.objects.filter(userprofile__last_name__contains=str(query))
+        last_name_query1 = User.objects.filter(userprofile__last_name__icontains=str(query))
         last_name_query2 = User.objects.filter(userprofile__last_name__in=[query])
-        username_query = User.objects.filter(username__in=[query])
+        username_query1 = User.objects.filter(username__in=[query])
+        username_query2 = User.objects.filter(username__icontains=str(query))
+
         users = first_name_query1.union(
-            first_name_query1, last_name_query1, last_name_query2,username_query)
+            first_name_query1, last_name_query1, last_name_query2,username_query1,username_query2)
         
         return render(request, "users/index.html", {
             "usersResult": users,
             "query": query,
         })
+    posts=Post.objects.filter(owner=request.user)
+    try:
+        # friends = []
+        friend_list = FriendList.objects.get(user=request.user)
+        for friend in friend_list.friends.all():
+            # friends.append((friend))
+            posts=posts.union(Post.objects.filter(owner=friend))
+    except FriendList.DoesNotExist:
+        pass
+     #[(account1, True), (account1, False), ... ]
+    # auth_user_friend_list = FriendList.objects.get(user=user)
+    # 
 
-    posts = Post.objects.all().order_by('-created_at')
-    groups = Group.objects.all()
-    post = PostForm(request.POST, request.FILES or None)
+    # posts = Post.objects.all().order_by('-created_at')
+    try:
+        user_groups = request.user.userprofile.groups.all()
+        for group in user_groups:
+            posts=posts.union(Post.objects.filter(group=group))
+    except:
+        pass
+    posts=posts.order_by('-created_at')
+    groups=request.user.userprofile.groups.all()
+    # groups=Group.objects.all()
+    post=PostForm(request.POST, request.FILES or None)
 
     if post.is_valid():
         form_content=post.cleaned_data['content']

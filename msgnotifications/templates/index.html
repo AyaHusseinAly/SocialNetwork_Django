@@ -38,14 +38,14 @@
 
                 <form action="" method="post">
                     {% csrf_token %}
-                    <div class="row">
+                    <div class="row d-flex justify-content-space-beween">
                         <div class="col-10">
                             {{ form.as_p}}
-                            <input class="post_input " name="text" placeholder="  Enter your message" />
+                            <input style="margin-top: 7px;" class="post_input " name="text" placeholder="  Enter your message" />
 
                         </div>
                         <div class="col-2">
-                            <button class="post btn" type="submit">send</button>
+                            <button class="post btn" style="margin-bottom: 5px;margin-top:7px;" type="submit">Send</button>
                         </div>
                     </div>
                 </form>

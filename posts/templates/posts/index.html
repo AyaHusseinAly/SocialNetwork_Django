@@ -74,10 +74,10 @@
                         </p>
                         
                         <div class="col-5"style="text-align:right;">
-                            <a href="{% url "view" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="{% url 'view' post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
                             {% if post.owner == request.user %}
-                            <a href="{% url "edit" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
-                            <a href="{% url "delete" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="{% url 'edit' post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
+                            <a href="{% url 'delete' post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             {% endif %}
                         </div>
                        
@@ -93,9 +93,9 @@
                 <div class="card-footer text-muted d-flex">
                     <p style="text-align:left;color:gray;font-size:12px;margin:0px">{{post.created_at}}</p>
                     <div style="text-align:right;width:80%">
-                    <a href="{% url "view" post.id%}" style="color:#e44d3a;" ><i class="fa fa-comment mx-4 fa-lg " aria-hidden="true"></i></a>
+                    <a href="{% url 'view' post.id%}" style="color:#e44d3a;" ><i class="fa fa-comment mx-4 fa-lg " aria-hidden="true"></i></a>
                     <!-- <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a> -->
-                    <form action="{% url "like-post"%}"  method="POST" style="display: inline-block;">
+                    <form action="{% url 'like-post' %}"  method="POST" style="display: inline-block;">
                         {% csrf_token %}
                         <input type="hidden" name="post_id" value="{{post.id}}">
                        
@@ -106,7 +106,7 @@
                         {% endif %}
                        
                     </form>
-                    <strong >{{ post.liked.all.count }}likes</strong>
+                    <strong >{{ post.liked.all.count }} likes</strong>
                 </div>
                 </div>
                 </div>
