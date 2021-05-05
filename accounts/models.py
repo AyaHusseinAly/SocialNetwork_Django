@@ -21,7 +21,10 @@ from groups.models import Group
 
 
 class UserProfile(models.Model):
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name=models.CharField(max_length=50,null=False,blank=False)
+    last_name=models.CharField(max_length=50,null=False,blank=False)
     email = models.EmailField(max_length=255)
     country = models.CharField(max_length=30, null=True, blank=True)
     avatar = models.ImageField(null=True, blank=True)
@@ -29,8 +32,8 @@ class UserProfile(models.Model):
         auto_now=False, auto_now_add=False, null=False, blank=False)
     about = models.TextField(max_length=500, null=True, blank=True)
     groups = models.ManyToManyField(Group, blank=True, null=True)
-    # groups=models.ManyToManyField(Group,blank=True,null=True)
-    # posts=models.ManyToManyField(Post,blank=True,null=True)
+
+    
 
     def __str__(self):
         return self.user.username

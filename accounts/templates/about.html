@@ -2,16 +2,32 @@
 
 {% block content %}
 <div class="profile-content">
-	<h2>Information about {{user.first_name}}:</h2>
+    {% if checker.is_self == False %}
+    <h2>Information about {account.first_name}}:</h2>
+    {% else %}
+    <h2>Information about {{user.first_name}}:</h2>
+    {% endif %}
     <br>
+
+    {% if checker.is_self == False %}
+    <h4 class="profile-about">Country: </h4>
+    {{account.userprofile.country}}
+    {% else %}
     <h4 class="profile-about">Country: </h4>
     {{user.userprofile.country}}
+    {% endif %}
+
     <br>
     <br>
+    {% if checker.is_self == False %}
+    <h4 class="profile-about">Birthdate: </h4>
+    {{account.userprofile.birthdate}}
+    {% else %}
     <h4 class="profile-about">Birthdate: </h4>
     {{user.userprofile.birthdate}}
+    {% endif %}
     <br>
-    
+
     <br>
     <br><br>
     <hr>

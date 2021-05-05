@@ -100,6 +100,7 @@ def edit(request, id):
         'form': form,
         'profile':profile_form,
         'user': user
+        
     })
 
     
