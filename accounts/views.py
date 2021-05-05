@@ -118,10 +118,7 @@ def edit(request, id):
 #     })
 @login_required(login_url="/login")
 def redirecting(request):
-    posts=Post.objects.all()
-    return render(request,'posts/index.html',{
-        "posts":posts,
-    })
+    return redirect('/posts/')
 
 def profile(request,id):
     context ={}
