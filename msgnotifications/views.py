@@ -48,6 +48,7 @@ def index(request):
         "msgto":sender1.username
 
 
+
     })
     
 #def delete(request,id):

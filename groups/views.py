@@ -76,6 +76,9 @@ def show(request, id):
 
     })
 
+def viewOutside(request, id):
+    group = Group.objects.get(id=id)
+    return render(request, "groups/showOutside.html",{"group":group})
 
 def delete(request, id):
     post = Post.objects.get(pk=id)
@@ -113,3 +116,5 @@ def invite(request, id):
     return render(request, "groups/invite.html", {
         "invites": invites
     })
+
+
