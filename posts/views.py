@@ -130,7 +130,5 @@ def like_post(request):
         like.save()            
         return redirect("index")
 
-    comment = Comment.objects.get(pk=id)
-    comment.delete()
-    return redirect("index")
+    
 
