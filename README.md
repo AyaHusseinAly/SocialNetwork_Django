@@ -5,18 +5,31 @@
 
 ## Post view and Comments
 <p float="left">
-  <img src="preview/comments.PNG" width="45%" />
-  <img src="preview/postWithImage.PNG" width="45%" /> 
+  <img src="preview/comments.PNG" width="49%" />
+  <img src="preview/postWithImage.PNG" width="49%" /> 
 </p>
 
 ## Messages
 ![](preview/messages.PNG)
 
-## Group Page
-![](preview/groupPage.PNG)
-
 ## Groups
 ![](preview/groups.PNG)
 
+## Group Page
+![](preview/groupPage.PNG)
+
+## Group Invitation
+![](preview/groupAccept.PNG)
+
+## Notifications
+![](preview/notifications.PNG)
+
 ## Search new friends
 ![](preview/searchUsers.PNG)
+
+## User Profile
+![](preview/userProfile.PNG)
+
+## Edit Profile
+![](preview/editProfile.PNG)
+

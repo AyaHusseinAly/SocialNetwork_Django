@@ -59,7 +59,7 @@ def show(request, id):
             "usersResult": users,
             "query": query,
         })
-    posts = Post.objects.filter(group=group)
+    posts = Post.objects.filter(group=group).order_by('-created_at')
 
     groups = Group.objects.all()
     users_in_group = UserProfile.objects.filter(Q(groups=id))
