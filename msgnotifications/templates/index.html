@@ -72,14 +72,13 @@
                     <div class="d-flex justify-content-center align-items-center" style="background-color:#f88b7c;"id="chatdiv">
                 {% else %}
                     <a href="?id={{ friend.id }}" style="color:black;">
-                    <div class="d-flex justify-content-center align-items-center" id="chatdiv"> 
-                {% endif %}                            
+                    <div class="d-flex justify-content-center align-items-center" id="chatdiv">                       
                         <div class="mx-2">{{friend.username}}</div>
-                       <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
+                       <img class="  m-1 rounded-circle "  src="{% if user.is_authenticated  and friend.userprofile.avatar.url %} {{friend.userprofile.avatar.url}} {% else %} /images/avatars/profile.jpeg {% endif %}">
                     </div>
                      </a> 
                 
-
+                {% endif %}
                 
               
             <hr>

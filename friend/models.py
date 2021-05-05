@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth.models import User
+from msgnotifications.models import Notification
 
 
 class FriendList(models.Model):
@@ -58,7 +59,6 @@ class FriendRequest(models.Model):
     def accept(self):
         # Accept a friend request
         # update both DENDER and RECEIVER friend lists
-        #
         receiver_friend_list = FriendList.objects.get(user=self.receiver)
         if receiver_friend_list:
             receiver_friend_list.add_friend(self.sender)
@@ -67,6 +67,9 @@ class FriendRequest(models.Model):
                 sender_friend_list.add_friend(self.receiver)
                 self.is_active = False
                 self.save()
+                text=str(self.receiver.username +" accepted your friend request")
+                notify_instance = Notification.objects.create(sender=self.receiver, reciever=self.sender,text=text, notifyType="profileView",instance_id=self.receiver.id)
+                notify_instance.save()
     
     def decline(self):
         # Decline a friend request
