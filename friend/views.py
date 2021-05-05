@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.http import HttpResponse
 import json
 from django.contrib.auth.models import User
@@ -6,6 +6,21 @@ from django.contrib.auth.models import User
 
 from accounts.models import UserProfile
 from friend.models import FriendRequest
+
+def friend_requests(request, *args, **kwargs):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        user_id = kwargs.get("user_id")
+        account =  User.objects.get(pk=user_id)
+        if account == user:
+            friend_requests = FriendRequest.objects.filter(receiver= account, is_active= True)
+            context['friend_requests'] = friend_requests
+        else:
+            return HttpResponse("You can't view another users friend requests.")
+    #else:
+    #    redirect("login")
+    return render(request, "friend/friend_requests.html", context)
 
 def send_friend_request(request, *args, **kwargs):
     user = request.user #get authenticated user
@@ -43,6 +58,28 @@ def send_friend_request(request, *args, **kwargs):
         payload['response'] = "You must be authenticated to send a friend request."
     return HttpResponse(json.dumps(payload), content_type="application/json")
 
+def accept_friend_request(request, *args, **kwargs):
+    user = request.user
+    payload = {}
+    if request.method == "GET" and user.is_authenticated:
+        friend_request_id = kwargs.get("friend_request_id")
+        if friend_request_id:
+            friend_request = FriendRequest.objects.get(pk= friend_request_id)
+            # confirm that is the correct request 
+            if friend_request.receiver == user:
+                if friend_request:
+                    # found the request. Not accept it.
+                    friend_request.accept()
+                    payload['response'] = "Friend request accepted"
+                else:
+                    payload['response'] = "Something went wrong"
+            else:
+                payload['response'] = "That is not your request to accept."
+        else:
+            payload['response'] = "Unable to accept that friend request."
+    return HttpResponse(json.dumps(payload), content_type="application/json")
+
+
 def decline_friend_request(request,*args,**kwargs):
     user=request.user
     payload={}
@@ -64,4 +101,3 @@ def decline_friend_request(request,*args,**kwargs):
         payload['response']="please log in to decline"
     return HttpResponse(json.dumps(payload), content_type="application/json")
 
-                
