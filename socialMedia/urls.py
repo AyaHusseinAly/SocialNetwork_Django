@@ -27,7 +27,7 @@ urlpatterns = [
 
     path('posts/', include("posts.urls")),
     path('groups/', include("groups.urls")),
-    path('messages/', include("msgnotifications.urls")),
+    path('messages/', include("msgnotifications.urls")), #route for messages and notifications
 
 
 ]

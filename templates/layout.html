@@ -35,7 +35,7 @@
             <a  href="/groups/" id="navLink"><i class="fa fa-users" aria-hidden="true"></i><p>groups</p></a>
             <a  href="#" id="navLink"><i class="fa fa-user-friends" aria-hidden="true"></i><p>Friends</p></a>
             <a  href="/messages" id="navLink"><i class="fa fa-comments" aria-hidden="true"></i><p>Messages</p></a>
-            <a  href="#" id="navLink"><i class="fa fa-bell" aria-hidden="true"></i><p>Notifications</p></a>
+            <a  href="/messages/notifications" id="navLink"><i class="fa fa-bell" aria-hidden="true"></i><p>Notifications</p></a>
 
             <div >
                 <a  href="{% url 'userProfile' %}" id="navLink"><img  class="  m-1 rounded-circle"  src="{% if user.is_authenticated %} {{request.user.userprofile.avatar.url}} {% else %} /images/avatars/profile.jpeg {% endif %}"  ></a>

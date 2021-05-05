@@ -87,7 +87,7 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-text">{{post.content}}</h5>
-                         {% if post.image != null %}
+                         {% if post.image != null and  post.image != ""%}
                             <img src="/images/{{post.image }}" width="400px"/>
                         {% endif %}
 
