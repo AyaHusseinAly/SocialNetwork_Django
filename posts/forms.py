@@ -1,6 +1,7 @@
 from django import forms
 from .models import Post
 from .models import Comment
+from .models import BadWord
 from django.core.exceptions import ValidationError
 
 class PostForm(forms.ModelForm):
@@ -8,6 +9,20 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ("content",)
 
+# def clean_content(self):
+#         content = self.cleaned_data.get('content')
+#         bad_words = BadWord.objects.all()
+#         results = list(map(lambda x: x.word, bad_words))
+        
+#         bad_words_list = []
+#         for word in results:
+#             if word in content:
+#                 bad_words_list.append(word)
+#         bad_words_string = ', '.join(bad_words_list)
+        
+#         if len(bad_words_list) > 0:
+#             raise ValidationError("The content of a post contain bad words " + bad_words_string)
+#         return content
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -19,3 +34,18 @@ class CommentForm(forms.ModelForm):
         # widgets={
         #     'owner':forms.TextInput(attrs={'value':'','id':'eldr'})
         # }
+
+# def clean_content(self):
+#         content = self.cleaned_data.get('content')
+#         bad_words = BadWord.objects.all()
+#         results = list(map(lambda x: x.word, bad_words))
+        
+#         bad_words_list = []
+#         for word in results:
+#             if word in content:
+#                 bad_words_list.append(word)
+#         bad_words_string = ', '.join(bad_words_list)
+        
+#         if len(bad_words_list) > 0:
+#             raise ValidationError("The content of a comment contain bad words " + bad_words_string)
+#         return content        

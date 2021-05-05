@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
-from .models import Post , Comment
+from .models import Post , Comment , Like ,BadWord 
 from groups.models import Group
 from .forms import PostForm 
 from .forms import CommentForm
@@ -83,7 +83,28 @@ def AddCommentView(request,id):
         })
 
 def delComment(request,id): 
-    
+    # post = Post.objects.get(pk=id)
     comment = Comment.objects.get(pk=id)
     comment.delete()
     return redirect("index")
+
+def like_post(request): 
+    user = request.user
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        post_obj = Post.objects.get(id=post_id)
+
+        if user in post_obj.liked.all():
+            post_obj.liked.remove(user)
+        else:
+            post_obj.liked.add(user)  
+
+        like, created = Like.objects.get_or_create(user = user,post_id = post_id ) 
+
+        if not created:
+            if like.value == 'Like':
+                like.value = 'Unlike' 
+            else :
+                 like.value = 'Like'    
+        like.save()            
+        return redirect("index")
