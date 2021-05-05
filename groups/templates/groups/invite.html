@@ -1,12 +1,16 @@
 {% extends "layout.html"%} {% block body %}
-<div class="container mycard p-5 m-5" style="width: 80%">
+
+<div class="post-topbar p-5 m-5 d-flex justify-content-around " style="width: 80%">
+<div class="">
   <i class="fa fa-users fa-4x" aria-hidden="true"></i>
   <h3>Invite Friends</h3>
-  <form method="POST" enctype="multipart/form-data" action="{% url "group.sendrequest" id %}">
+  </div>
+  <form method="POST"name="formSelect" enctype="multipart/form-data" action="{% url 'group.sendrequest' id %}" multiple style="width:60%" class="mycard">
+ 
   {% csrf_token %}
-    <select name="groupRequest" id="groupRequest" multiple> 
+    <select name="groupRequest" id="groupRequest" class="picker" multiple style="width:100%"> 
       {% for invite in invites %}
-      <option value="{{invite.id}}" class="mycard">
+      <option value="{{invite.id}}" class="mycard" style="width: 100%">
         {% if invite.avatar %}
         <img class="m-1 rounded-circle" src="/images/{{invite.UserProfile.avatar}}" />
         {% else%}
@@ -15,7 +19,15 @@
       </option> 
       {% endfor %}
     </select> 
-    <input type="submit" value="Invite">
+    </br>
+    {% comment %} {%if groupRequest%} {% endcomment %}
+    <input type="submit" id="Testing" value="Invite"  class="btn btn-danger px-5" style="widtd:100%" disabled>
+    {% comment %} {%else%}
+    <input type="submit" value="Invite"  class="btn btn-danger px-5" style="widtd:100%" >
+    {%endif%} {% endcomment %}
+
   </form>
+
 </div>
+
 {%endblock%}

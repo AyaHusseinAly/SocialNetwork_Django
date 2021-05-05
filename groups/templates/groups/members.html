@@ -1,0 +1,24 @@
+{% extends "layout.html"%} {% block body %} {% comment %}
+<div class="col-sm-8 mycard">
+  {% endcomment %}
+  <div class="post-topbar p-5 m-5" style="width: 80%">
+    <div class="d-flex justify-content-center">
+      <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+    </div>
+    <h3 class="d-flex justify-content-center">{{group.name}} Members</h3>
+    {% for user in users %}
+    <div class="mycard">
+      {% if user.userprofile.avatar %}
+      <img
+        class="m-1 rounded-circle"
+        src="/images/{{user.userprofile.avatar}}"
+      />
+      {% else%}
+      <img class="m-1 rounded-circle" src="/images/avatars/profile.jpeg" />
+      {%endif%} {{user.username}}
+    </div>
+    {% endfor %}
+  </div>
+  {% comment %}
+</div>
+{% endcomment %} {%endblock%}
