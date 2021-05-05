@@ -22,7 +22,7 @@
             <hr>
             <h5>{{group.name}}</h5>
             <div class="d-flex pl-3">
-                <p><button class="mx-2">visit group</button></p>
+                <p><button class="mx-2" onclick="location.href='{% url "show" group.id %}';" >visit group</button></p>
                 <p><button class="mx-2" style="background-color:grey">leave group</button></p>
             </div>
             
@@ -41,19 +41,21 @@
                 
                 <div class="post-topbar">
                     
-                    <form action='{% url "index" %}' method="post">
+                    <form action='{% url "index" %}' method="post" enctype="multipart/form-data" >
                         {% csrf_token %}
                         <div class="row">    
                             <div class="col-10">
                                 {{ form.as_p}}
                                 <input class="post_input " name="content" placeholder="  What's in your mind?" />
+                                <input class="mt-2 " type="file" name="image"/>
+
                             
                             </div>
                             <div class="col-2">
                                 <button class="post btn" type="submit" >Post</button>
                             </div>   
                         </div> 
-                        </form>
+                    </form>
                         
                     
                 </div>
@@ -85,6 +87,10 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-text">{{post.content}}</h5>
+                         {% if post.image != null and  post.image != ""%}
+                            <img src="/images/{{post.image }}" width="400px"/>
+                        {% endif %}
+
                 </div>
                 <div class="card-footer text-muted d-flex">
                     <p style="text-align:left;color:gray;font-size:12px;margin:0px">{{post.created_at}}</p>
@@ -113,6 +119,7 @@
 
         
         </div>
+
     </div>    
 
 

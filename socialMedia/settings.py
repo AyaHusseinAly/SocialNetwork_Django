@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'accounts',
     'msgnotifications',
     'groups',
+    'friend',
     'active_link',
+    'profanitycustom',
 ]
 
 MIDDLEWARE = [
@@ -83,8 +85,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "socialmedia",
-        "USER": "root",
-        "PASSWORD": "1234",
+        "USER": "root1",
+        "PASSWORD": "",
         "HOST": "localhost"
     }
 }
@@ -129,7 +131,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/image/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]

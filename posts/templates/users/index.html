@@ -17,9 +17,11 @@
             <div class="mycard">
                 <i class="fa fa-users fa-4x" aria-hidden="true"></i>
                 <h1>Results: </h1>
+                {% if usersResult%}
                 {% for user in usersResult %}
                 <hr>
-                <h5>{{user.first_name}} {{user.last_name}}</h5>
+                <h5>{{user.userprofile.first_name}} {{user.userprofile.last_name}}</h5>
+                <h6>UserName: {{user.username}}</h6>
                 <div class="d-flex " style="width:100%">
                     <a class="btn-secondary btn" href="/profile/{{user.id}}" style="width:35%;"><i class="fas fa-user"></i>View Profile</a>
                     <button class="post btn" style="width:35%;"><i class="fas fa-user-plus"></i>Add Friend</button>
@@ -28,6 +30,10 @@
                 </div>
                 <hr>
                 {% endfor %}
+                {% else %}
+                <h3>There is no results.. </h3>
+                <h2>Search using another name.</h2>
+                {% endif %}
 
 
             </div>

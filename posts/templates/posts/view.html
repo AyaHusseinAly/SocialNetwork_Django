@@ -3,11 +3,24 @@
 {% block body %} 
 <div class="container">
 
-    <div  style="margin-bottom: 50px;margin-top: 20px;border-radius: 20px;border: 2px solid #e44d3a;padding: 40px;">
+    <div style="margin-bottom: 50px;margin-top: 20px;border-radius: 20px;border: 2px solid #e44d3a;padding: 40px;">
     
     <strong><h5 style="display: inline-block;font-size: 20px;">{{post.owner}}</h5></strong> -{{post.created_at}}
     <div style="width: 300px;height: 2px;background-color: #e44d3a;"></div>
-    <p style="margin-top: 20px;">{{post.content}}</p>
+    <div class="row">
+        <div class="col-6">
+            <p style="margin-top: 20px;">{{post.content}}</p>
+        </div>
+        <div class="col-6">
+        {% if post.image != null and  post.image != ""%}
+            <img src="/images/{{post.image }}" width="400px"/>
+        {% endif %}
+        </div>
+
+    </div>
+    
+          
+
      </div>
     
     <hr>

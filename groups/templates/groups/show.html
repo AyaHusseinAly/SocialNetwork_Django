@@ -1,7 +1,7 @@
 {% extends "layout.html"%}
 
 {% block body %}
-<div style=" background-image: url({{group.cover.url}});width:100%%;height:300px;background-size: 100% 300px;cursor: pointer;background-repeat: no-repeat;">
+<div style=" background-image: {% if group.cover != '' %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:100%%;height:300px;background-size: 100% 300px;cursor: pointer;background-repeat: no-repeat;">
 </div>
 <div class="d-flex justify-content-between" style="background-color:#e44d3a; padding:10px;color: white;">
   <div class="" >
@@ -9,15 +9,19 @@
   <h3>{{group.description}}</h3>
   </div>
   <div class="d-flex align-items-end">
- 
-    <a  href="{% url "invite" %}"><i class="fa fa-users fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
-     <a><i class="fa fa-user-plus fa-2x m-3" aria-hidden="true"></i></a>
+ {%if request.user in users_in_group%}
+    <a  ><i class="fa fa-users fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
+     <a href="{% url "invite" group.id %}"><i class="fa fa-user-plus fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
      <a onclick=""><i class="fas fa-door-open fa-2x m-3" aria-hidden="true"></i></a>
-
+{%endif%}
   </div>
 </div>
 
 <div class="container">
+
+
+{%if request.user in users_in_group%}
+
     <div class="row pt-1">
 
         <div class="col-sm-4 ">
@@ -52,6 +56,7 @@
         
 
     <!-- ----------------------------------------------------------- end side ----------------------------------- -->
+        
         <div class="col-sm-8 mycard">
                 
                 <div class="post-topbar">
@@ -85,9 +90,9 @@
                         <p class="col-5 tex-left "><span style="color:#e44d3a;">Post from:</span> {{post.owner}}</br><span style="color:#e44d3a;">Group :</span> {{group.name}}</p>
                         <div class="col-2"></div>
                         <div class="col-5">
-                            <a href="{% url "group.view" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a href="{% url "group.edit" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
-                            <a href="{% url "group.delete" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="/posts/view/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                            <a href="/posts/edit/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
+                            <a href="/posts/delete/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
@@ -97,7 +102,7 @@
                 <div class="card-footer text-muted d-flex">
                     <p >{{post.created_at}}</p>
                     <div style="width:300px"></div>
-                    <a href="{% url "view" post.id%}" style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg " aria-hidden="true"></i></a>
+                    <a href="/posts/view/{{post.id}}"  style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg " aria-hidden="true"></i></a>
                     <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a>
                    
                 </div>
@@ -109,12 +114,55 @@
 
         
         </div>
+
+{%elif not invited%}
+  <div class="row pt-1 mt-5">
+        <div class="col-sm-8 mycard">                
+                <div class="post-topbar">                    
+                    <a class="post btn btn-primary" >Join Group</a>
+                </div>
+                         
+        </div>
+    </div>    
+
+
+
+
     </div>    
 
 
 
   
 </div>
+
+{%else%}
+
+  <div class="row pt-1 mt-5">
+        <div class="col-sm-8 mycard">
+                
+                <div class="post-topbar">
+                    
+                    <a class="post btn btn-primary" >Accept invitation</a>
+                    <a class="post btn btn-secondary" >Cancel invitation</a>
+
+
+                        
+                    
+                </div>
+                         
+        </div>
+    </div>    
+
+
+
+
+    </div>    
+
+
+
+  
+</div>
+{%endif%}
 
 {%endblock%}
 

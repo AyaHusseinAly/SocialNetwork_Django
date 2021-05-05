@@ -7,7 +7,9 @@ from django.core.exceptions import ValidationError
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("content",)
+        fields = ("content","image")
+        #fields = "__all__"
+
 
 # def clean_content(self):
 #         content = self.cleaned_data.get('content')
@@ -23,6 +25,13 @@ class PostForm(forms.ModelForm):
 #         if len(bad_words_list) > 0:
 #             raise ValidationError("The content of a post contain bad words " + bad_words_string)
 #         return content
+
+class PostEditForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ("content",)
+        #fields = "__all__"
+
 
 class CommentForm(forms.ModelForm):
     class Meta:

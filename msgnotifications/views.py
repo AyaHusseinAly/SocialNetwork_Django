@@ -3,9 +3,10 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 #from .models import Friends
-from .models import Message
+from .models import Message, Notification
 from .forms import MsgForm
 from django.contrib.auth.models import User
+from accounts.models import  UserProfile
 #from django.contrib.auth.decorators import login_required, permission_required
 
 
@@ -24,10 +25,13 @@ def index(request):
             "usersResult":users,
             "query":query,
         })
+    
     #friends= Friends.objects.all()
     
     #friends=[{'id':1,'name':"Amal Tamam",'img':"exPP3.png"},{'id':2,'name':"Alaa Hesham",'img':"alaa.png"},{'id':3,'name':"Eman Hussein",'img':"eman.png"},{'id':4,'name':"Fatma Tarek",'img':"fatma.png"}]
     friends=User.objects.exclude(username=request.user.username)
+    usersforAvatar  = UserProfile.objects.filter(user__in=friends)   
+
 
     sender1=User.objects.get(pk=friendId)
     sender2= User.objects.get(username=request.user.username)
@@ -45,13 +49,26 @@ def index(request):
     return render(request,"index.html",{
         "friends":friends,
         "messages":messages,
-        "msgto":sender1.username
+        "msgto":sender1.username,
+        "avatars":usersforAvatar
+
 
 
     })
     
+#def delete(request,id):
+#    msg=Message.objects.get(pk=id)
+#    msg.delete()
+#    return redirect("index")
 
-def delete(request,id):
-    msg=Message.objects.get(pk=id)
-    msg.delete()
-    return redirect("index")
+################################################## Notififcations #####################################################################    
+def notify(request):
+
+    notifications= Notification.objects.filter(reciever=request.user).order_by('-created_at')
+
+
+
+    return render(request,"notificationIndex.html",{
+
+        "notifications":notifications
+    })

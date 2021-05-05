@@ -65,22 +65,22 @@
             <h2>Chats</h2>
 
             {% for friend in friends %}
+
             <hr>
                 {% if msgto == friend.username %}
                     <a href="?id={{ friend.id }}" style="color:black;">
                     <div class="d-flex justify-content-center align-items-center" style="background-color:#f88b7c;"id="chatdiv">
-                        <div class="mx-2">{{friend.username}}</div>
-                        <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
-                    </div>
-                     </a> 
                 {% else %}
                     <a href="?id={{ friend.id }}" style="color:black;">
-                    <div class="d-flex justify-content-center align-items-center" id="chatdiv">
+                    <div class="d-flex justify-content-center align-items-center" id="chatdiv"> 
+                {% endif %}                            
                         <div class="mx-2">{{friend.username}}</div>
-                        <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
+                       <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
                     </div>
-                     </a>
-                {% endif %}  
+                     </a> 
+                
+
+                
               
             <hr>
             {% endfor %} 

@@ -1,4 +1,4 @@
-<!DOCTYPE html >
+<!--<!DOCTYPE html >
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -12,4 +12,62 @@
 </form>
 
 </body>
+</html>
+-->
+
+<!DOCTYPE html>
+    {% load static  %}
+    <html>
+    <head>
+    <title>Social Media</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/posts.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/profile.css'%}" type="text/css">
+    <title> signup </title>
+    <style>
+   
+    </style>
+    
+    </head>
+<body>
+
+    <nav class="nav">
+        <nav class="py-1">
+        
+            <div class="row">
+                <div class="col-4"></div>
+
+                <div class="col-4">
+                    <h3 style="text-align: center;"class="m-4"> Welcome  to our Social Media Website  </h3>
+
+                </div>
+                <div class="col-4">
+                    <h4 style="text-align:right;  text-decoration: underline;"class="mr-5 mt-2"><a  href="/signup" id="navLink">signup</a></h4>   
+                </div>
+
+            </div>     
+        
+            </div>
+        
+        </nav>
+        
+        
+        </nav>
+        <div class="container p-5">
+            <div style="height:150px"></div>
+            <div class="m-5 mycard post-topbar" >
+                <form action="{% url "login" %}"  method="post" >
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit" style="width:300px">login</button>
+                </form>
+            </div>
+
+        </div>
+    
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://
 </html>

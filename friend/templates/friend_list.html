@@ -1,0 +1,68 @@
+{% extends "profileLayout.html" %}
+{% block content %}
+<style type="text/css">
+	.profile-image{
+		max-height: 100px;
+		max-width: 100px;
+	}
+	.profile-image{
+		border-radius: 12px;
+	}
+	.card{
+		border-radius: 12px;
+	}
+	.friends-text{
+		color: #000;
+		font-weight: 500;
+	}
+	.friends-text-container{
+		border: 1px solid #cccccc;
+		border-radius: 12px;
+	}
+	.friends-btn:hover {
+		background-color: #bfbfbf;
+		border-color: #bfbfbf;
+	}
+	.dropdown-toggle::after { 
+		content: none; 
+	}
+	.profile-link{
+		color: #000;
+	}
+	.checkmark-icon{
+		color: green;
+	}
+	.cancel-icon{
+		color: red;
+	}
+	
+</style>
+
+<div class="container">
+	
+	<div >
+		<h2>Friends of {{user.username}}</h2>
+		<!--<div class="d-flex flex-row flex-wrap">-->
+			{% for friend in friends %}
+			<div class="card" col-lg-4 >
+				<a class="profile-link" >
+					<div class="card-image m-2 col-lg-4">
+						<img class="img-fluid profile-image" src="{{friend.0.userprofile.avatar.url}}" alt="">
+						<a class="profile-link" style="display: inline;" >
+							<h4 class="card-title">{{friend.0.username|truncatechars:50}}  {{friend.0.last_name|truncatechars:50}}</h4>
+						</a>
+						<button class="post btn btn-sm"><a href="/messages/?id={{friend.0.id}}">Send a Message</a></button>
+						
+					</div>
+				</a>
+				
+				<!--<div class="card-center px-2">-->
+					
+					
+				<!--</div>-->
+				{% endfor %}	
+	</div>
+	
+</div>
+
+{% endblock %}
