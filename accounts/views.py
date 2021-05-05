@@ -9,6 +9,7 @@ from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
 from posts.models import Post
 from .models import UserProfile
+from posts.forms import PostForm
 # Fatima 
 from django.conf import settings
 from friend.friend_request_status import FriendRequestStatus
@@ -111,6 +112,8 @@ def redirecting(request):
 @login_required(login_url="/login")
 def profile(request,id):
     context ={}
+    posts={}
+    form={}
     account= User.objects.get(id=id)
     if  account:
         context['id'] = account.id
@@ -138,6 +141,7 @@ def profile(request,id):
         is_self = False
         if friends.filter(pk=user.id):
             is_friend = True
+            posts=Post.objects.filter(owner_id=account.id)
         else:
             is_friend = False
             # CASE1: Request has been sent from THEM to YOU: FriendRequestStatus.THEM_SENT_TO_YOU
@@ -156,6 +160,7 @@ def profile(request,id):
     else:
         try:
             is_self = True
+            posts=Post.objects.filter(owner_id=user.id)
             # You look at your own profile
             friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
         except:
@@ -171,7 +176,9 @@ def profile(request,id):
     return render(request, "profile.html",{
        "user":user,
        "account":account,
-       "checker":context
+       "checker":context,
+       "posts":posts,
+       
    })
 
    # return render(request,'profile.html',{
