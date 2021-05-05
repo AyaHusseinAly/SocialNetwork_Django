@@ -1,11 +1,19 @@
-{% extends 'layout.html' %}
+{% extends 'profileLayout.html' %}
 {% block title %} edit {% endblock %}
 
-{% block body %}
+{% block content %}
+<div class="container pt-2 ">
+    <div class="post-topbar">
     <form  method="post"  action="{% url  "editProfile" user.id   %}" enctype="multipart/form-data">
+        <table class="table table-bordered table-hover">
         {% csrf_token %}
-        {{ form.as_p }}
-        {{profile.as_p}}
-        <button type="submit">Update Account</button>
+        {{ form.as_table }}
+        {{profile.as_table}}
+        <tr>
+            <td></td>
+            <td><input type="submit" name="submit" value="Register" /></td>
+        </table>
     </form>
+    </div>
+    </div>
 {% endblock %}
