@@ -1,41 +1,67 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Post, Comment
+from .models import Post , Comment , Like ,BadWord 
 from groups.models import Group
 from .forms import PostForm,PostEditForm
 from .forms import CommentForm
 from django.contrib.auth.models import User
 from accounts.models import UserProfile
 from django import forms
+from friend.models import FriendList
+from django.contrib.auth.decorators import login_required
+
 
 
 # from django.views.generic import CreateView
 # from groups.models import Group
 #from django.contrib.auth.decorators import login_required, permission_required
 
-#@login_required
 #@permission_required(["books.view_book"],raise_exception=True)
 
 def index(request):
     query = request.GET.get('q', '')
     if(query):
-        first_name_query1 = User.objects.filter(userprofile__first_name__contains=str(query))
+        first_name_query1 = User.objects.filter(userprofile__first_name__icontains=str(query))
         first_name_query2 = User.objects.filter(userprofile__first_name__in=[query])
-        last_name_query1 = User.objects.filter(userprofile__last_name__contains=str(query))
+        last_name_query1 = User.objects.filter(userprofile__last_name__icontains=str(query))
         last_name_query2 = User.objects.filter(userprofile__last_name__in=[query])
-        username_query = User.objects.filter(username__in=[query])
+        username_query1 = User.objects.filter(username__in=[query])
+        username_query2 = User.objects.filter(username__icontains=str(query))
+
         users = first_name_query1.union(
-            first_name_query1, last_name_query1, last_name_query2,username_query)
+            first_name_query1, last_name_query1, last_name_query2,username_query1,username_query2)
         
         return render(request, "users/index.html", {
             "usersResult": users,
-           
             "query": query,
         })
+    try:
+        posts=Post.objects.filter(owner=request.user)
+    except:
+        pass
+    try:
+        # friends = []
+        friend_list = FriendList.objects.get(user=request.user)
+        for friend in friend_list.friends.all():
+            # friends.append((friend))
+            posts=posts.union(Post.objects.filter(owner=friend))
+    except FriendList.DoesNotExist:
+        pass
+     #[(account1, True), (account1, False), ... ]
+    # auth_user_friend_list = FriendList.objects.get(user=user)
+    # 
 
-    posts = Post.objects.all()
-    groups = Group.objects.all()
-    post = PostForm(request.POST, request.FILES or None)
+    # posts = Post.objects.all().order_by('-created_at')
+    try:
+        user_groups = request.user.userprofile.groups.all()
+        for group in user_groups:
+            posts=posts.union(Post.objects.filter(group=group))
+    except:
+        pass
+    posts=posts.order_by('-created_at')
+    groups=request.user.userprofile.groups.all()
+    # groups=Group.objects.all()
+    post=PostForm(request.POST, request.FILES or None)
 
     if post.is_valid():
         form_content=post.cleaned_data['content']
@@ -100,8 +126,35 @@ def AddCommentView(request, id):
     })
 
 
-def delComment(request, id):
 
+
+
+def delComment(request,id): 
+    # post = Post.objects.get(pk=id)
     comment = Comment.objects.get(pk=id)
     comment.delete()
     return redirect("index")
+
+def like_post(request): 
+    user = request.user
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        post_obj = Post.objects.get(id=post_id)
+
+        if user in post_obj.liked.all():
+            post_obj.liked.remove(user)
+        else:
+            post_obj.liked.add(user)  
+
+        like, created = Like.objects.get_or_create(user = user,post_id = post_id ) 
+
+        if not created:
+            if like.value == 'Like':
+                like.value = 'Unlike' 
+            else :
+                 like.value = 'Like'    
+        like.save()            
+        return redirect("index")
+
+    
+

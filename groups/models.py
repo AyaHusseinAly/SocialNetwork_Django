@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
+
 # from accounts.models import UserProfile
 
 # Create your models here.
@@ -24,7 +26,18 @@ class Group(models.Model):
 
 
 class GroupInvite(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
+    #
+    #     created_at = models.DateTimeField(auto_now_add=True)
+    #     inviteFrom = models.ForeignKey(
+    #         User, on_delete=models.CASCADE, related_name="groupinvitefrom")
+    #     inviteTo = models.ForeignKey(
+    #         User, on_delete=models.CASCADE, related_name="groupinviteto")
+    #     group = models.ForeignKey(
+    #         Group, on_delete=models.CASCADE, related_name="groupinvitegroup")
+
+    #
+    # created_at=models.DateTimeField(auto_now_add=True)
+    created_at = datetime.datetime.now()
     inviteFrom = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="groupinvitefrom")
     inviteTo = models.ForeignKey(

@@ -3,9 +3,9 @@
 {% block content %}
 <div class="profile-content">
     {% if checker.is_self == False %}
-    <h2>Information about {account.first_name}}:</h2>
+    <h2>Information about {{account.userprofile.first_name}}:</h2>
     {% else %}
-    <h2>Information about {{user.first_name}}:</h2>
+    <h2>Information about {{user.userprofile.first_name}}:</h2>
     {% endif %}
     <br>
 

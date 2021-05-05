@@ -7,6 +7,7 @@ from .models import Message, Notification
 from .forms import MsgForm
 from django.contrib.auth.models import User
 from accounts.models import  UserProfile
+from friend.models import FriendList
 #from django.contrib.auth.decorators import login_required, permission_required
 
 
@@ -27,9 +28,25 @@ def index(request):
         })
     
     #friends= Friends.objects.all()
+    flag = 0 # check to see if friendID doesn't exist in my friend list
     
     #friends=[{'id':1,'name':"Amal Tamam",'img':"exPP3.png"},{'id':2,'name':"Alaa Hesham",'img':"alaa.png"},{'id':3,'name':"Eman Hussein",'img':"eman.png"},{'id':4,'name':"Fatma Tarek",'img':"fatma.png"}]
-    friends=User.objects.exclude(username=request.user.username)
+    # friends=User.objects.exclude(username=request.user.username)
+    try:
+        friend_list = FriendList.objects.get(user=request.user)
+    except FriendList.DoesNotExist:
+        # return HttpResponse("could not find a friends list for {this_user.username}")
+        return render(request, "friend/friend_list.html")
+    friends = [] #[(account1, True), (account1, False), ... ]
+    # auth_user_friend_list = FriendList.objects.get(user=user)
+    for friend in friend_list.friends.all():
+        # friends.append((friend, auth_user_friend_list.is_mutual_friend(friend)))
+        friends.append((friend))
+        if friendId == friend.id or friendId==request.user.id:
+            flag=1
+    if flag == 0:
+        return redirect('/profile/'+str(friendId))
+
     usersforAvatar  = UserProfile.objects.filter(user__in=friends)   
 
 
