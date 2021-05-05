@@ -152,5 +152,54 @@ def cancel_friend_request(request, *args, **kwargs):
          payload['response'] = "You must be authenticated to cancel a friend request."
     return HttpResponse(json.dumps(payload), content_type="application/json")
 
+def friend_list_view(request, *args, **kwargs):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        user_id = kwargs.get("user.id")
+        if user_id:
+            try:
+                this_user = User.objects.get(pk=user_id)
+                context['this_user'] = this_user
+            except User.DoesNotExist:
+                return HttpResponse("That user does not exist.")
+            try:
+                friend_list = FriendList.objects.get(user=this_user)
+            except FriendList.DoesNotExist:
+                return HttpResponse("could not find a friends list for {this_user.username}")
+
+             # Must be friends to view a friends list
+            if user != this_user:
+                if not user in friend_list.friends.all():
+                    return HttpResponse("You must be friends to view their friends list")
+
+            friends = [] #[(account1, True), (account1, False), ... ]
+            auth_user_friend_list = FriendList.objects.get(user=user)
+            for friend in friend_list.friends.all():
+                friends.append((friend, auth_user_friend_list.is_mutual_friend(friend)))
+            context['friends'] = friends
+        else:
+            return HttpResponse("You must be friends to view their fiends list.")
+        return render(request, "friend/friend_list.html", context)
+
+def friend_list_view1(request, *args, **kwargs):
+    context = {}
+    user = request.user
+    #if user.is_authenticated:
+    try:
+        friend_list = FriendList.objects.get(user=user)
+    except FriendList.DoesNotExist:
+        return HttpResponse("could not find a friends list for {this_user.username}")
+    friends = [] #[(account1, True), (account1, False), ... ]
+    auth_user_friend_list = FriendList.objects.get(user=user)
+    for friend in friend_list.friends.all():
+        friends.append((friend, auth_user_friend_list.is_mutual_friend(friend)))
+
+    context['friends'] = friends
+    return render(request, "friend_list.html", context)
+    #return HttpResponse("You must be friends to view their friends list")
+        
+
+
 
             
