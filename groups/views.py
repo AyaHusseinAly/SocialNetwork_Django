@@ -195,11 +195,19 @@ def sendRequestJoin(request, id):
     return redirect("group")
 
 
+# def request(request, id):
+#     group = Group.objects.get(id=id)
+#     requests = GroupRequestJoin.objects.filter(
+#         requestTo=request.user).filter(group=group)
+#     return render(request, "groups/request.html", {
+#         "requests": requests,
+#         "id": id
+#     })
 def request(request, id):
     group = Group.objects.get(id=id)
     requests = GroupRequestJoin.objects.filter(
         requestTo=request.user).filter(group=group)
-    return render(request, "groups/request.html", {
+    return render(request, "groups/groupRequests.html", {
         "requests": requests,
         "id": id
     })
@@ -218,6 +226,31 @@ def acceptrequest(request, id):
             sender=group.owner, reciever=user, text=text, notifyType="groupView", instance_id=group.id)
         notify_instance.save()
 
+    return redirect("group")
+
+
+def acceptRefuseRequest(request, id):
+    group = Group.objects.get(id=id)
+    user_id = request.POST['user']
+    user = User.objects.get(id=int(user_id))
+    print("print1111111111111")
+    print(user)
+    print(request.POST['submit'])
+    print(dict(request.POST)['submit'] == ['Accept'])
+    if dict(request.POST)['submit'] == ['Accept']:
+        user.userprofile.groups.add(group)
+        text = " you are now a member in " + str(group.name+" group")
+        notify_instance = Notification.objects.create(
+            sender=group.owner, reciever=user, text=text, notifyType="groupView", instance_id=group.id)
+        notify_instance.save()
+    elif dict(request.POST)['submit'] == ['Refuse']:
+        text = " Admin of " + str(group.name+" group refused your request")
+        notify_instance = Notification.objects.create(
+            sender=group.owner, reciever=user, text=text, notifyType="groupView", instance_id=group.id)
+        notify_instance.save()
+    request = GroupRequestJoin.objects.get(
+        requestTo=request.user, group=group)
+    request.delete()
     return redirect("group")
 
 
