@@ -46,6 +46,8 @@ def about(request,id):
     if user==request.user:
         context["is_self"]=True
         choice="user"
+        friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
+        context["friend_requests"]=friend_requests
     else:
         context["is_self"]=False
         choice="account"
@@ -62,7 +64,7 @@ def edit(request, id):
     user_profile = UserProfile.objects.get(user=id)
     form = UserCreationForm(request.POST or None, instance=user)
     profile_form = UserProfileForm(request.POST or None,request.FILES or None, instance=user_profile)
-
+    friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
     if form.is_valid() and profile_form.is_valid():
         form.save()
         profile = profile_form.save(commit = False)
@@ -72,7 +74,10 @@ def edit(request, id):
     return render(request, 'accounts/editProfile.html', {
         'form': form,
         'profile':profile_form,
-        'user': user
+        'user': user,
+        'checker':{
+            'friend_requests':friend_requests
+        }
 
     })
 

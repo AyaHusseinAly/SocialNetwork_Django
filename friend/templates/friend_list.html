@@ -48,7 +48,9 @@
 
 <div class="container">
 	<div>
-		<h2>Friends of {{user.username}}</h2>
+		<h2>Friends of {{user.username}}:</h2>
+		<br>
+		<hr>
 		{% if friends|length > 0 %}
 		{% for friend in friends %}
 		<div class="mycard col-lg-8 d-flex justify-content-center">

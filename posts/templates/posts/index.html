@@ -26,7 +26,7 @@
 <div class="container">
     <div class="row pt-1">
 
-        <div class="col-sm-4 ">
+        <div class="col-sm-4 py-2 ">
 
             <div class="mycard">
                 <form action="" method="GET">
@@ -37,7 +37,7 @@
 
             <div class="mycard">
                 <i class="fa fa-users fa-4x" aria-hidden="true"></i>
-                <h2>your groups</h2>
+                <h2>Your groups</h2>
 
                 {% for group in groups %}
                 <hr>
@@ -60,24 +60,17 @@
 
         <!-- ----------------------------------------------------------- end side ----------------------------------- -->
         <div class="col-sm-8 mycard">
-
             <div class="post-topbar">
-
                 <form action='{% url "index" %}' method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-
-
                     <div class="row">
                         <div class="col-10">
                             {{form.as_p}}
-
-
                             {% if form.content.error %}
                             <div id="form-error">
                                 {{form.content.errors.0}}
                             </div>
                             {% endif %}
-
                         </div>
 
                         <div class="col-2">

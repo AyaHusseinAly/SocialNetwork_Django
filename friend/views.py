@@ -138,4 +138,6 @@ def friend_list_view1(request, *args, **kwargs):
     for friend in friend_list.friends.all():
         friends.append((friend))
     context['friends'] = friends
+    friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
+    context["checker"]={"friend_requests":friend_requests}
     return render(request, "friend_list.html", context)

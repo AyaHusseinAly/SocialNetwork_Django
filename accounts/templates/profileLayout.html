@@ -5,6 +5,15 @@
 <div class="container">
     <div class="row profile">
         <div class="col-md-3">
+            <div class="alert alert-success" id="accepted" style="display:none;"  role="alert">
+                Request confirmed! Friend added.
+              </div>
+              <div class="alert alert-danger" style="display:none;" id="deleted" role="alert">
+                Friend have been removed.
+              </div>
+              <div class="alert alert-danger" style="display:none;" id="decline" role="alert">
+                You have declined the request.
+              </div>
             <div class="profile-sidebar">
                 <div class="profile-userpic" style="display: flex;justify-content: center;">
                     {% if checker.is_self == False %}
@@ -78,7 +87,7 @@
                     {% endif %}
 
                 </div>
-                {% if checker.friend_requests %}
+                {% if checker.friend_requests  %}
 
                 <!-- Friend requests -->
                 <div class="d-flex flex-row align-items-center m-2 px-4">
@@ -175,12 +184,24 @@
     var removeFriendBtn = document.getElementById("id_unfriend_btn")
     if (removeFriendBtn != null) {
         removeFriendBtn.addEventListener("click", function () {
-            removeFriend("{{account.id}}", uiReload)
+            removeFriend("{{account.id}}", function(){
+                var deletedDiv=document.getElementById("deleted");
+			    deletedDiv.style.display="block";
+			    setInterval(() => {
+				uiReload()
+			}, 1000);
+            })
         })
     }
 
     function triggerAcceptFriendRequest(friend_request_id) {
-        acceptFriendRequest(friend_request_id, uiReload)
+        acceptFriendRequest(friend_request_id,function(){
+            var acceptedDiv=document.getElementById("accepted");
+			acceptedDiv.style.display="block";
+			setInterval(() => {
+				uiReload()
+			}, 1000);
+        })
     }
 
     var cancelFriendRequestBtn = document.getElementById("id_cancel_friend_request_btn")
@@ -193,8 +214,14 @@
 
 
     function triggerDeclineFriendRequest(friend_request_id) {
-        alert(friend_request_id)
-        declineFriendRequest(friend_request_id, uiReload)
+    
+        declineFriendRequest(friend_request_id,function(){
+            var declinedDiv=document.getElementById("decline");
+			declinedDiv.style.display="block";
+			setInterval(() => {
+				uiReload()
+			}, 1000);
+        })
     }
 
 

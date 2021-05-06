@@ -32,8 +32,10 @@ def index(request):
     friends = [] 
     for friend in friend_list.friends.all():
         friends.append((friend))
-        if friendId == friend.id or friendId==request.user.id:
+        if friendId == friend.id:
             flag=1
+    if friendId==request.user.id:
+        flag=1
     if flag == 0:
         return redirect('/profile/'+str(friendId))
     usersforAvatar  = UserProfile.objects.filter(user__in=friends)   
