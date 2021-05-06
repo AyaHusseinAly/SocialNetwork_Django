@@ -18,6 +18,9 @@ from friend.utils import get_friend_request_or_false
 
 
 
+@login_required(login_url="/login")
+def redirecting(request):
+    return redirect('/posts/')
 
 
 
@@ -68,6 +71,8 @@ def signup(request):
 #         "user":user,
 #     })
 def about(request,id):
+    if request.user.is_anonymous:
+        return redirect('redirecting')
     user = User.objects.get(pk=id)
     context={}
     if user==request.user:
@@ -116,11 +121,10 @@ def edit(request, id):
 #     return render(request,'profile.html',{
 #         "user":user,
 #     })
-@login_required(login_url="/login")
-def redirecting(request):
-    return redirect('/posts/')
 
 def profile(request,id):
+    if request.user.is_anonymous:
+        return redirect('redirecting')
     context ={}
     posts={}
     form={}

@@ -9,8 +9,9 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import UserProfile
 from friend.models import FriendRequest,FriendList
 
-@login_required(login_url="/login")
 def friend_requests(request, *args, **kwargs):
+    if request.user.is_anonymous:
+        return redirect("redirecting")
     context = {}
     user = request.user
 
@@ -24,6 +25,7 @@ def friend_requests(request, *args, **kwargs):
     return render(request, "friend/friend_requests.html", context)
 
 def send_friend_request(request, *args, **kwargs):
+
     user = request.user #get authenticated user
     payload = {}
     if request.method == "POST" and user.is_authenticated:

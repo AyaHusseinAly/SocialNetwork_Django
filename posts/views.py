@@ -19,6 +19,8 @@ from django.contrib.auth.decorators import login_required
 #@permission_required(["books.view_book"],raise_exception=True)
 
 def index(request):
+    if request.user.is_anonymous:
+        return redirect('')
     query = request.GET.get('q', '')
     if(query):
         first_name_query1 = User.objects.filter(userprofile__first_name__icontains=str(query))
