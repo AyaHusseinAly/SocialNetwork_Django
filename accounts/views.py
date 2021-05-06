@@ -1,7 +1,7 @@
 
 # Create your views here.
 from django.shortcuts import render ,redirect
-from django.contrib.auth import authenticate , login
+from django.contrib.auth import authenticate , login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -18,6 +18,9 @@ from friend.utils import get_friend_request_or_false
 
 
 
+# @login_required(login_url="/login")
+# def redirecting(request):
+#     return redirect('/posts/')
 
 
 
@@ -68,6 +71,7 @@ def signup(request):
 #         "user":user,
 #     })
 def about(request,id):
+    
     user = User.objects.get(pk=id)
     context={}
     if user==request.user:
@@ -116,11 +120,9 @@ def edit(request, id):
 #     return render(request,'profile.html',{
 #         "user":user,
 #     })
-@login_required(login_url="/login")
-def redirecting(request):
-    return redirect('/posts/')
 
 def profile(request,id):
+    
     context ={}
     posts={}
     form={}
@@ -196,3 +198,6 @@ def profile(request,id):
    # })
 
 
+def logout_request(request):
+    logout(request)
+    return redirect('index')

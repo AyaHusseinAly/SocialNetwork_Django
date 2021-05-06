@@ -19,7 +19,10 @@ from django.contrib.auth.decorators import login_required
 #@permission_required(["books.view_book"],raise_exception=True)
 
 def index(request):
-    
+
+    # if request.user.is_anonymous:
+    #     return redirect('')
+
     query = request.GET.get('q', '')
     if(query):
         first_name_query1 = User.objects.filter(userprofile__first_name__icontains=str(query))
@@ -91,12 +94,16 @@ def index(request):
 
 def delete(request, id):
     post = Post.objects.get(pk=id)
+    if request.user != post.owner:
+        return render(request,'unauthorized.html')
     post.delete()
     return redirect("index")
 
 
 def edit(request, id):
     postData = Post.objects.get(pk=id)
+    if request.user != postData.owner:
+        return render(request,'unauthorized.html')
     post = PostEditForm(request.POST or None, instance=postData)
     if post.is_valid():
         post.save()

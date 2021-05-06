@@ -17,6 +17,8 @@
 
 <!DOCTYPE html>
     {% load static  %}
+    {% load crispy_forms_tags %}
+
     <html>
     <head>
     <title>Social Media</title>
@@ -44,26 +46,25 @@
 
                 </div>
                 <div class="col-4">
-                    <h4 style="text-align:right;  text-decoration: underline;"class="mr-5 mt-2"><a  href="/signup" id="navLink">signup</a></h4>   
+                    <h4 style="text-align:right;  text-decoration: underline;"class="mr-5 mt-2"><a  href="/signup" id="navLink">Signup</a></h4>   
                 </div>
 
             </div>     
-        
             </div>
-        
         </nav>
-        
-        
         </nav>
-        <div class="container p-5">
+        <div class="container ">
             <div style="height:150px"></div>
-            <div class="m-5 mycard post-topbar" >
+            <div class="mt-2 mycard post-topbar" >
                 <form action="{% url "login" %}"  method="post" >
                     {% csrf_token %}
-                    {{form.as_p}}
+                    {{form|crispy}}
                     <button type="submit" style="width:300px">login</button>
                 </form>
             </div>
+            <p class="text-center">Don't have an account? <a href="/register">Create an account</a>.</p>
+            <p class="text-center">Forgot Password? <a href="{% url 'password_reset' %}">Reset Password</a>.</p>
+
 
         </div>
     

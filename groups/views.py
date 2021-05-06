@@ -85,6 +85,7 @@ def show(request, id):
         return redirect("/groups/show/"+str(group.id))
     return render(request, "groups/show.html", {
         "posts": posts,
+        "form": post,
         "groups": groups,
         "group": group,
         "users_in_group": members,
@@ -95,12 +96,16 @@ def show(request, id):
 
 def delete(request, id):
     post = Post.objects.get(pk=id)
+    if request.user != post.owner:
+        return render(request,'unauthorized.html')
     post.delete()
     return redirect("/groups/show/"+str(post.group.id))
 
 
 def edit(request, id):
     postData = Post.objects.get(pk=id)
+    if request.user != postData.owner:
+        return render(request,'unauthorized.html')
     post = PostForm(request.POST or None, instance=postData)
 
     if post.is_valid():
@@ -119,15 +124,33 @@ def view(request, id):
 def invite(request, id):
 
     users = UserProfile.objects.filter(~Q(groups=id))
-    print(users[0].user.id)
-    print(users[0].first_name)
+    # print(users[0].user.id)
+    # print(users[0].first_name)
+    group = Group.objects.get(id=id)
+    alreadyInvitedUsers = GroupInvite.objects.filter(group=group)
+    print(alreadyInvitedUsers)
     notMember = []
+    # for user in users:
+    #     print(user.user)
+    #     notMember.append(user.user.id)
+    notInvited = False
     for user in users:
-        notMember.append(user.user.id)
-    invites = User.objects.filter(id__in=notMember)
+        for alreadyInvitedUser in alreadyInvitedUsers:
+            # print("already invited "+alreadyInvitedUser.inviteTo.username)
+            if user.user == alreadyInvitedUser.inviteTo:
+                # print("****entered equal "+user.user.username +
+                #       "===="+alreadyInvitedUser.inviteTo.username)
+                notInvited = True
+        if notInvited == False:
+            notMember.append(user.user.id)
+        notInvited = False
+        # print("users not in group "+user.user.username)
+
+    invites = User.objects.filter(id__in=notMember).exclude(id=request.user.id)
     return render(request, "groups/invite.html", {
         "invites": invites,
-        "id": id
+        "id": id,
+        "alreadyInvitedUsers": alreadyInvitedUsers
     })
 
 
@@ -142,8 +165,8 @@ def groupRequest(request, id):
                 inviteFrom=request.user, inviteTo=user, group=group)
             invite.save()
 
-    # return redirect("group")
-    return redirect("/groups/show/"+str(group.id))
+    return redirect("/groups/invite/"+str(group.id))
+    # return redirect("/groups/show/"+str(group.id))
 
 
 def acceptInvitation(request, id):
@@ -164,19 +187,32 @@ def cancelInvitation(request, id):
 
 def sendRequestJoin(request, id):
     group = Group.objects.get(id=id)
-    invite = GroupRequestJoin.objects.create(
-        requestFrom=request.user, requestTo=group.owner, group=group)
-    invite.save()
 
+    try:
+        GroupRequestJoin.objects.get(
+            requestFrom=request.user, requestTo=group.owner, group=group)
+        return HttpResponse("You Aleardy send request join.")
+    except:
+        invite = GroupRequestJoin.objects.create(
+            requestFrom=request.user, requestTo=group.owner, group=group)
+        invite.save()
     # return redirect("/groups/show/"+str(group.id))
     return redirect("group")
 
 
+# def request(request, id):
+#     group = Group.objects.get(id=id)
+#     requests = GroupRequestJoin.objects.filter(
+#         requestTo=request.user).filter(group=group)
+#     return render(request, "groups/request.html", {
+#         "requests": requests,
+#         "id": id
+#     })
 def request(request, id):
     group = Group.objects.get(id=id)
     requests = GroupRequestJoin.objects.filter(
         requestTo=request.user).filter(group=group)
-    return render(request, "groups/request.html", {
+    return render(request, "groups/groupRequests.html", {
         "requests": requests,
         "id": id
     })
@@ -195,6 +231,31 @@ def acceptrequest(request, id):
             sender=group.owner, reciever=user, text=text, notifyType="groupView", instance_id=group.id)
         notify_instance.save()
 
+    return redirect("group")
+
+
+def acceptRefuseRequest(request, id):
+    group = Group.objects.get(id=id)
+    user_id = request.POST['user']
+    user = User.objects.get(id=int(user_id))
+    print("print1111111111111")
+    print(user)
+    print(request.POST['submit'])
+    print(dict(request.POST)['submit'] == ['Accept'])
+    if dict(request.POST)['submit'] == ['Accept']:
+        user.userprofile.groups.add(group)
+        text = " you are now a member in " + str(group.name+" group")
+        notify_instance = Notification.objects.create(
+            sender=group.owner, reciever=user, text=text, notifyType="groupView", instance_id=group.id)
+        notify_instance.save()
+    elif dict(request.POST)['submit'] == ['Refuse']:
+        text = " Admin of " + str(group.name+" group refused your request")
+        notify_instance = Notification.objects.create(
+            sender=group.owner, reciever=user, text=text, notifyType="groupView", instance_id=group.id)
+        notify_instance.save()
+    request = GroupRequestJoin.objects.get(
+        requestTo=request.user, group=group)
+    request.delete()
     return redirect("group")
 
 

@@ -1,11 +1,12 @@
 {% extends "layout.html"%}
+{% load crispy_forms_tags %}
 
 {% block body %} 
     <div class="container">
         <h1>Edit Book</h1>
         <form action="{% url "edit" data.id %}" method="post">
             {% csrf_token %}
-            {{ form.as_p}}
+            {{ form|crispy}}
             <button type="submit">Update Post</button>
         </form>
     </div>

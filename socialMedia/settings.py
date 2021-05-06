@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'friend',
     'active_link',
     'profanitycustom',
+    'crispy_forms',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'accounts.middleware.AnonymousMiddleWare',
+    'accounts.middleware.AnonymousMiddleWare',
 
     
 ]
@@ -128,6 +130,16 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+AUTH_EXEMPT_ROUTES = ('signup',
+                     'login', 
+                     'password_reset',
+                     'password_reset_done',
+                     'password_reset_confirm',
+                     'password_reset_complete',
+                     'password_change',
+                     'password_change_done',
+                     'admin',
+                     )
 
 
 # Static files (CSS, JavaScript, Images)
