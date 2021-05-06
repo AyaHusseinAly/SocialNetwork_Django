@@ -109,8 +109,24 @@
             <a  href="/posts/" id="navLink"><i class="fa fa-home" aria-hidden="true" ></i><p>Home</p></a>
             <a  href="/groups/" id="navLink"><i class="fa fa-users" aria-hidden="true"></i><p>groups</p></a>
             <a  href="{% url 'friend:list' %}" id="navLink"><i class="fa fa-user-friends" aria-hidden="true"></i><p>Friends</p></a>
-            <a  href="/messages" id="navLink"><i class="fa fa-comments" aria-hidden="true"></i><p>Messages</p></a>
-            <a  href="/messages/notifications" id="navLink"><i class="fa fa-bell" aria-hidden="true"></i><p>Notifications</p></a>
+            <a  href="/messages" id="navLink"><i class="fa fa-comments" aria-hidden="true">
+            
+            {% if msgCounter != null %}
+            <p class="rounded-circle d-inline px-2 py-1" style="background-color:white;color:red;font-weight:bold;-webkit-text-stroke: 1px red;">
+            {{msgCounter}}</p>
+            {% endif %}
+            
+            </i><p>Messages</p></a>
+
+            <a  href="/messages/notifications" id="navLink"><i class="fa fa-bell" aria-hidden="true">
+            {% if notifyCounter != null %}
+            <p class="rounded-circle d-inline px-2 py-1" style="background-color:white;color:red;font-weight:bold;-webkit-text-stroke: 1px red;">
+            {{notifyCounter}}</p>
+            {% endif %}
+            </i><p>Notifications</p>
+            </a>
+
+            
 
             <div >
                 <a  href="{% url 'profile' request.user.id %}" id="navLink"><img  class="  m-1 rounded-circle"  src="{% if request.user.is_authenticated  and request.user.userprofile.avatar %} {{request.user.userprofile.avatar.url}} {% else %} /images/avatars/profile.jpeg {% endif %}"  ></a>

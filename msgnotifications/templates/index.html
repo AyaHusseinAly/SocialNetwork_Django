@@ -65,23 +65,27 @@
 
             <div class="mycard" style="height:560px;overflow-y:scroll">
                 <h2>Chats</h2>
-
-                {% for friend in friends %}
-
+                {% for friend in newfriends %}
                 <hr>
-                {% if msgto == friend.username %}
+                
+                {% if msgto == friend.friendObj.username %}
+                
 
-                <a href="?id={{ friend.id }}" style="color:black;">
+                <a href="?id={{ friend.friendObj.id }}" style="color:black;">
                     <div class="d-flex justify-content-center align-items-center" style="background-color:#f88b7c;"
                         id="chatdiv">
-                        {% else %}
-                        <a href="?id={{ friend.id }}" style="color:black;">
-                            <div class="d-flex justify-content-center align-items-center" id="chatdiv">
+                {% else %}
+                    <a href="?id={{ friend.friendObj.id }}" style="color:black;">
+                        <div class="d-flex justify-content-center align-items-center" id="chatdiv">
+                {% endif %}
+                                 {% if friend.friendCounter != null and friend.friendCounter != 0 %}
+                                <p class="rounded-circle d-inline px-2 py-1" style="background-color:white;color:red;font-weight:bold;-webkit-text-stroke: 1px red;">
+                                    {{friend.friendCounter}}</p>
+                                    
                                 {% endif %}
-                                <div class="mx-2 ">{{friend.username}}</div>
-
+                                <div class="mx-2 ">{{friend.friendObj.username}}</div>
                                 <img class="  m-1 rounded-circle "
-                                    src="{% if friend.userprofile.avatar %}{{friend.userprofile.avatar.url}} {% else %} {% static 'images/avatars/profile.jpeg' %} {% endif %}">
+                                    src="{% if friend.friendObj.userprofile.avatar %}{{friend.friendObj.userprofile.avatar.url}} {% else %} {% static 'images/avatars/profile.jpeg' %} {% endif %}">
                             </div>
                         </a>
 

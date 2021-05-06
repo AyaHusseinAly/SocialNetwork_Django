@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import json
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-
+from msgnotifications.models import Message,Notification
 
 from accounts.models import UserProfile
 from friend.models import FriendRequest, FriendList
@@ -227,7 +227,10 @@ def friend_list_view1(request, *args, **kwargs):
     for friend in friend_list.friends.all():
         # friends.append((friend, auth_user_friend_list.is_mutual_friend(friend)))
         friends.append((friend))
-
+   
     context['friends'] = friends
+    notifyCounter=len(  Notification.objects.filter(reciever=request.user).filter(read=False) )
+    context['notifyCounter']=notifyCounter
+
     return render(request, "friend_list.html", context)
     # return HttpResponse("You must be friends to view their friends list")
