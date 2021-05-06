@@ -93,6 +93,24 @@
                      {% endif %}
                 </form>
 
+                <!-- <form method="POST" enctype="multipart/form-data" action='{% url "index" %}' >
+
+                    {% csrf_token %}
+                    <!-- {% comment %} {{ form.non_field_errors }} {% endcomment %} 
+                    <label for="{{ form.content.id_for_label }}" style="color: #e44d3a"Post:</label>
+                    {{ form.content }}
+                    {% if form.content.error%}
+                    <div class="alert alert-danger mt-6 mb-2" role="alert">
+                    {{ form.content.errors }}
+                    </div>
+                    {%endif%} 
+                    </br>
+
+                    
+                    <button type="submit">Done</button>
+            
+               </from> -->
+
 
             </div>
 
