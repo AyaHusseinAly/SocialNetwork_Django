@@ -140,8 +140,9 @@ def AddCommentView(request, id):
     })
 
 def delComment(request,id): 
-    # post = Post.objects.get(pk=id)
     comment = Comment.objects.get(pk=id)
+    if comment.owner != request.user:
+        return render(request,'unauthorized.html')
     post=comment.post
     comment.delete()
     return redirect("/posts/view/"+str(post.id))

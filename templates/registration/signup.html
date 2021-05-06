@@ -42,8 +42,6 @@
                 <form method="post" action="{% url "signup" %}" enctype="multipart/form-data" >
                     {% csrf_token %}
                     {{ profile_form.non_field_errors }}
-                    {{form.non_field_errors }}
-                    <!-- <table class="table table-bordered table-hover"> -->
                     {{ form.username|as_crispy_field}}
                     {{ profile_form.email|as_crispy_field }}
                     {{ profile_form.first_name|as_crispy_field}}
@@ -52,6 +50,7 @@
                     {{ form.password2|as_crispy_field}}
                     {{ profile_form.avatar|as_crispy_field}}
                     {{ profile_form.birthdate|as_crispy_field}}
+                    <small class="form-text text-muted">Format: dd/mm/yyy </small>
                     {{ profile_form.country|as_crispy_field}}
                     {{ profile_form.about|as_crispy_field}}
      

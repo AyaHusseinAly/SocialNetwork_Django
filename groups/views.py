@@ -28,7 +28,6 @@ def index(request):
 
 
 def create(request):
-    # request.POST or None means ==>take request form if get it or do nothing
     form = GroupForm(request.POST, request.FILES or None)
     if form.is_valid():
         print(form)
@@ -40,8 +39,6 @@ def create(request):
         group = Group.objects.create(
             name=name, privacy=privacy, description=description, cover=cover, owner=request.user)
         request.user.userprofile.groups.add(group)
-        # form.save()  # means send it to model and save it
-        # return redirect("group")
         return redirect("/groups/show/"+str(group.id))
     return render(request, "groups/create.html", {
         "form": form
@@ -74,8 +71,6 @@ def show(request, id):
     members = []
     for user in users_in_group:
         members.append(user.user)
-    # print(users_in_group)
-    # accounts = UserProfile.objects.all()
     post = PostForm(request.POST or None)
     if post.is_valid():
         form_content = post.cleaned_data['content']
@@ -123,15 +118,10 @@ def view(request, id):
 def invite(request, id):
 
     users = UserProfile.objects.filter(~Q(groups=id))
-    # print(users[0].user.id)
-    # print(users[0].first_name)
     group = Group.objects.get(id=id)
     alreadyInvitedUsers = GroupInvite.objects.filter(group=group)
     print(alreadyInvitedUsers)
     notMember = []
-    # for user in users:
-    #     print(user.user)
-    #     notMember.append(user.user.id)
     notInvited = False
     for user in users:
         for alreadyInvitedUser in alreadyInvitedUsers:
