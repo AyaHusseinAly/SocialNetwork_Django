@@ -24,8 +24,8 @@ from django.views.generic import TemplateView,RedirectView
 
 urlpatterns = [
     # path("/admin/login/?next=/admin/",RedirectView.as_view(url='/login/')),
-    path("", include("django.contrib.auth.urls")),
     path("", include("accounts.urls")),
+    path("", include("django.contrib.auth.urls")),
     path('admin/', admin.site.urls),
     path('friend/',include("friend.urls")),
 
