@@ -1,14 +1,25 @@
 {% extends "layout.html"%} {% block body %}
 
 {% load static %}
-<div class="container mycard p-5 m-5" style="width: 80%">
-
+<div class="container post-topbar p-5 m-5 text-center" style="width: 80%">
   <i class="fa fa-users fa-4x" aria-hidden="true"></i>
   <h3>Invite Friends</h3>
-  </div>
-  <form method="POST"name="formSelect" enctype="multipart/form-data" action="{% url 'group.sendrequest' id %}" multiple style="width:60%" class="mycard">
- 
+  <div class="d-flex justify-content-between">
+  <div class="mycard">
+  <h4> Invitations</h4>
+   {%for alreadyInvitedUser in alreadyInvitedUsers%}
+      <div class="mycard">
+         {% if alreadyInvitedUser.inviteTo.userprofile.avatar %}
+        <img class="m-1 rounded-circle" src="/images/{{alreadyInvitedUser.inviteTo.userprofile.avatar}}" />
+        {% else%}
+        <img class="m-1 rounded-circle" src="/images/avatars/profile.jpeg" />
+        {%endif%} {{alreadyInvitedUser.inviteTo.username}} 
+      </div>
+   {%endfor%}
+   </div>
+  <form method="POST"name="formSelect" enctype="multipart/form-data" action="{% url 'group.sendrequest' id %}" multiple style="width:50%" class="mycard">
   {% csrf_token %}
+   <h4> Send New Invitations</h4>
     <select name="groupRequest" id="groupRequest" class="picker" multiple style="width:100%"> 
       {% for invite in invites %}
       <option value="{{invite.id}}" class="mycard" style="width: 100%">
@@ -21,14 +32,9 @@
       {% endfor %}
     </select> 
     </br>
-    {% comment %} {%if groupRequest%} {% endcomment %}
     <input type="submit" id="Testing" value="Invite"  class="btn btn-danger px-5" style="widtd:100%" disabled>
-    {% comment %} {%else%}
-    <input type="submit" value="Invite"  class="btn btn-danger px-5" style="widtd:100%" >
-    {%endif%} {% endcomment %}
-
   </form>
-
+</div>
 </div>
 
 {%endblock%}

@@ -12,8 +12,8 @@
  {%if request.user in users_in_group or request.user == group.owner%}
     <a href="{% url "listMembers" group.id %}"><i class="fa fa-users fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
      <a href="{% url "invite" group.id %}"><i class="fas fa-user-plus fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
-     <a href="{% url "group.request" group.id %}"><i class="fas fa-user-check fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
      {%if request.user == group.owner%}
+      <a href="{% url "group.request" group.id %}"><i class="fas fa-user-check fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
       <a href="{% url "leave" group.id %}"><i class="fa fa-trash fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
      {%else%}
      <a href="{% url "leave" group.id %}"><i class="fas fa-door-open fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
@@ -146,14 +146,7 @@
                          
         </div>
     </div>    
-
-
-
-
     </div>    
-
-
-
   
 </div>
 
@@ -166,10 +159,6 @@
                     
                     <a class="post btn btn-primary" href="{%url 'group.acceptInvitation' group.id%}">Accept invitation</a>
                     <a class="post btn btn-secondary" href="{%url 'group.cancelInvitation' group.id%}">Cancel invitation</a>
-
-
-                        
-                    
                 </div>
                          
         </div>
