@@ -16,9 +16,10 @@ class PostForm(forms.ModelForm):
             bad_words = BadWord.objects.all()
             results = list(map(lambda x: x.word, bad_words))
             
+            body_list = content.split()
             bad_words_list = []
             for word in results:
-                if word in content:
+                if word in body_list:
                     bad_words_list.append(word)
             bad_words_string = ', '.join(bad_words_list)
             
@@ -48,9 +49,10 @@ class CommentForm(forms.ModelForm):
             bad_words = BadWord.objects.all()
             results = list(map(lambda x: x.word, bad_words))
             
+            body_list = content.split()
             bad_words_list = []
             for word in results:
-                if word in content:
+                if word in body_list:
                     bad_words_list.append(word)
             bad_words_string = ', '.join(bad_words_list)
             
