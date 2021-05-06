@@ -95,12 +95,16 @@ def show(request, id):
 
 def delete(request, id):
     post = Post.objects.get(pk=id)
+    if request.user != post.owner:
+        return render(request,'unauthorized.html')
     post.delete()
     return redirect("/groups/show/"+str(post.group.id))
 
 
 def edit(request, id):
     postData = Post.objects.get(pk=id)
+    if request.user != postData.owner:
+        return render(request,'unauthorized.html')
     post = PostForm(request.POST or None, instance=postData)
 
     if post.is_valid():

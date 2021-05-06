@@ -1,0 +1,26 @@
+
+{% extends "layout.html"  %}
+{% block body %}
+
+<div style="margin-top: 10px;text-align: center;color: #e44d3a;font-size: large;"> {{ post.liked.all.count }} likes from</div>
+{% for user in post.liked.all %}
+<div style="margin-top: 10px;text-align: center;">
+    <!-- {% if forloop.last %}
+        <div style="color: #e44d3a;">{{ user.username }}</div> 
+    {% else %}  
+        <span style="color: #e44d3a;">{{ user.username }}</span><span > and </span>
+    {% endif %} -->
+    
+     <span style="text-align: center;border: 2px solid #e44d3a;color: #e44d3a;width: 300px;border-radius: 30px;display: inline-block;position: relative;height: 45px;line-height: 40px;"> 
+        <img src="
+        {% if user.is_authenticated  and request.user.userprofile.avatar.url %}
+        {{request.user.userprofile.avatar.url}}
+        {% else %}
+        /images/avatars/profile.jpeg
+        {% endif %}" alt="" style="width: 40px;position: absolute;left: 40px;">  
+    {{ user.username }}</span> 
+   
+</div>   
+{% endfor %}
+
+{% endblock body %}
