@@ -182,10 +182,15 @@ def cancelInvitation(request, id):
 
 def sendRequestJoin(request, id):
     group = Group.objects.get(id=id)
-    invite = GroupRequestJoin.objects.create(
-        requestFrom=request.user, requestTo=group.owner, group=group)
-    invite.save()
 
+    try:
+        GroupRequestJoin.objects.get(
+            requestFrom=request.user, requestTo=group.owner, group=group)
+        return HttpResponse("You Aleardy send request join.")
+    except:
+        invite = GroupRequestJoin.objects.create(
+            requestFrom=request.user, requestTo=group.owner, group=group)
+        invite.save()
     # return redirect("/groups/show/"+str(group.id))
     return redirect("group")
 
