@@ -119,15 +119,33 @@ def view(request, id):
 def invite(request, id):
 
     users = UserProfile.objects.filter(~Q(groups=id))
-    print(users[0].user.id)
-    print(users[0].first_name)
+    # print(users[0].user.id)
+    # print(users[0].first_name)
+    group = Group.objects.get(id=id)
+    alreadyInvitedUsers = GroupInvite.objects.filter(group=group)
+    print(alreadyInvitedUsers)
     notMember = []
+    # for user in users:
+    #     print(user.user)
+    #     notMember.append(user.user.id)
+    notInvited = False
     for user in users:
-        notMember.append(user.user.id)
+        for alreadyInvitedUser in alreadyInvitedUsers:
+            # print("already invited "+alreadyInvitedUser.inviteTo.username)
+            if user.user == alreadyInvitedUser.inviteTo:
+                # print("****entered equal "+user.user.username +
+                #       "===="+alreadyInvitedUser.inviteTo.username)
+                notInvited = True
+        if notInvited == False:
+            notMember.append(user.user.id)
+        notInvited = False
+        # print("users not in group "+user.user.username)
+
     invites = User.objects.filter(id__in=notMember)
     return render(request, "groups/invite.html", {
         "invites": invites,
-        "id": id
+        "id": id,
+        "alreadyInvitedUsers": alreadyInvitedUsers
     })
 
 
@@ -142,8 +160,8 @@ def groupRequest(request, id):
                 inviteFrom=request.user, inviteTo=user, group=group)
             invite.save()
 
-    # return redirect("group")
-    return redirect("/groups/show/"+str(group.id))
+    return redirect("/groups/invite/"+str(group.id))
+    # return redirect("/groups/show/"+str(group.id))
 
 
 def acceptInvitation(request, id):
