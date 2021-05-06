@@ -1,4 +1,23 @@
 {% extends "layout.html"%}
+  {% block style %}
+  <style>
+  label{
+      display:none
+  }
+ul{
+     list-style: none; 
+}
+  textarea{
+        float: left;
+        width: 100%;
+        height: 60px;
+        border: 1px solid #e44d3a;
+        border-radius: 10px;
+        margin-bottom:10px;
+  }
+  </style>
+  
+  {% endblock %}
 
 {% block body %}
 
@@ -12,43 +31,52 @@
                     <input type="text" name="q" id="" class="post_input " placeholder="  Search for user by name">
                     <input type="submit" class="btn mt-2" value="Search"></a>
                 </form>
-            </div>    
+            </div>
 
             <div class="mycard">
-            <i class="fa fa-users fa-4x" aria-hidden="true"></i>
-            <h2>your groups</h2>
+                <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+                <h2>your groups</h2>
 
-            {% for group in groups %}
-            <hr>
-            <h5>{{group.name}}</h5>
-            <div class="d-flex pl-3">
-                <p><button class="mx-2" onclick="location.href='{% url "show" group.id %}';" >visit group</button></p>
-                <p><button class="mx-2" style="background-color:grey">leave group</button></p>
+                {% for group in groups %}
+                <hr>
+                <h5>{{group.name}}</h5>
+                <div class="d-flex pl-3">
+                    <p><button class="mx-2" onclick="location.href='{% url "show" group.id %}';">visit group</button>
+                    </p>
+                    <p><button class="mx-2" style="background-color:grey">leave group</button></p>
+                </div>
+
+                <hr>
+                {% endfor %}
+
+
             </div>
-            
-            <hr>
-            {% endfor %} 
 
 
-            </div>
-            
-    
         </div>
-        
 
-    <!-- ----------------------------------------------------------- end side ----------------------------------- -->
+
+        <!-- ----------------------------------------------------------- end side ----------------------------------- -->
         <div class="col-sm-8 mycard">
-                
+
                 <div class="post-topbar">
                     
                     <form action='{% url "index" %}' method="post" enctype="multipart/form-data" >
                         {% csrf_token %}
+                      
                         <div class="row">    
                             <div class="col-10">
-                                {{ form.as_p}}
-                                <textarea class="post_input " name="content" placeholder="  What's in your mind?" ></textarea>
-                                <input class="mt-2 " type="file" name="image"/>
+                           {{form.as_p}}
+                   
+                            
+                                    {% if form.content.error %}
+                                    <div id="form-error">
+                                        {{form.content.errors.0}}
+                                    </div>
+                                    {% endif %}
+                            
                             </div>
+                            
                             <div class="col-2">
                                 <button class="post btn" type="submit" >Post</button>
                             </div>   
@@ -57,73 +85,80 @@
                         
                     
                 </div>
-                 
 
-                <h5>Feed Posts</h5>
+            <h5>Feed Posts</h5>
 
-                {% for post in posts %}
-                <hr>
+            {% for post in posts %}
+            <hr>
 
-                <div class="card text-center">
+            <div class="card text-center" style="margin-top: 10px;">
                 <div class="card-header">
                     <div class="row" style="text-align:left;">
-                        <p class="col-7 tex-left "><span style="color:#e44d3a;">Posted by:</span> <a href="/profile/{{post.owner.id}}" style="color:black">{{post.owner}}</a>
-                        {% if post.group != null %}
+                        <p class="col-7 tex-left "><span style="color:#e44d3a;">Posted by:</span> <a
+                                href="/profile/{{post.owner.id}}" style="color:black">{{post.owner}}</a>
+                            {% if post.group != null %}
                             <span style="color:#e44d3a;"> >> from group:</span> {{post.group }}
-                        {% endif %}
+                            {% endif %}
                         </p>
-                        
-                        <div class="col-5"style="text-align:right;">
-                            <a href="{% url "view" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
+
+                        <div class="col-5" style="text-align:right;">
+                            <a href="{% url 'view' post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-eye"
+                                    aria-hidden="true"></i></a>
                             {% if post.owner == request.user %}
-                            <a href="{% url "edit" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
-                            <a href="{% url "delete" post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="{% url 'edit' post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-pen"
+                                    aria-hidden="true"></i></a>
+                            <a href="{% url 'delete' post.id%}" style="color:grey;" class="mx-3"><i class="fa fa-trash"
+                                    aria-hidden="true"></i></a>
                             {% endif %}
                         </div>
-                       
+
                     </div>
                 </div>
                 <div class="card-body">
                     <h5 class="card-text">{{post.content}}</h5>
-                         {% if post.image != null and  post.image != ""%}
-                            <img src="/images/{{post.image }}" width="400px"/>
-                        {% endif %}
+                    {% if post.image != null and post.image != ""%}
+                    <img src="/images/{{post.image }}" width="400px" />
+                    {% endif %}
 
                 </div>
                 <div class="card-footer text-muted d-flex">
                     <p style="text-align:left;color:gray;font-size:12px;margin:0px">{{post.created_at}}</p>
                     <div style="text-align:right;width:80%">
-                    <a href="{% url "view" post.id%}" style="color:#e44d3a;" ><i class="fa fa-comment mx-4 fa-lg " aria-hidden="true"></i></a>
-                    <!-- <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a> -->
-                    <form action="{% url "like-post"%}"  method="POST" style="display: inline-block;">
-                        {% csrf_token %}
-                        <input type="hidden" name="post_id" value="{{post.id}}">
-                       
-                        {% if request.user not in post.liked.all %}
-                        <button type="submit" style="background-color:#e44d3a;color:whitesmoke;width: 58px;height: 30px;line-height: 10px;font-size: medium;border-radius: 30px;">Like </button>
-                        {% else %}
-                        <button type="submit" style="background-color:#e47668;color:whitesmoke;width: 70px;height: 30px;line-height: 10px;font-size: medium;border-radius: 30px;">Unlike </button>
-                        {% endif %}
-                       
-                    </form>
-                    <strong >{{ post.liked.all.count }}likes</strong>
-                </div>
-                </div>
-                </div>
+                        <a href="{% url 'view' post.id%}" style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg "
+                                aria-hidden="true"></i></a>
+                        <!-- <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a> -->
+                        <form action="{% url 'like-post' %}" method="POST" style="display: inline-block;">
+                            {% csrf_token %}
+                            <input type="hidden" name="post_id" value="{{post.id}}">
 
-                <hr>
+                            {% if request.user not in post.liked.all %}
+                            <button type="submit"
+                                style="background-color:#e44d3a;color:whitesmoke;width: 58px;height: 30px;line-height: 10px;font-size: medium;border-radius: 30px;">Like
+                            </button>
+                            {% else %}
+                            <button type="submit"
+                                style="background-color:#e47668;color:whitesmoke;width: 70px;height: 30px;line-height: 10px;font-size: medium;border-radius: 30px;">Unlike
+                            </button>
+                            {% endif %}
 
-                {% endfor %}
+                        </form>
+                        <strong>{{ post.liked.all.count }} likes</strong>
+                    </div>
+                </div>
+            </div>
 
-        
+            <hr>
+
+            {% endfor %}
+
+
         </div>
 
-    </div>    
+    </div>
 
 
 
-  
+
 </div>
 
 {%endblock%}
-

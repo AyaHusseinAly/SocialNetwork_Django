@@ -6,25 +6,28 @@ from django.core.exceptions import ValidationError
 
 class PostForm(forms.ModelForm):
     class Meta:
-        model = Post
+        model = Post    
         fields = ("content","image")
         #fields = "__all__"
+    def __init__(self, *args, **kwargs):
+            super(PostForm, self).__init__(*args, **kwargs)
+            self.fields['content'].error_messages = {'required': ''}
 
 
-# def clean_content(self):
-#         content = self.cleaned_data.get('content')
-#         bad_words = BadWord.objects.all()
-#         results = list(map(lambda x: x.word, bad_words))
-        
-#         bad_words_list = []
-#         for word in results:
-#             if word in content:
-#                 bad_words_list.append(word)
-#         bad_words_string = ', '.join(bad_words_list)
-        
-#         if len(bad_words_list) > 0:
-#             raise ValidationError("The content of a post contain bad words " + bad_words_string)
-#         return content
+    def clean_content(self):
+            content = self.cleaned_data.get('content')
+            bad_words = BadWord.objects.all()
+            results = list(map(lambda x: x.word, bad_words))
+            
+            bad_words_list = []
+            for word in results:
+                if word in content:
+                    bad_words_list.append(word)
+            bad_words_string = ', '.join(bad_words_list)
+            
+            if len(bad_words_list) > 0:
+                raise ValidationError("The content of a post contain bad words (" + bad_words_string + ") , please remove it")
+            return content
 
 class PostEditForm(forms.ModelForm):
     class Meta:
@@ -35,8 +38,7 @@ class PostEditForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
     class Meta:
-        model = Comment
-        # fields = "__all__"
+        model = Comment 
         fields = ("content",)
         # fields = ("owner","content",)
         # fields = "__all__"
@@ -44,17 +46,17 @@ class CommentForm(forms.ModelForm):
         #     'owner':forms.TextInput(attrs={'value':'','id':'eldr'})
         # }
 
-# def clean_content(self):
-#         content = self.cleaned_data.get('content')
-#         bad_words = BadWord.objects.all()
-#         results = list(map(lambda x: x.word, bad_words))
-        
-#         bad_words_list = []
-#         for word in results:
-#             if word in content:
-#                 bad_words_list.append(word)
-#         bad_words_string = ', '.join(bad_words_list)
-        
-#         if len(bad_words_list) > 0:
-#             raise ValidationError("The content of a comment contain bad words " + bad_words_string)
-#         return content        
+    def clean_content(self):
+            content = self.cleaned_data.get('content')
+            bad_words = BadWord.objects.all()
+            results = list(map(lambda x: x.word, bad_words))
+            
+            bad_words_list = []
+            for word in results:
+                if word in content:
+                    bad_words_list.append(word)
+            bad_words_string = ', '.join(bad_words_list)
+            
+            if len(bad_words_list) > 0:
+                raise ValidationError("The content of a comment contain bad words (" + bad_words_string + "), please remove it")
+            return content        
