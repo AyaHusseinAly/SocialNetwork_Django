@@ -7,7 +7,7 @@ function acceptFriendRequest(friend_request_id, uiUpdateFunction){
         url: url,
         timeout: 5000,
         success: function(data) {
-             console.log("SUCCESS", data)
+             
              if(data['response'] == "Friend request accepted."){
                 // ui is updated
              }

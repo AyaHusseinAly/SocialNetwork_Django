@@ -41,6 +41,8 @@
             <div class="post-topbar">
                 <form method="post" action="{% url "signup" %}" enctype="multipart/form-data" >
                     {% csrf_token %}
+                    {{ profile_form.non_field_errors }}
+                    {{form.non_field_errors }}
                     <!-- <table class="table table-bordered table-hover"> -->
                     {{ form.username|as_crispy_field}}
                     {{ profile_form.email|as_crispy_field }}
