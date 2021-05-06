@@ -55,7 +55,7 @@
         </nav>
         <div class="container ">
             <div style="height:150px"></div>
-            <div class="m-5 mycard post-topbar" >
+            <div class="mt-2 mycard post-topbar" >
                 <form action="{% url "login" %}"  method="post" >
                     {% csrf_token %}
                     {{form|crispy}}

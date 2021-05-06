@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 def index(request):
     query = request.GET.get('q', '')
     if(query):
-        groups = Group.objects.filter(name__contains=str(query)).union(
+        groups = Group.objects.filter(name__icontains=str(query)).union(
             Group.objects.filter(name__in=[query]))
     else:
         groups = Group.objects.all()
@@ -95,6 +95,8 @@ def delete(request, id):
 
 def edit(request, id):
     postData = Post.objects.get(pk=id)
+    if request.user != postData.owner:
+        return render(request,'unauthorized.html')
     post = PostForm(request.POST or None, instance=postData)
 
     if post.is_valid():

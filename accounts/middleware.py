@@ -14,9 +14,9 @@ class AnonymousMiddleWare:
         
         # if request.user.is_anonymous:
         #     return redirect('redirecting')
-        current_route_name = resolve(request.path_info).url_name
+        route_name = resolve(request.path_info).url_name
         if request.user.is_anonymous:
-            if current_route_name in settings.AUTH_EXEMPT_ROUTES:
+            if route_name in settings.AUTH_EXEMPT_ROUTES or request.path == '/admin/':
                 return self.get_response(request)
             else:
                 return redirect('/login/')

@@ -123,8 +123,7 @@ def edit(request, id):
 #     })
 
 def profile(request,id):
-    if request.user.is_anonymous:
-        return redirect('redirecting')
+    
     context ={}
     posts={}
     form={}
