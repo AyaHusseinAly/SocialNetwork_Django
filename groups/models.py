@@ -26,13 +26,37 @@ class Group(models.Model):
 
 
 class GroupInvite(models.Model):
-    #created_at=models.DateTimeField(auto_now_add=True)
-    created_at=datetime.datetime.now()
-    inviteFrom=models.ForeignKey(User,on_delete=models.CASCADE,related_name="groupinvitefrom")
-    inviteTo=models.ForeignKey(User,on_delete=models.CASCADE,related_name="groupinviteto")
-    group=models.ForeignKey(Group,on_delete=models.CASCADE,related_name="groupinvitegroup")
+    #
+    #     created_at = models.DateTimeField(auto_now_add=True)
+    #     inviteFrom = models.ForeignKey(
+    #         User, on_delete=models.CASCADE, related_name="groupinvitefrom")
+    #     inviteTo = models.ForeignKey(
+    #         User, on_delete=models.CASCADE, related_name="groupinviteto")
+    #     group = models.ForeignKey(
+    #         Group, on_delete=models.CASCADE, related_name="groupinvitegroup")
+
+    #
+    # created_at=models.DateTimeField(auto_now_add=True)
+    created_at = datetime.datetime.now()
+    inviteFrom = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="groupinvitefrom")
+    inviteTo = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="groupinviteto")
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, related_name="groupinvitegroup")
+
     def __str__(self):
         return str(self.inviteFrom) + " invited " + str(self.inviteTo) + " to join " + str(self.group.name)
 
 
+class GroupRequestJoin(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    requestFrom = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="grouprequestjoinfrom")
+    requestTo = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="grouprequestjointo")
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, related_name="grouprequestjoingroup")
 
+    def __str__(self):
+        return str(self.requestFrom) + " requested to join " + str(self.group.name)

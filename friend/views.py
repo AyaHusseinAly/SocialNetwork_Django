@@ -10,8 +10,6 @@ from accounts.models import UserProfile
 from friend.models import FriendRequest,FriendList
 
 def friend_requests(request, *args, **kwargs):
-    if request.user.is_anonymous:
-        return redirect("redirecting")
     context = {}
     user = request.user
 

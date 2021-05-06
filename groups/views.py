@@ -5,7 +5,8 @@ from .models import Group
 from itertools import chain
 from .forms import GroupForm
 from posts.models import Post
-from groups.models import Group, GroupInvite
+from groups.models import Group, GroupInvite, GroupRequestJoin
+from msgnotifications.models import Notification
 from posts.forms import PostForm
 from accounts.models import UserProfile
 from django.contrib.auth.models import User
@@ -31,14 +32,17 @@ def create(request):
     form = GroupForm(request.POST, request.FILES or None)
     if form.is_valid():
         print(form)
+
         name = form.cleaned_data['name']
         privacy = form.cleaned_data['privacy']
         description = form.cleaned_data['description']
         cover = form.cleaned_data['cover']
         group = Group.objects.create(
             name=name, privacy=privacy, description=description, cover=cover, owner=request.user)
+        request.user.userprofile.groups.add(group)
         # form.save()  # means send it to model and save it
-        return redirect("group")
+        # return redirect("group")
+        return redirect("/groups/show/"+str(group.id))
     return render(request, "groups/create.html", {
         "form": form
     })
@@ -64,12 +68,13 @@ def show(request, id):
     groups = Group.objects.all()
     users_in_group = UserProfile.objects.filter(Q(groups=id))
 
-    invited=GroupInvite.objects.filter(inviteTo=request.user).filter(group=group)
-   
+    invited = GroupInvite.objects.filter(
+        inviteTo=request.user).filter(group=group)
+
     members = []
     for user in users_in_group:
         members.append(user.user)
-    #print(users_in_group)
+    # print(users_in_group)
     # accounts = UserProfile.objects.all()
     post = PostForm(request.POST or None)
     if post.is_valid():
@@ -82,13 +87,16 @@ def show(request, id):
         "posts": posts,
         "groups": groups,
         "group": group,
-        "users_in_group":members,
-        "invited":invited
+        "users_in_group": members,
+        "invited": invited
 
     })
 
+
 def delete(request, id):
     post = Post.objects.get(pk=id)
+    if request.user != post.owner:
+        return render(request,'unauthorized.html')
     post.delete()
     return redirect("/groups/show/"+str(post.group.id))
 
@@ -126,14 +134,91 @@ def invite(request, id):
         "id": id
     })
 
+
 def groupRequest(request, id):
     # print(dict(request.POST)["groupRequest"])
     group = Group.objects.get(id=id)
+    if request.POST:
+        for user_id in dict(request.POST)["groupRequest"]:
+            user = User.objects.get(id=user_id)
+            # UserProfile.objects.get(user=user)
+            invite = GroupInvite.objects.create(
+                inviteFrom=request.user, inviteTo=user, group=group)
+            invite.save()
+
+    # return redirect("group")
+    return redirect("/groups/show/"+str(group.id))
+
+
+def acceptInvitation(request, id):
+    profile = UserProfile.objects.get(user=request.user)
+    group = Group.objects.get(id=id)
+    profile.groups.add(group)
+    invitedGroup = GroupInvite.objects.get(inviteTo=request.user, group=group)
+    invitedGroup.delete()
+    return redirect("/groups/show/"+str(group.id))
+
+
+def cancelInvitation(request, id):
+    group = Group.objects.get(id=id)
+    invitedGroup = GroupInvite.objects.get(inviteTo=request.user, group=group)
+    invitedGroup.delete()
+    return redirect("/groups/show/"+str(group.id))
+
+
+def sendRequestJoin(request, id):
+    group = Group.objects.get(id=id)
+    invite = GroupRequestJoin.objects.create(
+        requestFrom=request.user, requestTo=group.owner, group=group)
+    invite.save()
+
+    # return redirect("/groups/show/"+str(group.id))
+    return redirect("group")
+
+
+def request(request, id):
+    group = Group.objects.get(id=id)
+    requests = GroupRequestJoin.objects.filter(
+        requestTo=request.user).filter(group=group)
+    return render(request, "groups/request.html", {
+        "requests": requests,
+        "id": id
+    })
+    # print(requests)
+    # return redirect('group')
+
+
+def acceptrequest(request, id):
+    group = Group.objects.get(id=id)
+    text = " you are now a member in " + \
+        str(group.name+" group")
     for user_id in dict(request.POST)["groupRequest"]:
         user = User.objects.get(id=user_id)
-        # UserProfile.objects.get(user=user)
-        invite = GroupInvite.objects.create(
-            inviteFrom=request.user, inviteTo=user, group=group)
-        invite.save()
+        user.userprofile.groups.add(group)
+        notify_instance = Notification.objects.create(
+            sender=group.owner, reciever=user, text=text, notifyType="groupView", instance_id=group.id)
+        notify_instance.save()
 
     return redirect("group")
+
+
+def leave(request, id):
+    group = Group.objects.get(id=id)
+    request.user.userprofile.groups.remove(group)
+    if request.user == group.owner:
+        group.delete()
+        # return redirect("group")
+
+    return redirect("group")
+    # return redirect("/groups/show/"+str(group.id))
+
+
+def listMembers(request, id):
+    group = Group.objects.get(id=id)
+    users = User.objects.filter(Q(userprofile__groups=group))
+    print(users)
+
+    return render(request, "groups/members.html", {
+        "users": users,
+        "group": group
+    })
