@@ -35,8 +35,7 @@ class PostEditForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
     class Meta:
-        model = Comment
-        # fields = "__all__"
+        model = Comment 
         fields = ("content",)
         # fields = ("owner","content",)
         # fields = "__all__"
