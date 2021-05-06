@@ -64,6 +64,11 @@ def show(request, id):
 
     groups = Group.objects.all()
     users_in_group = UserProfile.objects.filter(Q(groups=id))
+    request_sent=True
+    try:
+        GroupRequestJoin.objects.get(requestFrom=request.user, requestTo=group.owner, group=group)
+    except:
+        request_sent=False
     invited = GroupInvite.objects.filter(
         inviteTo=request.user).filter(group=group)
 
@@ -83,7 +88,8 @@ def show(request, id):
         "groups": groups,
         "group": group,
         "users_in_group": members,
-        "invited": invited
+        "invited": invited,
+        "request_sent":request_sent,
 
     })
 
@@ -223,6 +229,14 @@ def acceptRefuseRequest(request, id):
     request.delete()
     return redirect("group")
 
+def cancelRequestJoin(request,id):
+    group = Group.objects.get(id=id)
+    join_request = GroupRequestJoin.objects.get(
+        requestFrom=request.user, group=group)
+    join_request.delete()
+    notification=Notification.objects.filter(sender=request.user,reciever=group.owner,instance_id=group.id,notifyType="groupRequest").order_by('created_at').last()
+    notification.delete()
+    return redirect("/groups/show/"+str(group.id))
 
 def leave(request, id):
     group = Group.objects.get(id=id)

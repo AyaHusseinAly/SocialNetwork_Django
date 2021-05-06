@@ -28,6 +28,7 @@ urlpatterns = [
          name="group.sendRequestJoin"),
     path("cancelInvitation/<int:id>", views.cancelInvitation,
          name="group.cancelInvitation"),
+     path('cancelRequestJoin/<int:id>',views.cancelRequestJoin,name='cancel-request-join')
 
 
 

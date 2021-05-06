@@ -49,8 +49,6 @@
 </div>
 
 <div class="container">
-
-
     {%if request.user in users_in_group or request.user == group.owner%}
 
     <div class="row pt-1">
@@ -176,13 +174,30 @@
 
         </div>
 
-        {%elif not invited%}
+        {% elif not invited and request_sent == False %}
         <div class="row pt-1 mt-5">
             <div class="col-sm-8 mycard">
                 <div class="post-topbar">
                     <a class="post btn btn-primary" href="{%url 'group.sendRequestJoin' group.id%}">Join Group</a>
                 </div>
 
+            </div>
+        </div>
+        
+        {% elif request_sent == True %}
+        <div class="mycard my-4">
+            <div class="page-wrap d-flex flex-row align-items-center">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 text-center d-flex-column justify-content-center ">
+                            <!-- <span class="display-1 d-block">Unauthorized!</span> -->
+                            <div class="mb-4 lead ">You already sent a request to this group.</div>
+                            <a href="{% url 'cancel-request-join' group.id %}" style="width: 50%; margin-left: 25%;" class="btn post">Cancel Request</a>
+                            <a href="{% url 'group' %}" style="width: 50%; margin-left: 25%;" class="btn post">Back to
+                                All Groups</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
