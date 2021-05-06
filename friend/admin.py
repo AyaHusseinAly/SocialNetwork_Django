@@ -11,7 +11,7 @@ class FriendListAdmin(admin.ModelAdmin):
     class Meta:
         model = FriendList
 
-admin.site.register(FriendList, FriendListAdmin)
+# admin.site.register(FriendList, FriendListAdmin)
 # Register your models here.
 
 class FriendRequestAdmin(admin.ModelAdmin):

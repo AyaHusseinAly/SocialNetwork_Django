@@ -8,12 +8,6 @@ class AnonymousMiddleWare:
         # One-time configuration and initialization.
 
     def __call__(self, request):
-
-        # if request.path=='/login/' or request.path=='/signup/' or request.path=='':
-        #     return self.get_response(request)
-        
-        # if request.user.is_anonymous:
-        #     return redirect('redirecting')
         route_name = resolve(request.path_info).url_name
         if request.user.is_anonymous:
             if route_name in settings.AUTH_EXEMPT_ROUTES or request.path == '/admin/':
@@ -22,4 +16,3 @@ class AnonymousMiddleWare:
                 return redirect('/login/')
         return self.get_response(request)
         
-            # return HttpResponseForbidden("NO")

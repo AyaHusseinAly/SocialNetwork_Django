@@ -2,7 +2,6 @@ from django.shortcuts import render , redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-#from .models import Friends
 from .models import Message, Notification
 from .forms import MsgForm
 from django.contrib.auth.models import User
@@ -10,11 +9,7 @@ from accounts.models import  UserProfile
 from friend.models import FriendList
 from .models import Message, Notification 
 
-#from django.contrib.auth.decorators import login_required, permission_required
 
-
-#@login_required
-#@permission_required(["books.view_book"],raise_exception=True)
 def index(request):
     notifyCounter=len(  Notification.objects.filter(reciever=request.user).filter(read=False) )
     friendId=int(request.GET.get('id',request.user.id))
@@ -29,7 +24,6 @@ def index(request):
             "usersResult":users,
             "query":query,
         })
-
     sender1=User.objects.get(pk=friendId)
     sender2= User.objects.get(username=request.user.username)
     reciever1= User.objects.get(pk=friendId)
@@ -42,14 +36,13 @@ def index(request):
         msg.save()
 
     #friends= Friends.objects.all()
+
+    
     flag = 0 # check to see if friendID doesn't exist in my friend list
     
-    #friends=[{'id':1,'name':"Amal Tamam",'img':"exPP3.png"},{'id':2,'name':"Alaa Hesham",'img':"alaa.png"},{'id':3,'name':"Eman Hussein",'img':"eman.png"},{'id':4,'name':"Fatma Tarek",'img':"fatma.png"}]
-    # friends=User.objects.exclude(username=request.user.username)
     try:
         friend_list = FriendList.objects.get(user=request.user)
     except FriendList.DoesNotExist:
-        # return HttpResponse("could not find a friends list for {this_user.username}")
         return render(request, "friend/friend_list.html")
     friends = [] #[(account1, True), (account1, False), ... ]  [{friend_obj,friendCounter},...,...]
     newfriends=[]
@@ -65,13 +58,13 @@ def index(request):
             flag=1
     if friendId==request.user.id:
         flag=1        
+
     if flag == 0:
         return redirect('/profile/'+str(friendId))
-
     usersforAvatar  = UserProfile.objects.filter(user__in=friends)   
-
-    
+ 
     msgCounter=len(Message.objects.filter(reciever=request.user,read=False) )
+
 
 
     msg= MsgForm(request.POST or None)
@@ -80,7 +73,6 @@ def index(request):
         msg_obj=Message.objects.create( text=form_text,sender=request.user,reciever=reciever1)
         msg_obj.save()
         return HttpResponseRedirect(request.path_info+"?id="+str(friendId))
-
     return render(request,"index.html",{
         "friends":friends,
         "newfriends":newfriends,
@@ -89,14 +81,8 @@ def index(request):
         "avatars":usersforAvatar,
         "notifyCounter":notifyCounter,
         "msgCounter":msgCounter
-
-
     })
     
-#def delete(request,id):
-#    msg=Message.objects.get(pk=id)
-#    msg.delete()
-#    return redirect("index")
 
 ################################################## Notififcations #####################################################################    
 def notify(request):
@@ -106,6 +92,5 @@ def notify(request):
         notification.save()
 
     return render(request,"notificationIndex.html",{
-
         "notifications":notifications
     })

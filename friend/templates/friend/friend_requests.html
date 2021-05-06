@@ -7,6 +7,12 @@
 
 
 <div class="container">
+	<div class="alert alert-success py-2" style="display:none;" id="success" role="alert" >
+		User Added successfully!
+	  </div>
+	  <div class="alert alert-danger py-2" style="display:none;" id="decline" role="alert">
+		You have declined the request.
+	  </div>
 	<div class="card p-2">
 
 		{% if friend_requests %}
@@ -45,6 +51,7 @@
 </div>
 
 <script type="text/javascript">
+	
 
 	function uiReload(){
 		location.reload();
@@ -53,13 +60,27 @@
 	
 
 	function triggerAcceptFriendRequest(friend_request_id){
-		acceptFriendRequest(friend_request_id, uiReload)
+		acceptFriendRequest(friend_request_id, function(){
+			var successDiv=document.getElementById("success");
+			successDiv.style.display="block";
+			setInterval(() => {
+				uiReload()
+			}, 1000);
+		})
 	}
 
 	function triggerDeclineFriendRequest(friend_request_id){
-		declineFriendRequest(friend_request_id, uiReload)
+		declineFriendRequest(friend_request_id, function(){
+			var declinedDiv=document.getElementById("decline");
+			declinedDiv.style.display="block";
+			setInterval(() => {
+				uiReload()
+			}, 1000);
+		})
 	}
+	
 </script>
 {% include 'friend/snippets/accept_friend_request.html' %}
 {% include 'friend/snippets/decline_friend_request.html' %}
+
 {% endblock %}

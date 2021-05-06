@@ -1,91 +1,71 @@
 {% extends "layout.html"%}
 {% block body %}
-{% load static  %}
+{% load static %}
 
 <div class="container">
     <div class="row pt-5">
-
         <!---------------------------------------------------- side ------------------------------------------------------------>
         <div class="col-sm-8">
-
-            <div class="mycard post-topbar" style="height:750px;overflow-y:scroll;" >
-           
-
-            {% for notification in notifications %}
-          
-               {% if notification.notifyType == "postView_comment"%}
-                    <a href="{% url "view" notification.instance_id%}" style="color:black;">
-                    <div class="mycard d-flex justify-content-end align-items-center" id="chatdiv" >
-                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">{{ notification.created_at}}</p>
-                        <div class="mx-2">{{notification.text}}</div>
-                        
-                        <i class="fa fa-comments fa-2x m-1 rounded-circle" aria-hidden="true"></i>
-                   
-                    </div>
-                     </a>
-                {% endif %}   
-                {% if notification.notifyType == "groupView"%}
-                    <a href="{% url "show" notification.instance_id%}" style="color:black;">
+            <div class="mycard post-topbar" style="height:750px;overflow-y:scroll;">
+                {% for notification in notifications %}
+                {% if notification.notifyType == "postView_comment"%}
+                <a href="{% url "view" notification.instance_id%}" style="color:black;">
                     <div class="mycard d-flex justify-content-end align-items-center" id="chatdiv">
-                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">{{ notification.created_at}}</p>
+                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">
+                            {{notification.created_at}}</p>
                         <div class="mx-2">{{notification.text}}</div>
-                        
-                        <i class="fa fa-users fa-2x m-1 rounded-circle" aria-hidden="true"></i>
-                   
+                        <i class="fa fa-comments fa-2x m-1 rounded-circle" aria-hidden="true"></i>
                     </div>
-                     </a>
+                </a>
+                {% endif %}
+                {% if notification.notifyType == "groupView"%}
+                <a href="{% url "show" notification.instance_id%}" style="color:black;">
+                    <div class="mycard d-flex justify-content-end align-items-center" id="chatdiv">
+                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">
+                            {{notification.created_at}}</p>
+                        <div class="mx-2">{{notification.text}}</div>
+                        <i class="fa fa-users fa-2x m-1 rounded-circle" aria-hidden="true"></i>
+                    </div>
+                </a>
                 {% endif %}
                 {% if notification.notifyType == "groupRequest"%}
-                    <a href="/groups/request/{{notification.instance_id}}" style="color:black;">
+                <a href="/groups/request/{{notification.instance_id}}" style="color:black;">
                     <div class="mycard d-flex justify-content-end align-items-center" id="chatdiv">
-                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">{{ notification.created_at}}</p>
+                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">
+                            {{notification.created_at}}</p>
                         <div class="mx-2">{{notification.text}}</div>
                         
                         <i class="fa fa-users fa-2x m-1 rounded-circle " aria-hidden="true"></i>
-                   
+ 
                     </div>
-                     </a>
-                {% endif %}  
+                </a>
+                {% endif %}
                 {% if notification.notifyType == "profileView"%}
-                    <a href="/profile/{{notification.instance_id}}" style="color:black;">
+                <a href="/profile/{{notification.instance_id}}" style="color:black;">
                     <div class="mycard d-flex justify-content-end align-items-center" id="chatdiv">
-                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">{{ notification.created_at}}</p>
+                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">
+                            {{notification.created_at}}</p>
                         <div class="mx-2">{{notification.text}}</div>
-                        
+
                         <i class="fas fa-user-plus fa-2x m-1 rounded-circle" aria-hidden="true"></i>
-                   
                     </div>
-                     </a>
+                </a>
                 {% endif %}
                 {% if notification.notifyType == "postView_like"%}
-                    <a href="{% url "view" notification.instance_id%}" style="color:black;">
+                <a href="{% url "view" notification.instance_id%}" style="color:black;">
                     <div class="mycard d-flex justify-content-end align-items-center" id="chatdiv">
-                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">{{ notification.created_at}}</p>
+                        <p style="text-align:left;color:gray;font-size:12px;margin:0px" class="mr-4 mt-5">
+                            {{notification.created_at}}</p>
                         <div class="mx-2">{{notification.text}}</div>
-                        
                         <i class="fas fa-thumbs-up fa-2x m-1 rounded-circle" aria-hidden="true"></i>
-                   
                     </div>
-                     </a>
-                {% endif %}     
-           
-              
-            <hr>
-            {% endfor %} 
-
-
+                </a>
+                {% endif %}
+                <hr>
+                {% endfor %}
             </div>
-            
-    
         </div>
-        
-
-    </div>    
-
-
-
-  
+    </div>
 </div>
 
 {%endblock%}
-

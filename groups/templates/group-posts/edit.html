@@ -2,14 +2,14 @@
 {% load crispy_forms_tags %}
 
 
-{% block body %} 
-    <div class="container">
-        <h1>Edit Book</h1>
-        <form action="{% url "group.edit" data.id %}" method="post">
-            {% csrf_token %}
-            {{ form|crispy}}
-            <button type="submit">Update Post</button>
-        </form>
-    </div>
+{% block body %}
+<div class="container">
+    <h1>Edit Book</h1>
+    <form action="{% url " group.edit" data.id %}" method="post">
+        {% csrf_token %}
+        {{ form|crispy}}
+        <button type="submit">Update Post</button>
+    </form>
+</div>
 
 {% endblock %}

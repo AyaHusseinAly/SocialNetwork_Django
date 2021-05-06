@@ -17,33 +17,6 @@ from friend.models import FriendList, FriendRequest
 from friend.utils import get_friend_request_or_false
 
 
-
-# @login_required(login_url="/login")
-# def redirecting(request):
-#     return redirect('/posts/')
-
-
-
-# Create your views here.
-# def index(request):
-#     query=request.GET.get('q','')
-#     if(query):
-#         first_name_query1=UserProfile.objects.filter(first_name__contains=str(query))
-#         first_name_query2=UserProfile.objects.filter(first_name__in=[query])
-#         last_name_query1=UserProfile.objects.filter(last_name__contains=str(query))
-#         last_name_query2=UserProfile.objects.filter(last_name__in=[query])
-#         users = first_name_query1.union(first_name_query1,last_name_query1,last_name_query2)
-#         return render(request,"searchResult.html",{
-#             "usersResult":users,
-#         })
-#     users=User.objects.all()
-
-#     return render(request,"searchResult.html",{
-        
-#         "usersResult":users,
-
-#     })
-
 def signup(request):
     form = UserCreationForm(request.POST or None) 
     profile_form = UserProfileForm(request.POST,request.FILES or None)
@@ -65,11 +38,7 @@ def signup(request):
     context = {'profile_form' : profile_form ,'form' : form }
     return render(request , "registration/signup.html", context)
 
-# def profile(request,id):
-#     user = User.objects.get(pk=id)
-#     return render(request,'profile.html',{
-#         "user":user,
-#     })
+
 def about(request,id):
     
     user = User.objects.get(pk=id)
@@ -77,12 +46,9 @@ def about(request,id):
     if user==request.user:
         context["is_self"]=True
         choice="user"
+        friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
+        context["friend_requests"]=friend_requests
     else:
-
-        # return render(request,'about.html',{
-        #     "user":user,
-        #     "checker":context 
-        # })
         context["is_self"]=False
         choice="account"
     return render(request,'about.html',{
@@ -94,11 +60,11 @@ def about(request,id):
 def edit(request, id):
     user = User.objects.get(pk=id)
     if request.user.id != id:
-        return HttpResponse("Unauthorized Entery!!")
+        return render(request,'unauthorized.html')
     user_profile = UserProfile.objects.get(user=id)
     form = UserCreationForm(request.POST or None, instance=user)
     profile_form = UserProfileForm(request.POST or None,request.FILES or None, instance=user_profile)
-
+    friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
     if form.is_valid() and profile_form.is_valid():
         form.save()
         profile = profile_form.save(commit = False)
@@ -108,18 +74,12 @@ def edit(request, id):
     return render(request, 'accounts/editProfile.html', {
         'form': form,
         'profile':profile_form,
-        'user': user
+        'user': user,
+        'checker':{
+            'friend_requests':friend_requests
+        }
 
     })
-
-    
-
-
-# def userProfile(request):
-#     user=User.objects.get(pk=request.user.id)
-#     return render(request,'profile.html',{
-#         "user":user,
-#     })
 
 def profile(request,id):
     
@@ -132,9 +92,6 @@ def profile(request,id):
         context['username'] = account.username
         context['email'] = account.userprofile.email
         context['avatar'] = account.userprofile.avatar
-        #context['location'] = account.userprofile.location
-        #context['age'] = account.userprofile.age
-
     try:
             friend_list = FriendList.objects.get(user=account)
     except FriendList.DoesNotExist:
@@ -183,8 +140,6 @@ def profile(request,id):
     context['is_friend'] = is_friend
     context['request_sent'] = request_sent
     context['friend_requests'] = friend_requests
-    #context['BASE_URL'] = settings.BASE_URL
-    #return render(request, "profile.html", context)
     return render(request, "profile.html",{
        "user":user,
        "account":account,
@@ -192,11 +147,6 @@ def profile(request,id):
        "posts":posts,
        
    })
-
-   # return render(request,'profile.html',{
-   #     "user":user,
-   # })
-
 
 def logout_request(request):
     logout(request)

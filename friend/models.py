@@ -53,7 +53,6 @@ class FriendRequest(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
     is_active = models.BooleanField(blank=True, null=False, default=True)
-    #timestamp = models.DateTimeField(auto_now_add=True)
     timestamp=datetime.datetime.now()
 
     def __str__(self):

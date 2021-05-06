@@ -24,7 +24,7 @@
                         {% elif request.user == message.reciever %}
                         <div class="card-body" style="padding-bottom:0px">
                             <h6 class="card-text" style="text-align:left;"><span style="color:#e44d3a;">
-                            {{message.sender}}: </span>{{ message.text}}</h6>
+                                    {{message.sender}}: </span>{{ message.text}}</h6>
                             <p style="text-align:right;color:gray;font-size:12px;margin:0px">{{ message.created_at}}</p>
 
                         </div>
@@ -41,11 +41,13 @@
                     <div class="row d-flex justify-content-space-beween">
                         <div class="col-10">
                             {{ form.as_p}}
-                            <input style="margin-top: 7px;" class="post_input " name="text" placeholder="  Enter your message" />
+                            <input style="margin-top: 7px;" class="post_input " name="text"
+                                placeholder="  Enter your message" />
 
                         </div>
                         <div class="col-2">
-                            <button class="post btn" style="margin-bottom: 5px;margin-top:7px;" type="submit">Send</button>
+                            <button class="post btn" style="margin-bottom: 5px;margin-top:7px;"
+                                type="submit">Send</button>
                         </div>
                     </div>
                 </form>
@@ -98,14 +100,14 @@
 
 
 
+                    </div>
+
+
             </div>
+
+
 
 
         </div>
 
-
-
-
-    </div>
-
-    {%endblock%}
+        {%endblock%}

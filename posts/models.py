@@ -2,10 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from groups.models import Group
 
-# from profanitycustom.validators import validate_is_profane
-# from django import template
-
-
 import datetime
 
 
@@ -13,10 +9,7 @@ import datetime
 
 
 class Post(models.Model):
-
-    # content=models.CharField(max_length=2000 , validators=[validate_is_profane])
     content=models.TextField(max_length=2000 )
-
     created_at=models.DateTimeField(auto_now_add=True)
     image=models.ImageField(null=True, blank=True)
     owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name="post")
@@ -32,7 +25,6 @@ class Post(models.Model):
 class Comment(models.Model):
 
     content=models.TextField(max_length=1000 )
-    #created_at=models.DateTimeField(auto_now_add=True)
     created_at=datetime.datetime.now()
 
     owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name="comments")
@@ -54,19 +46,12 @@ class Like(models.Model):
    
     def __str__(self):
         return str(self.post)
-
-
+        
 class BadWord(models.Model):
 
     word   = models.CharField(max_length=100)
     
-    def _str_(self):
+    def __str__(self):
         return self.word
 
 
-# register = template.Library()
-
-# @register.filter
-# def split(s, splitter=" "):
-#     return s.split(splitter)
-   
