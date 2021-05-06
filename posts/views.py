@@ -91,6 +91,8 @@ def delete(request, id):
 
 def edit(request, id):
     postData = Post.objects.get(pk=id)
+    if request.user != postData.owner:
+        return render(request,'unauthorized.html')
     post = PostEditForm(request.POST or None, instance=postData)
     if post.is_valid():
         post.save()
