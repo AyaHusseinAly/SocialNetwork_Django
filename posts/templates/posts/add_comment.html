@@ -3,30 +3,20 @@
 
 {% block title %}Comment On Post{% endblock %}
 
-{% block body %} 
-    <div class="container">
-        <br>
-        <h4>Add New Comment</h4>
-        <hr>
-        
-        <form action='{% url "add_comment"  post.id%}' method="post">
-            {% csrf_token %}
-            {{ form|crispy}}
-            
-            <button class="comment-btn" type="submit">Add Comment</button>
-          
-        </form>
-       
-    </div >
-    
-    <!-- <script>
-        var name="{{user.username}}";
-        document.getElementById("eldr").value=name;
-    </script> -->
+{% block body %}
+<div class="container">
+    <br>
+    <h4>Add New Comment</h4>
+    <hr>
+
+    <form action='{% url "add_comment"  post.id%}' method="post">
+        {% csrf_token %}
+        {{ form|crispy}}
+
+        <button class="comment-btn" type="submit">Add Comment</button>
+
+    </form>
+
+</div>
 
 {% endblock %}
-
-
-
-
-

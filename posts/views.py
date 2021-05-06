@@ -11,18 +11,7 @@ from friend.models import FriendList
 from django.contrib.auth.decorators import login_required
 
 
-
-# from django.views.generic import CreateView
-# from groups.models import Group
-#from django.contrib.auth.decorators import login_required, permission_required
-
-#@permission_required(["books.view_book"],raise_exception=True)
-
 def index(request):
-
-    # if request.user.is_anonymous:
-    #     return redirect('')
-
     query = request.GET.get('q', '')
     if(query):
         first_name_query1 = User.objects.filter(userprofile__first_name__icontains=str(query))
@@ -44,18 +33,11 @@ def index(request):
     except:
         pass
     try:
-        # friends = []
         friend_list = FriendList.objects.get(user=request.user)
         for friend in friend_list.friends.all():
-            # friends.append((friend))
             posts=posts.union(Post.objects.filter(owner=friend))
     except FriendList.DoesNotExist:
         pass
-     #[(account1, True), (account1, False), ... ]
-    # auth_user_friend_list = FriendList.objects.get(user=user)
-    # 
-
-    # posts = Post.objects.all().order_by('-created_at')
     try:
         user_groups = request.user.userprofile.groups.all()
         for group in user_groups:
@@ -64,9 +46,7 @@ def index(request):
         pass
     posts=posts.order_by('-created_at')
     groups=request.user.userprofile.groups.all()
-    # groups=Group.objects.all()
     post=PostForm(request.POST, request.FILES or None)
-
     if post.is_valid():
         form_content=post.cleaned_data['content']
         form_image=None
@@ -77,18 +57,10 @@ def index(request):
             content=form_content, owner=request.user, image=form_image)
         post_obj.save()
         return redirect("index")
-    # else:
-       
-        # print(post.errors)
-        #  post = PostForm()
-        #  args['post'] = post
-        
-       
     return render(request, "posts/index.html", {
         "form": post,
         "posts": posts,
         "groups": groups,
-        #  "post" : post
     })
 
 
@@ -117,11 +89,6 @@ def view(request, id):
         "post": post
     })
 
-# class AddCommentView(CreateView):
-#     model = Comment
-#     template_name = "add_comment.html"
-#     fields = ("content",)
-
 
 def AddCommentView(request, id):
     post = Post.objects.get(pk=id)
@@ -131,7 +98,6 @@ def AddCommentView(request, id):
         comment_obj = Comment.objects.create(
             content=form_content, owner=request.user, post=post)
         comment_obj.save()
-        # form.save()
         return redirect("view", post.id)
 
     return render(request, "posts/add_comment.html", {
@@ -168,14 +134,6 @@ def like_post(request):
                  like.value = 'Like'    
         like.save()            
         return redirect("index")
-
-
-# def post_likes(request, id):
-#     post = post = Post.objects.get(pk=id)
-#     post_likes = post.liked.all()
-#     context = {'post_likes': post_likes,}
-
-#     return render(request, 'posts/post_likes.html', context)
 
 def post_likes(request, id):
     post = Post.objects.get(pk=id)

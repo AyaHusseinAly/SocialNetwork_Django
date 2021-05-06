@@ -23,7 +23,6 @@ from django.views.generic import TemplateView,RedirectView
 from posts import views
 
 urlpatterns = [
-    # path("/admin/login/?next=/admin/",RedirectView.as_view(url='/login/')),
     path("", views.index,name='home'),
     path("", include("accounts.urls")),
     path("", include("django.contrib.auth.urls")),

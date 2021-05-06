@@ -1,22 +1,3 @@
-<!-- {% extends "layout.html"%}
-
-{% block body %} 
-<div class="container">
-
-    <h4>Content: </h4><p> {{post.content}}</p>
-    <h4>Date: </h4><p>{{post.created_at}}</p>
-    <h4>Author: </h4><p>{{post.owner}}</p>
-
-    
-    <hr>
-        <input class="post_input " name="content" placeholder="Add Comment" />            
-        <button class="post btn" type="submit" >Comment</button>
-
-
-</div>
-{% endblock %}  -->
-
-
 
 {% extends "layout.html"%}
 
@@ -44,8 +25,6 @@
      </div>
     
     <hr>
-        <!-- <input class="post_input " name="content" placeholder="Add Comment" />            
-        <button class="post btn" type="submit" >Comment</button> -->
         {% if  post.liked.all.count > 0 %} 
         <div style="color: #e44d3a;display: inline-block;margin-right: 20px;"><strong> likes : </strong></div> {{ post.liked.all.count }} likes from :
         {% for user in post.liked.all %}
@@ -59,7 +38,6 @@
         {% else %} 
         <div style="color: #e44d3a;display: inline-block;margin-right: 20px;"><strong> likes : </strong></div> {{ post.liked.all.count }} likes 
         {% endif %} 
-        <!-- <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a> -->
         <br>
         <hr>
         <h4>Comments</h4>

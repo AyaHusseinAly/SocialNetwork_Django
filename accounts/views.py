@@ -58,7 +58,7 @@ def about(request,id):
 def edit(request, id):
     user = User.objects.get(pk=id)
     if request.user.id != id:
-        return HttpResponse("Unauthorized Entery!!")
+        return render(request,'unauthorized.html')
     user_profile = UserProfile.objects.get(user=id)
     form = UserCreationForm(request.POST or None, instance=user)
     profile_form = UserProfileForm(request.POST or None,request.FILES or None, instance=user_profile)

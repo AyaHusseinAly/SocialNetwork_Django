@@ -8,7 +8,6 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post    
         fields = ("content","image")
-        #fields = "__all__"
     def __init__(self, *args, **kwargs):
             super(PostForm, self).__init__(*args, **kwargs)
             self.fields['content'].error_messages = {'required': ''}
@@ -34,18 +33,12 @@ class PostEditForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ("content",)
-        #fields = "__all__"
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment 
         fields = ("content",)
-        # fields = ("owner","content",)
-        # fields = "__all__"
-        # widgets={
-        #     'owner':forms.TextInput(attrs={'value':'','id':'eldr'})
-        # }
 
     def clean_content(self):
             content = self.cleaned_data.get('content')

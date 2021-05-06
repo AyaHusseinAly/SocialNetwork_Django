@@ -5,37 +5,30 @@
     <div class="col-sm-4">
       <div class="mycard">
         <form action="" method="GET">
-          <input
-            type="text"
-            name="q"
-            id=""
-            class="post_input"
-            placeholder="Search for group by name"
-          />
+          <input type="text" name="q" id="" class="post_input" placeholder="Search for group by name" />
           <input type="submit" class="btn mt-2" value="Search" />
         </form>
-          <button type="button" class="btn btn-outline-danger"onclick="location.href='{% url "create" %}';">Create Group</button>
+        <button type="button" class="btn btn-outline-danger" onclick="location.href='{% url "create" %}';">Create
+          Group</button>
       </div>
-    
+
     </div>
-    
+
     <div class="col-sm-8">
       <div class="mycard container">
         <i class="fa fa-users fa-4x" aria-hidden="true"></i>
         <h3>Groups</h3>
         <div class="row pl-5">
-          {% for group in groups %} 
+          {% for group in groups %}
 
-          <div 
+          <div
             style=" background-image: {% if group.cover  %}  url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
-            onclick="location.href='{% url "show" group.id %}';"
-            class="col-md-3 m-2"
-            >
+            onclick="location.href='{% url "show" group.id %}';" class="col-md-3 m-2">
 
             <h2 style="color: white; -webkit-text-stroke: 0.4px black;">{{group.name}}</h2>
             <p style="color: white; -webkit-text-stroke: 0.25px black;">{{group.description}}</p>
             <div class="d-flex pl-3" style="width: 100%">
-          
+
             </div>
           </div>
 

@@ -1,55 +1,28 @@
-{% extends "layout.html"%} 
+{% extends "layout.html"%}
 {% block body %}
-<div
-  class="post-topbar p-5 m-5 d-flex flex-column justify-content-around"
-  style="width: 80%">
+<div class="post-topbar p-5 m-5 d-flex flex-column justify-content-around" style="width: 80%">
   <div class="">
     <i class="fa fa-users fa-4x" aria-hidden="true"></i>
     <h3>Requests</h3>
   </div>
   {%for request in requests%}
-  
-  <form
-    method="POST"
-    enctype="multipart/form-data"
-    action="{% url 'group.acceptRefuseRequest' id %}"
-    style="width: 60%"
-    class="mycard"
-  >
+
+  <form method="POST" enctype="multipart/form-data" action="{% url 'group.acceptRefuseRequest' id %}" style="width: 60%"
+    class="mycard">
     {% csrf_token %} {% if request.requestFrom.userprofile.avatar %}
-    <img
-      class="m-1 rounded-circle"
-      src="/images/{{request.requestFrom.userprofile.avatar}}"
-    />
+    <img class="m-1 rounded-circle" src="/images/{{request.requestFrom.userprofile.avatar}}" />
     {% else%}
     <img class="m-1 rounded-circle" src="/images/avatars/profile.jpeg" />
     {%endif%} {{request.requestFrom.UserProfile.avatar}}
     {{request.requestFrom.username}}
-    <input
-      type="text"
-      value="{{request.requestFrom.id}}"
-      name="user"
-      hidden
-    />
-    <br/>
-    <input
-      type="submit"
-      value="Accept"
-      class="btn btn-success px-5"
-      style="widtd: 100%"
-      name="submit"
-    />
-    <input
-      type="submit"
-      value="Refuse"
-      class="btn btn-danger px-5"
-      style="widtd: 100%"
-      name="submit"
-    />
+    <input type="text" value="{{request.requestFrom.id}}" name="user" hidden />
+    <br />
+    <input type="submit" value="Accept" class="btn btn-success px-5" style="widtd: 100%" name="submit" />
+    <input type="submit" value="Refuse" class="btn btn-danger px-5" style="widtd: 100%" name="submit" />
   </form>
-  <br/>
- 
- 
+  <br />
+
+
   {%endfor%}
 </div>
 {%endblock%}

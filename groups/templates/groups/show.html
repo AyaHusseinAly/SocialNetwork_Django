@@ -1,49 +1,57 @@
 {% extends "layout.html"%}
-  {% block style %}
-  <style>
-  label{
-      display:none
-  }
-ul{
-     list-style: none; 
-}
-  textarea{
+{% block style %}
+<style>
+    label {
+        display: none
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    textarea {
         float: left;
         width: 100%;
         height: 60px;
         border: 1px solid #e44d3a;
         border-radius: 10px;
-        margin-bottom:10px;
-  }
-  </style>
-  
-  {% endblock %}
+        margin-bottom: 10px;
+    }
+</style>
+
+{% endblock %}
 {% block body %}
-<div style=" background-image: {% if group.cover  %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:100%%;height:300px;background-size: 100% 300px;cursor: pointer;background-repeat: no-repeat;">
+<div
+    style=" background-image: {% if group.cover  %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:100%%;height:300px;background-size: 100% 300px;cursor: pointer;background-repeat: no-repeat;">
 </div>
 <div class="d-flex justify-content-between" style="background-color:#e44d3a; padding:10px;color: white;">
-  <div class="" >
-  <h1 >{{group.name}}</h1>
-  <h3>{{group.description}}</h3>
-  </div>
-  <div class="d-flex align-items-end">
- {%if request.user in users_in_group or request.user == group.owner%}
-    <a href="{% url "listMembers" group.id %}"><i class="fa fa-users fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
-     <a href="{% url "invite" group.id %}"><i class="fas fa-user-plus fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
-     {%if request.user == group.owner%}
-      <a href="{% url "group.request" group.id %}"><i class="fas fa-user-check fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
-      <a href="{% url "leave" group.id %}"><i class="fa fa-trash fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
-     {%else%}
-     <a href="{% url "leave" group.id %}"><i class="fas fa-door-open fa-2x m-3" aria-hidden="true" style="color:white"></i></a>
-     {%endif%}
-{%endif%}
-  </div>
+    <div class="">
+        <h1>{{group.name}}</h1>
+        <h3>{{group.description}}</h3>
+    </div>
+    <div class="d-flex align-items-end">
+        {%if request.user in users_in_group or request.user == group.owner%}
+        <a href="{% url "listMembers" group.id %}"><i class="fa fa-users fa-2x m-3" aria-hidden="true"
+                style="color:white"></i></a>
+        <a href="{% url "invite" group.id %}"><i class="fas fa-user-plus fa-2x m-3" aria-hidden="true"
+                style="color:white"></i></a>
+        {%if request.user == group.owner%}
+        <a href="{% url "group.request" group.id %}"><i class="fas fa-user-check fa-2x m-3" aria-hidden="true"
+                style="color:white"></i></a>
+        <a href="{% url "leave" group.id %}"><i class="fa fa-trash fa-2x m-3" aria-hidden="true"
+                style="color:white"></i></a>
+        {%else%}
+        <a href="{% url "leave" group.id %}"><i class="fas fa-door-open fa-2x m-3" aria-hidden="true"
+                style="color:white"></i></a>
+        {%endif%}
+        {%endif%}
+    </div>
 </div>
 
 <div class="container">
 
 
-{%if request.user in users_in_group or request.user == group.owner%}
+    {%if request.user in users_in_group or request.user == group.owner%}
 
     <div class="row pt-1">
 
@@ -54,78 +62,82 @@ ul{
                     <input type="text" name="q" id="" class="post_input " placeholder="Search for user by name">
                     <input type="submit" class="btn mt-2" value="Search"></a>
                 </form>
-            </div>    
+            </div>
 
             {% comment %} <div class="mycard">
-            <i class="fa fa-users fa-4x" aria-hidden="true"></i>
-            <h2>your groups</h2>
+                <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+                <h2>your groups</h2>
 
-            {% for group in groups %}
-            <hr>
-            <h5>{{group.name}}</h5>
-            <div class="d-flex pl-3">
-                <p><button class="mx-2">visit group</button></p>
-                <p><button class="mx-2" style="background-color:grey">leave group</button></p>
-            </div>
-            
-            <hr>
-            {% endfor %} 
+                {% for group in groups %}
+                <hr>
+                <h5>{{group.name}}</h5>
+                <div class="d-flex pl-3">
+                    <p><button class="mx-2">visit group</button></p>
+                    <p><button class="mx-2" style="background-color:grey">leave group</button></p>
+                </div>
+
+                <hr>
+                {% endfor %}
 
 
             </div> {% endcomment %}
-            
-    
+
+
         </div>
-        
 
-    <!-- ----------------------------------------------------------- end side ----------------------------------- -->
-        
+
+        <!-- ----------------------------------------------------------- end side ----------------------------------- -->
+
         <div class="col-sm-8 mycard">
-                
- 
-                <div class="post-topbar">
-                    
-                    <form action='{% url "index" %}' method="post" enctype="multipart/form-data" >
-                        {% csrf_token %}
-                      
-                        <div class="row">    
-                            <div class="col-10">
-                           {{form.as_p}}
-                   
-                            
-                                    {% if form.content.error %}
-                                    <div id="form-error">
-                                        {{form.content.errors.0}}
-                                    </div>
-                                    {% endif %}
-                            
+
+
+            <div class="post-topbar">
+
+                <form action='{% url "index" %}' method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-10">
+                            {{form.as_p}}
+
+
+                            {% if form.content.error %}
+                            <div id="form-error">
+                                {{form.content.errors.0}}
                             </div>
-                            
-                            <div class="col-2">
-                                <button class="post btn" type="submit" >Post</button>
-                            </div>   
-                        </div> 
-                    </form>
-                        
-                    
-                </div>
+                            {% endif %}
 
-                 
+                        </div>
 
-                <h5>Feed Posts</h5>
+                        <div class="col-2">
+                            <button class="post btn" type="submit">Post</button>
+                        </div>
+                    </div>
+                </form>
 
-                {% for post in posts %}
-                <hr>
 
-                <div class="card text-center">
+            </div>
+
+
+
+            <h5>Feed Posts</h5>
+
+            {% for post in posts %}
+            <hr>
+
+            <div class="card text-center">
                 <div class="card-header">
                     <div class="row">
-                        <p class="col-5 tex-left "><span style="color:#e44d3a;">Post from:</span> {{post.owner}}</br><span style="color:#e44d3a;">Group :</span> {{group.name}}</p>
+                        <p class="col-5 tex-left "><span style="color:#e44d3a;">Post from:</span>
+                            {{post.owner}}</br><span style="color:#e44d3a;">Group :</span> {{group.name}}</p>
                         <div class="col-2"></div>
                         <div class="col-5">
-                            <a href="/posts/view/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                            <a href="/posts/edit/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-pen" aria-hidden="true"></i></a>
-                            <a href="/posts/delete/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="/posts/view/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-eye"
+                                    aria-hidden="true"></i></a>
+                            <a href="/posts/edit/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-pen"
+                                    aria-hidden="true"></i></a>
+                            <a href="/posts/delete/{{post.id}}" style="color:grey;" class="mx-3"><i class="fa fa-trash"
+                                    aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
@@ -137,7 +149,6 @@ ul{
                     <div style="text-align:right;width:80%">
                         <a href="{% url 'view' post.id%}" style="color:#e44d3a;"><i class="fa fa-comment mx-4 fa-lg "
                                 aria-hidden="true"></i></a>
-                        <!-- <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a> -->
                         <form action="{% url 'like-post' %}" method="POST" style="display: inline-block;">
                             {% csrf_token %}
                             <input type="hidden" name="post_id" value="{{post.id}}">
@@ -156,52 +167,51 @@ ul{
                         <strong>{{ post.liked.all.count }} likes</strong>
                     </div>
                 </div>
-                </div>
+            </div>
 
-                <hr>
+            <hr>
 
-                {% endfor %}
+            {% endfor %}
 
-        
+
         </div>
 
-{%elif not invited%}
-  <div class="row pt-1 mt-5">
-        <div class="col-sm-8 mycard">                
-                <div class="post-topbar">                    
-                    <a class="post btn btn-primary"href="{%url 'group.sendRequestJoin' group.id%}" >Join Group</a>
+        {%elif not invited%}
+        <div class="row pt-1 mt-5">
+            <div class="col-sm-8 mycard">
+                <div class="post-topbar">
+                    <a class="post btn btn-primary" href="{%url 'group.sendRequestJoin' group.id%}">Join Group</a>
                 </div>
-                         
+
+            </div>
         </div>
-    </div>    
-    </div>    
-  
+    </div>
+
 </div>
 
 {%else%}
 
-  <div class="row pt-1 mt-5">
-        <div class="col-sm-8 mycard">
-                
-                <div class="post-topbar">
-                    
-                    <a class="post btn btn-primary" href="{%url 'group.acceptInvitation' group.id%}">Accept invitation</a>
-                    <a class="post btn btn-secondary" href="{%url 'group.cancelInvitation' group.id%}">Cancel invitation</a>
-                </div>
-                         
+<div class="row pt-1 mt-5">
+    <div class="col-sm-8 mycard">
+
+        <div class="post-topbar">
+
+            <a class="post btn btn-primary" href="{%url 'group.acceptInvitation' group.id%}">Accept invitation</a>
+            <a class="post btn btn-secondary" href="{%url 'group.cancelInvitation' group.id%}">Cancel invitation</a>
         </div>
-    </div>    
+
+    </div>
+</div>
 
 
 
 
-    </div>    
+</div>
 
 
 
-  
+
 </div>
 {%endif%}
 
 {%endblock%}
-

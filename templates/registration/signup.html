@@ -1,20 +1,23 @@
-
 <!DOCTYPE html>
-    {% load static  %}
-    {% load crispy_forms_tags %}
-    <html>
-    <head>
+{% load static %}
+{% load crispy_forms_tags %}
+<html>
+
+<head>
     <title>Social Media</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/posts.css'%}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/profile.css'%}" type="text/css">
     <title> signup </title>
     <style>
-   
+
     </style>
-    
-    </head>
+
+</head>
+
 <body style="overflow-x:hidden">
 
     <nav class="nav">
@@ -22,54 +25,50 @@
 
             <div class="row">
                 <div class="col-4"></div>
-
                 <div class="col-4">
-                    <h3 style="text-align: center;"class="m-4"> Welcome  to our Social Media Website  </h3>
-
+                    <h3 style="text-align: center;" class="m-4"> Welcome to our Social Media Website </h3>
                 </div>
                 <div class="col-4">
-                    <h4 style="text-align:right;  text-decoration: underline;"class="mr-5 mt-2"><a  href="/login/" id="navLink">Login</a></h4>   
+                    <h4 style="text-align:right;  text-decoration: underline;" class="mr-5 mt-2"><a href="/login/"
+                            id="navLink">Login</a></h4>
                 </div>
 
             </div>
-        
+
         </nav>
-        
-        
-        </nav>
-        <div class="container pt-2 ">
-            <div class="post-topbar">
-                <form method="post" action="{% url "signup" %}" enctype="multipart/form-data" >
-                    {% csrf_token %}
-                    {{ profile_form.non_field_errors }}
-                    {{ form.username|as_crispy_field}}
-                    {{ profile_form.email|as_crispy_field }}
-                    {{ profile_form.first_name|as_crispy_field}}
-                    {{ profile_form.last_name|as_crispy_field}}
-                    {{ form.password1|as_crispy_field}}
-                    {{ form.password2|as_crispy_field}}
-                    {{ profile_form.avatar|as_crispy_field}}
-                    {{ profile_form.birthdate|as_crispy_field}}
-                    <small class="form-text text-muted">Format: dd/mm/yyy </small>
-                    {{ profile_form.country|as_crispy_field}}
-                    {{ profile_form.about|as_crispy_field}}
-     
-                        <!-- <tr>
-                        <td></td> -->
-                        <!-- <td> -->
-                            <input type="submit" name="submit" value="Register" />
-                        <!-- </td>
-                    </tr>
-                    </table> -->
-                </form>
-            </div>
-            <p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
 
 
+    </nav>
+    <div class="container pt-2 ">
+        <div class="post-topbar">
+            <form method="post" action="{% url " signup" %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ profile_form.non_field_errors }}
+                {{ form.username|as_crispy_field}}
+                {{ profile_form.email|as_crispy_field }}
+                {{ profile_form.first_name|as_crispy_field}}
+                {{ profile_form.last_name|as_crispy_field}}
+                {{ form.password1|as_crispy_field}}
+                {{ form.password2|as_crispy_field}}
+                {{ profile_form.avatar|as_crispy_field}}
+                {{ profile_form.birthdate|as_crispy_field}}
+                <small class="form-text text-muted">Format: dd/mm/yyy </small>
+                {{ profile_form.country|as_crispy_field}}
+                {{ profile_form.about|as_crispy_field}}
+                <input type="submit" name="submit" value="Register" />
+            </form>
         </div>
-    
+        <p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+
+
+    </div>
+
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
 <script src="https://
 </html>

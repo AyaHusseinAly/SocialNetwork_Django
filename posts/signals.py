@@ -11,10 +11,6 @@ from groups.models import GroupInvite, GroupRequestJoin
 @receiver(post_save, sender=Comment)
 def after_comment_creation(sender, instance, created, *args, **kwargs):
     if created:
-
-        # text = str("comment from " + instance.owner.username +
-        #            ": "+instance.content[0:30])
-
         text = str(instance.owner.username +
                    " commented on your post: "+instance.content[0:30])
         if instance.post.owner != instance.owner:
@@ -48,20 +44,10 @@ def after_group_Request(sender, instance, created, *args, **kwargs):
     else:
         print("Updating..")
 
-# model GroupInvite >>    inviteFrom  -  inviteTo  -  group
-
 
 @receiver(post_save, sender=FriendRequest)
 def after_friend_request(sender, instance, created, *args, **kwargs):
     if created:
-
-        #     text = str(instance.sender)+" sent a friend request "
-        #     notify_instance = Notification.objects.create(
-        #         sender=instance.sender, reciever=instance.reciever, text=text, notifyType="profileView", instance_id=instance.sender.id)
-        #     notify_instance.save()
-        # else:
-        #     print("Updating..")
-
         text = str(instance.sender.username + " sent you a friend request ")
         notify_instance = Notification.objects.create(
             sender=instance.sender, reciever=instance.receiver, text=text, notifyType="profileView", instance_id=instance.sender.id)

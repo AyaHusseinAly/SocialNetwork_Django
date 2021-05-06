@@ -5,36 +5,37 @@
   <i class="fa fa-users fa-4x" aria-hidden="true"></i>
   <h3>Invite Friends</h3>
   <div class="d-flex justify-content-between">
-  <div class="mycard">
-  <h4> Invitations</h4>
-   {%for alreadyInvitedUser in alreadyInvitedUsers%}
+    <div class="mycard">
+      <h4> Invitations</h4>
+      {%for alreadyInvitedUser in alreadyInvitedUsers%}
       <div class="mycard">
-         {% if alreadyInvitedUser.inviteTo.userprofile.avatar %}
+        {% if alreadyInvitedUser.inviteTo.userprofile.avatar %}
         <img class="m-1 rounded-circle" src="/images/{{alreadyInvitedUser.inviteTo.userprofile.avatar}}" />
         {% else%}
         <img class="m-1 rounded-circle" src="/images/avatars/profile.jpeg" />
-        {%endif%} {{alreadyInvitedUser.inviteTo.username}} 
+        {%endif%} {{alreadyInvitedUser.inviteTo.username}}
       </div>
-   {%endfor%}
-   </div>
-  <form method="POST"name="formSelect" enctype="multipart/form-data" action="{% url 'group.sendrequest' id %}" multiple style="width:50%" class="mycard">
-  {% csrf_token %}
-   <h4> Send New Invitations</h4>
-    <select name="groupRequest" id="groupRequest" class="picker" multiple style="width:100%"> 
-      {% for invite in invites %}
-      <option value="{{invite.id}}" class="mycard" style="width: 100%">
-        {% if invite.avatar %}
-        <img class="m-1 rounded-circle" src="/images/{{invite.UserProfile.avatar}}" />
-        {% else%}
-        <img class="m-1 rounded-circle" src="/images/avatars/profile.jpeg" />
-        {%endif%} {{invite.username}} 
-      </option> 
-      {% endfor %}
-    </select> 
-    </br>
-    <input type="submit" id="Testing" value="Invite"  class="btn btn-danger px-5" style="widtd:100%" disabled>
-  </form>
-</div>
+      {%endfor%}
+    </div>
+    <form method="POST" name="formSelect" enctype="multipart/form-data" action="{% url 'group.sendrequest' id %}"
+      multiple style="width:50%" class="mycard">
+      {% csrf_token %}
+      <h4> Send New Invitations</h4>
+      <select name="groupRequest" id="groupRequest" class="picker" multiple style="width:100%">
+        {% for invite in invites %}
+        <option value="{{invite.id}}" class="mycard" style="width: 100%">
+          {% if invite.avatar %}
+          <img class="m-1 rounded-circle" src="/images/{{invite.UserProfile.avatar}}" />
+          {% else%}
+          <img class="m-1 rounded-circle" src="/images/avatars/profile.jpeg" />
+          {%endif%} {{invite.username}}
+        </option>
+        {% endfor %}
+      </select>
+      </br>
+      <input type="submit" id="Testing" value="Invite" class="btn btn-danger px-5" style="widtd:100%" disabled>
+    </form>
+  </div>
 </div>
 
 {%endblock%}
