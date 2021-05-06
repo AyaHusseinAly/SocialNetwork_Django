@@ -27,7 +27,7 @@
           {% for group in groups %} 
 
           <div 
-            style=" background-image: {% if group.cover != '' %} url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
+            style=" background-image: {% if group.cover  %}  url({{group.cover.url}}){% else %}url(/images/Default.jpg){% endif %};width:200px;height:200px;display:inline-block;background-size: cover;cursor: pointer;"
             onclick="location.href='{% url "show" group.id %}';"
             class="col-md-3 m-2"
             >

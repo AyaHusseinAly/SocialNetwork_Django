@@ -1,0 +1,43 @@
+{% extends "layout.html"%} {% block body %}
+<div
+  class="post-topbar p-5 m-5 d-flex justify-content-around"
+  style="width: 80%"
+>
+  <div class="">
+    <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+    <h3>Accept New Members</h3>
+  </div>
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+    action="{% url 'group.acceptrequest' id %}"
+    style="width:60%"
+    class="mycard"
+  >
+    {% csrf_token %}
+    <select name="groupRequest" id="groupRequest" multiple style="width:100%">
+      {% for request in requests %}
+      <option value="{{request.requestFrom.id}}" class="mycard" style="width:100%">
+        {% if request.requestFrom.avatar %}
+        <img
+          class="m-1 rounded-circle"
+          src="/images/{{request.requestFrom.UserProfile.avatar}}"
+        />
+        {% else%}
+        <img class="m-1 rounded-circle" src="/images/avatars/profile.jpeg" />
+        {%endif%} {{request.requestFrom}}
+      </option>
+      {% endfor %}
+    </select>
+    </br>
+    <input
+      type="submit"
+      value="Accept"
+      class="btn btn-danger px-5"
+      style="widtd: 100%"
+      id="Testing"
+      disabled
+    />
+  </form>
+</div>
+{%endblock%}

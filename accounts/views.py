@@ -6,9 +6,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from .forms import UserProfileForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from posts.models import Post
 from .models import UserProfile
+from posts.forms import PostForm
 # Fatima 
 from django.conf import settings
 from friend.friend_request_status import FriendRequestStatus
@@ -68,13 +69,28 @@ def signup(request):
 #     })
 def about(request,id):
     user = User.objects.get(pk=id)
+    context={}
+    if user==request.user:
+        context["is_self"]=True
+        choice="user"
+    else:
+
+        # return render(request,'about.html',{
+        #     "user":user,
+        #     "checker":context 
+        # })
+        context["is_self"]=False
+        choice="account"
     return render(request,'about.html',{
-        "user":user,
-    })
+            choice:user,
+            "checker":context 
+        })
 
 
 def edit(request, id):
     user = User.objects.get(pk=id)
+    if request.user.id != id:
+        return HttpResponse("Unauthorized Entery!!")
     user_profile = UserProfile.objects.get(user=id)
     form = UserCreationForm(request.POST or None, instance=user)
     profile_form = UserProfileForm(request.POST or None,request.FILES or None, instance=user_profile)
@@ -95,7 +111,6 @@ def edit(request, id):
     
 
 
-@login_required(login_url="/login")
 # def userProfile(request):
 #     user=User.objects.get(pk=request.user.id)
 #     return render(request,'profile.html',{
@@ -103,14 +118,12 @@ def edit(request, id):
 #     })
 @login_required(login_url="/login")
 def redirecting(request):
-    posts=Post.objects.all()
-    return render(request,'posts/index.html',{
-        "posts":posts,
-    })
-    
-@login_required(login_url="/login")
+    return redirect('/posts/')
+
 def profile(request,id):
     context ={}
+    posts={}
+    form={}
     account= User.objects.get(id=id)
     if  account:
         context['id'] = account.id
@@ -138,6 +151,7 @@ def profile(request,id):
         is_self = False
         if friends.filter(pk=user.id):
             is_friend = True
+            posts=Post.objects.filter(owner_id=account.id).order_by('-created_at')
         else:
             is_friend = False
             # CASE1: Request has been sent from THEM to YOU: FriendRequestStatus.THEM_SENT_TO_YOU
@@ -156,6 +170,7 @@ def profile(request,id):
     else:
         try:
             is_self = True
+            posts=Post.objects.filter(owner_id=user.id).order_by('-created_at')
             # You look at your own profile
             friend_requests = FriendRequest.objects.filter(receiver=user, is_active=True)
         except:
@@ -171,7 +186,9 @@ def profile(request,id):
     return render(request, "profile.html",{
        "user":user,
        "account":account,
-       "checker":context
+       "checker":context,
+       "posts":posts,
+       
    })
 
    # return render(request,'profile.html',{
