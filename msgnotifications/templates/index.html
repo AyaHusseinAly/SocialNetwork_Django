@@ -1,54 +1,56 @@
 {% extends "layout.html"%}
 {% block body %}
-{% load static  %}
+{% load static %}
 
 <div class="container">
     <div class="row pt-5">
         <div class="col-sm-8 mycard d-flex flex-column">
-            <div class=" post-topbar" >
-                                
-                    <h6>Chatting with<span style="color:#e44d3a;"> :{{ msgto}}</span></h6>
-                    <hr>
-                    <div style="height:400px;overflow-y:scroll" >
+            <div class=" post-topbar">
+
+                <h6>Chatting with<span style="color:#e44d3a;"> :{{ msgto}}</span></h6>
+                <hr>
+                <div style="height:400px;overflow-y:scroll">
                     {% for message in messages %}
                     <div class="card text-center">
                         {% if request.user == message.sender %}
-                            <div class="card-body  bg-light"style="padding-bottom:0px">
-                                <h6 class="card-text"style="text-align:right">{{ message.text}}<span style="color:#e44d3a;"> :{{ message.sender}}</span></h6>
-                                <p style="text-align:left;color:gray;font-size:12px;margin:0px">{{ message.created_at}}</p>
+                        <div class="card-body  bg-light" style="padding-bottom:0px">
+                            <h6 class="card-text" style="text-align:right">{{ message.text}}<span
+                                    style="color:#e44d3a;"> :{{ message.sender}}</span></h6>
+                            <p style="text-align:left;color:gray;font-size:12px;margin:0px">{{ message.created_at}}</p>
 
-                            </div>
+                        </div>
 
-                        
+
                         {% elif request.user == message.reciever %}
-                            <div class="card-body"style="padding-bottom:0px">
-                                <h6 class="card-text"style="text-align:left;"><span style="color:#e44d3a;">{{ message.sender}}: </span>{{ message.text}}</h6>
-                                <p style="text-align:right;color:gray;font-size:12px;margin:0px">{{ message.created_at}}</p>
+                        <div class="card-body" style="padding-bottom:0px">
+                            <h6 class="card-text" style="text-align:left;"><span style="color:#e44d3a;">{{
+                                    message.sender}}: </span>{{ message.text}}</h6>
+                            <p style="text-align:right;color:gray;font-size:12px;margin:0px">{{ message.created_at}}</p>
 
-                            </div>
+                        </div>
                         {% endif %}
                     </div>
-                  
+
                     {% endfor %}
-                    </div>
+                </div>
             </div>
-                    <div class="card p-2">
-                        
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <div class="row">    
-                                <div class="col-10">
-                                    {{ form.as_p}}
-                                    <input class="post_input " name="text" placeholder="  Enter your message" />
-                                
-                                </div>
-                                <div class="col-2">
-                                    <button class="post btn" type="submit" >send</button>
-                                </div>   
-                            </div> 
-                        </form>     
-                        
+            <div class="card p-2">
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-10">
+                            {{ form.as_p}}
+                            <input class="post_input " name="text" placeholder="  Enter your message" />
+
+                        </div>
+                        <div class="col-2">
+                            <button class="post btn" type="submit">send</button>
+                        </div>
                     </div>
+                </form>
+
+            </div>
         </div>
 
         <!---------------------------------------------------- side ------------------------------------------------------------>
@@ -59,45 +61,47 @@
                     <input type="text" name="q" id="" class="post_input " placeholder=" Search for user by name">
                     <input type="submit" class="btn mt-2" value="Search"></a>
                 </form>
-            </div>    
+            </div>
 
-            <div class="mycard" style="height:500px;overflow-y:scroll" >
-            <h2>Chats</h2>
+            <div class="mycard" style="height:500px;overflow-y:scroll">
+                <h2>Chats</h2>
 
-            {% for friend in friends %}
-            <hr>
+                {% for friend in friends %}
+
+                <hr>
                 {% if msgto == friend.username %}
-                    <a href="?id={{ friend.id }}" style="color:black;">
-                    <div class="d-flex justify-content-center align-items-center" style="background-color:#f88b7c;"id="chatdiv">
-                        <div class="mx-2">{{friend.username}}</div>
-                        <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
+                <a href="?id={{ friend.id }}" style="color:black;">
+                    <div class="d-flex justify-content-center align-items-center" style="background-color:#f88b7c;"
+                        id="chatdiv">
+                        {% else %}
+                        <a href="?id={{ friend.id }}" style="color:black;">
+                            <div class="d-flex justify-content-center align-items-center" id="chatdiv">
+                                {% endif %}
+                                <div class="mx-2 ">{{friend.username}}</div>
+
+                                <img class="  m-1 rounded-circle img-thumbnail"
+                                    src="{% if friend.userprofile.avatar %}{{friend.userprofile.avatar.url}} {% else %} {% static 'images/avatars/profile.jpeg' %} {% endif %}">
+                            </div>
+                        </a>
+
+
+
+
+                        <hr>
+                        {% endfor %}
+
+
                     </div>
-                     </a> 
-                {% else %}
-                    <a href="?id={{ friend.id }}" style="color:black;">
-                    <div class="d-flex justify-content-center align-items-center" id="chatdiv">
-                        <div class="mx-2">{{friend.username}}</div>
-                        <img class="  m-1 rounded-circle"  src="{% static 'images/exPP3.png' %}">
-                    </div>
-                     </a>
-                {% endif %}  
-              
-            <hr>
-            {% endfor %} 
 
 
             </div>
-            
-    
+
+
         </div>
-        
-
-    </div>    
 
 
 
-  
-</div>
 
-{%endblock%}
+    </div>
 
+    {%endblock%}

@@ -27,8 +27,9 @@
         <!-- <input class="post_input " name="content" placeholder="Add Comment" />            
         <button class="post btn" type="submit" >Comment</button> -->
         
-        <div class="likes"><strong> likes </strong></div> 0 likes 
-        <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a>
+        <div class="likes"><strong> likes </strong></div> {{ post.liked.all.count }} likes 
+        
+        <!-- <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a> -->
         <br>
         <hr>
         <h4>Comments</h4>

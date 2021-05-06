@@ -10,5 +10,7 @@ urlpatterns = [
     path("edit/<int:id>", views.edit, name="group.edit"),
     path("delete/<int:id>", views.delete, name="group.delete"),
     path("view/<int:id>", views.view, name="group.view"),
+    path("sendrequest/<int:id>", views.groupRequest, name="group.sendrequest"),
+
 
 ]

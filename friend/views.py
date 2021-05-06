@@ -2,24 +2,25 @@ from django.shortcuts import render , redirect
 from django.http import HttpResponse
 import json
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 
 
 from accounts.models import UserProfile
-from friend.models import FriendRequest
+from friend.models import FriendRequest,FriendList
 
+@login_required(login_url="/login")
 def friend_requests(request, *args, **kwargs):
     context = {}
     user = request.user
-    if user.is_authenticated:
-        user_id = kwargs.get("user_id")
-        account =  User.objects.get(pk=user_id)
-        if account == user:
-            friend_requests = FriendRequest.objects.filter(receiver= account, is_active= True)
-            context['friend_requests'] = friend_requests
-        else:
-            return HttpResponse("You can't view another users friend requests.")
-    #else:
-    #    redirect("login")
+
+    user_id = kwargs.get("user_id")
+    account =  User.objects.get(pk=user_id)
+    if account == user:
+        friend_requests = FriendRequest.objects.filter(receiver= account, is_active= True)
+        context['friend_requests'] = friend_requests
+    else:
+        return HttpResponse("You can't view another users friend requests.")
     return render(request, "friend/friend_requests.html", context)
 
 def send_friend_request(request, *args, **kwargs):
@@ -104,6 +105,26 @@ def decline_friend_request(request,*args,**kwargs):
     return HttpResponse(json.dumps(payload), content_type="application/json")
 
 
+def remove_friend(request,*args,**kwargs):
+    user=request.user
+    payload={}
+    if request.method == "POST" and user.is_authenticated:
+        user_id=request.POST.get("reciever_user_id")
+        if user_id:
+            try:
+                removee = User.objects.get(pk=user_id)
+                friend_list=FriendList.objects.get(user=user)
+                friend_list.unfriend(removee)
+                payload['response']="Friend Removed."
+            except Exception as e:
+                payload['response']= f"something went wronghu: {str(e)}"
+        else:
+            payload['response']="Unable to remove that friend"
+    else:
+        payload['response']="You must be signed in"
+    return HttpResponse(json.dumps(payload), content_type="application/json")
+
+
 def cancel_friend_request(request, *args, **kwargs):
     user = request.user
     payload= {}
@@ -130,6 +151,55 @@ def cancel_friend_request(request, *args, **kwargs):
     else:
          payload['response'] = "You must be authenticated to cancel a friend request."
     return HttpResponse(json.dumps(payload), content_type="application/json")
+
+def friend_list_view(request, *args, **kwargs):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        user_id = kwargs.get("user.id")
+        if user_id:
+            try:
+                this_user = User.objects.get(pk=user_id)
+                context['this_user'] = this_user
+            except User.DoesNotExist:
+                return HttpResponse("That user does not exist.")
+            try:
+                friend_list = FriendList.objects.get(user=this_user)
+            except FriendList.DoesNotExist:
+                return HttpResponse("could not find a friends list for {this_user.username}")
+
+             # Must be friends to view a friends list
+            if user != this_user:
+                if not user in friend_list.friends.all():
+                    return HttpResponse("You must be friends to view their friends list")
+
+            friends = [] #[(account1, True), (account1, False), ... ]
+            auth_user_friend_list = FriendList.objects.get(user=user)
+            for friend in friend_list.friends.all():
+                friends.append((friend, auth_user_friend_list.is_mutual_friend(friend)))
+            context['friends'] = friends
+        else:
+            return HttpResponse("You must be friends to view their fiends list.")
+        return render(request, "friend/friend_list.html", context)
+
+def friend_list_view1(request, *args, **kwargs):
+    context = {}
+    user = request.user
+    #if user.is_authenticated:
+    try:
+        friend_list = FriendList.objects.get(user=user)
+    except FriendList.DoesNotExist:
+        return HttpResponse("could not find a friends list for {this_user.username}")
+    friends = [] #[(account1, True), (account1, False), ... ]
+    auth_user_friend_list = FriendList.objects.get(user=user)
+    for friend in friend_list.friends.all():
+        friends.append((friend, auth_user_friend_list.is_mutual_friend(friend)))
+
+    context['friends'] = friends
+    return render(request, "friend_list.html", context)
+    #return HttpResponse("You must be friends to view their friends list")
+        
+
 
 
             

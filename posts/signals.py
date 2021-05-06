@@ -1,6 +1,7 @@
 from django.db.models.signals import post_save, pre_save, post_delete, pre_delete
 from django.dispatch import receiver
 from msgnotifications.models import Notification
+from friend.models import FriendRequest
 
 from .models import Comment
 from groups.models import GroupInvite
@@ -19,7 +20,7 @@ def after_comment_creation(sender,instance,created,*args,**kwargs):
 
 
 @receiver(post_save, sender=GroupInvite)
-def after_comment_creation(sender,instance,created,*args,**kwargs):
+def after_group_invitation(sender,instance,created,*args,**kwargs):
     if created:
         text=str(instance.inviteFrom)+" invited you to join " + str(instance.group.name+" group")
         notify_instance = Notification.objects.create(sender=instance.inviteFrom, reciever=instance.inviteTo,text=text, notifyType="groupView",instance_id=instance.group.id)
@@ -28,3 +29,13 @@ def after_comment_creation(sender,instance,created,*args,**kwargs):
         print("Updating..")
 
 #model GroupInvite >>    inviteFrom  -  inviteTo  -  group
+
+
+@receiver(post_save, sender=FriendRequest)
+def after_friend_request(sender,instance,created,*args,**kwargs):
+    if created:
+        text=str(instance.sender)+" sent a friend request "
+        notify_instance = Notification.objects.create(sender=instance.sender, reciever=instance.reciever,text=text, notifyType="profileView",instance_id=instance.sender.id)
+        notify_instance.save()
+    else:
+        print("Updating..")
