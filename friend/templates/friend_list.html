@@ -60,8 +60,8 @@
 					<br>
 					<br>
 					<a class="profile-link" style="display: inline;">
-						<h4 class="card-title">{{friend.username|truncatechars:50}}
-							{{friend.last_name|truncatechars:50}}</h4>
+						<h4 class="card-title">{{friend.username|truncatechars:50}}</h4>
+							<h6>{{friend.first_name}} {{friend.last_name|truncatechars:50}}</h6>
 					</a>
 					<div class="d-flex justify-content-space-beween align-items-center">
 						<a href="/messages/?id={{friend.id}}" class="post btn btn-sm">Send a Message</a>

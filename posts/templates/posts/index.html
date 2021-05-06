@@ -1,4 +1,23 @@
 {% extends "layout.html"%}
+  {% block style %}
+  <style>
+  label{
+      display:none
+  }
+ul{
+     list-style: none; 
+}
+  textarea{
+        float: left;
+        width: 100%;
+        height: 60px;
+        border: 1px solid #e44d3a;
+        border-radius: 10px;
+        margin-bottom:10px;
+  }
+  </style>
+  
+  {% endblock %}
 
 {% block body %}
 
@@ -40,80 +59,33 @@
         <!-- ----------------------------------------------------------- end side ----------------------------------- -->
         <div class="col-sm-8 mycard">
 
-                
-                <!-- <div class="post-topbar" >
+                <div class="post-topbar">
                     
                     <form action='{% url "index" %}' method="post" enctype="multipart/form-data" >
                         {% csrf_token %}
+               
+                      
                         <div class="row">    
                             <div class="col-10">
-                                {{ form.as_p}}
-                                <input class="post_input " name="content" placeholder="  What's in your mind?" />
-                                <input class="mt-2 " type="file" name="image"/>
-                                 </br>
-                            </div>
-                               
+                           {{form.as_p}}
+                   
                             
-                           
+                                    {% if form.content.error %}
+                                    <div id="form-error">
+                                        {{form.content.errors.0}}
+                                    </div>
+                                    {% endif %}
+                            
+                            </div>
                             
                             <div class="col-2">
                                 <button class="post btn" type="submit" >Post</button>
                             </div>   
-                        </div>
+                        </div> 
+                    </form>
                         
-                        <!-- {% if form.content.errors %}
-                        <div class="alert alert-danger mt-6 mb-2" role="alert">
-                        {{ form.errors.content  }}
-                        </div>
-                        {%endif%}  -->
-                    <!-- </form> -->
                     
-                    
-                <!-- </div> -->
-                  
-
-
-            <div class="post-topbar">
-
-                <form action='{% url "index" %}' method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-10">
-                            {{ form.as_p}}
-                            <textarea class="post_input " name="content"
-                                placeholder="  What's in your mind?"></textarea>
-                            <input class="mt-2 " type="file" name="image" />
-                        </div>
-                        <div class="col-2">
-                            <button class="post btn" type="submit">Post</button>
-                        </div>
-                    </div>
-                    {% if form.errors %}
-                        {{ form.content.errors }}
-                     {% endif %}
-                </form>
-
-                <!-- <form method="POST" enctype="multipart/form-data" action='{% url "index" %}' >
-
-                    {% csrf_token %}
-                    <!-- {% comment %} {{ form.non_field_errors }} {% endcomment %} 
-                    <label for="{{ form.content.id_for_label }}" style="color: #e44d3a"Post:</label>
-                    {{ form.content }}
-                    {% if form.content.error%}
-                    <div class="alert alert-danger mt-6 mb-2" role="alert">
-                    {{ form.content.errors }}
-                    </div>
-                    {%endif%} 
-                    </br>
-
-                    
-                    <button type="submit">Done</button>
-            
-               </from> -->
-
-
-            </div>
-
+                </div>
 
             <h5>Feed Posts</h5>
 

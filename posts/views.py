@@ -85,6 +85,7 @@ def index(request):
         
        
     return render(request, "posts/index.html", {
+        "form": post,
         "posts": posts,
         "groups": groups,
         #  "post" : post

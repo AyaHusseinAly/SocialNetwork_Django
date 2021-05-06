@@ -80,6 +80,7 @@ def show(request, id):
         return redirect("/groups/show/"+str(group.id))
     return render(request, "groups/show.html", {
         "posts": posts,
+        "form": post,
         "groups": groups,
         "group": group,
         "users_in_group": members,
@@ -135,7 +136,7 @@ def invite(request, id):
         notInvited = False
         # print("users not in group "+user.user.username)
 
-    invites = User.objects.filter(id__in=notMember)
+    invites = User.objects.filter(id__in=notMember).exclude(id=request.user.id)
     return render(request, "groups/invite.html", {
         "invites": invites,
         "id": id,

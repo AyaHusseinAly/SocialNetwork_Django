@@ -9,7 +9,10 @@
   <img src="preview/postWithImage.PNG" width="49%" /> 
 </p>
 
-## Messages
+## Friend List
+![](preview/friendList.PNG)
+
+## Message Friend
 ![](preview/messages.PNG)
 
 ## Groups
@@ -21,15 +24,27 @@
 ## Group Invitation
 ![](preview/groupAccept.PNG)
 
-## Notifications
-![](preview/notifications.PNG)
-
 ## Search new friends
 ![](preview/searchUsers.PNG)
+
+## Friend Request
+<p float="left">
+  <img src="preview/nonFriend.PNG" width="49%" />
+  <img src="preview/acceptFriend.PNG" width="49%" /> 
+</p>
+
+## Friend Profile
+![](preview/friendPage.PNG)
+
+## Notifications
+![](preview/notifications.PNG)
 
 ## User Profile
 ![](preview/userProfile.PNG)
 
 ## Edit Profile
 ![](preview/editProfile.PNG)
+
+## Profanity check
+![](preview/profanity.PNG)
 

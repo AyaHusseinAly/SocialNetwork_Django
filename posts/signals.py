@@ -40,10 +40,10 @@ def after_group_invitation(sender, instance, created, *args, **kwargs):
 @receiver(post_save, sender=GroupRequestJoin)
 def after_group_Request(sender, instance, created, *args, **kwargs):
     if created:
-        text = str(instance.requestFrom)+" send request to join " + \
+        text = str(instance.requestFrom)+" sent request to join " + \
             str(instance.group.name+" group")
         notify_instance = Notification.objects.create(
-            sender=instance.requestFrom, reciever=instance.requestTo, text=text, notifyType="groupView", instance_id=instance.group.id)
+            sender=instance.requestFrom, reciever=instance.requestTo, text=text, notifyType="groupRequest", instance_id=instance.group.id)
         notify_instance.save()
     else:
         print("Updating..")

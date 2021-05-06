@@ -15,9 +15,7 @@ import datetime
 class Post(models.Model):
 
     # content=models.CharField(max_length=2000 , validators=[validate_is_profane])
-    content=models.CharField(max_length=2000 )
-
-   
+    content=models.TextField(max_length=2000 )
 
     created_at=models.DateTimeField(auto_now_add=True)
     image=models.ImageField(null=True, blank=True)

@@ -1,13 +1,14 @@
-{% extends "layout.html"%} {% block body %}
+{% extends "layout.html"%} 
+{% block body %}
 <div
-  class="post-topbar p-5 m-5 d-flex justify-content-around"
-  style="width: 80%"
->
+  class="post-topbar p-5 m-5 d-flex flex-column justify-content-around"
+  style="width: 80%">
   <div class="">
     <i class="fa fa-users fa-4x" aria-hidden="true"></i>
     <h3>Requests</h3>
   </div>
   {%for request in requests%}
+  
   <form
     method="POST"
     enctype="multipart/form-data"
@@ -30,7 +31,7 @@
       name="user"
       hidden
     />
-    </br>
+    <br/>
     <input
       type="submit"
       value="Accept"
@@ -46,7 +47,9 @@
       name="submit"
     />
   </form>
-  
+  <br/>
+ 
+ 
   {%endfor%}
 </div>
 {%endblock%}

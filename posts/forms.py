@@ -6,9 +6,12 @@ from django.core.exceptions import ValidationError
 
 class PostForm(forms.ModelForm):
     class Meta:
-        model = Post
+        model = Post    
         fields = ("content","image")
         #fields = "__all__"
+    def __init__(self, *args, **kwargs):
+            super(PostForm, self).__init__(*args, **kwargs)
+            self.fields['content'].error_messages = {'required': ''}
 
 
     def clean_content(self):
