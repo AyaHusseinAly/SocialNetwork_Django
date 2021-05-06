@@ -6,13 +6,15 @@ from itertools import chain
 from .forms import GroupForm
 from posts.models import Post
 from groups.models import Group, GroupInvite, GroupRequestJoin
-from msgnotifications.models import Notification
+from msgnotifications.models import Message,Notification
 from posts.forms import PostForm
 from accounts.models import UserProfile
 from django.contrib.auth.models import User
 
 
 def index(request):
+    notifyCounter=len(  Notification.objects.filter(reciever=request.user).filter(read=False) )
+
     query = request.GET.get('q', '')
     if(query):
         groups = Group.objects.filter(name__icontains=str(query)).union(
@@ -22,7 +24,9 @@ def index(request):
 
     return render(request, "groups/index.html", {
 
-        "groups": groups
+        "groups": groups,
+        "notifyCounter":notifyCounter
+
 
     })
 
@@ -82,6 +86,9 @@ def show(request, id):
             content=form_content, owner=request.user, group=group)
         post_obj.save()
         return redirect("/groups/show/"+str(group.id))
+
+    notifyCounter=len(  Notification.objects.filter(reciever=request.user).filter(read=False) )
+        
     return render(request, "groups/show.html", {
         "posts": posts,
         "form": post,
@@ -90,7 +97,7 @@ def show(request, id):
         "users_in_group": members,
         "invited": invited,
         "request_sent":request_sent,
-
+        "notifyCounter":notifyCounter
     })
 
 

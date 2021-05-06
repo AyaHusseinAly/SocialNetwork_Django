@@ -9,9 +9,14 @@ from accounts.models import UserProfile
 from django import forms
 from friend.models import FriendList
 from django.contrib.auth.decorators import login_required
+from msgnotifications.models import Message, Notification 
 
 
 def index(request):
+
+    notifyCounter=len(  Notification.objects.filter(reciever=request.user).filter(read=False) )
+    msgCounter=len(Message.objects.filter(reciever=request.user,read=False) )
+
     query = request.GET.get('q', '')
     if(query):
         first_name_query1 = User.objects.filter(userprofile__first_name__icontains=str(query))
@@ -61,6 +66,10 @@ def index(request):
         "form": post,
         "posts": posts,
         "groups": groups,
+        "notifyCounter":notifyCounter,
+        "msgCounter":msgCounter
+        #  "post" : post
+
     })
 
 
