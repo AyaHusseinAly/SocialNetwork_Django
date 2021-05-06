@@ -1,12 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from groups.models import Group
-from profanitycustom.validators import validate_is_profane
+# from profanitycustom.validators import validate_is_profane
+# from django import template
 
 
 
 class Post(models.Model):
-    content=models.CharField(max_length=2000 , validators=[validate_is_profane])
+    # content=models.CharField(max_length=2000 , validators=[validate_is_profane])
+    content=models.CharField(max_length=2000 )
     created_at=models.DateTimeField(auto_now_add=True)
     image=models.ImageField(null=True, blank=True)
     owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name="post")
@@ -20,7 +22,7 @@ class Post(models.Model):
         self.liked.all().count()
 
 class Comment(models.Model):
-    content=models.CharField(max_length=1000 , validators=[validate_is_profane])
+    content=models.CharField(max_length=1000 )
     created_at=models.DateTimeField(auto_now_add=True)
     owner=models.ForeignKey(User,on_delete=models.CASCADE,related_name="comments")
     post=models.ForeignKey(Post,on_delete=models.CASCADE,related_name="comments")
@@ -51,5 +53,9 @@ class BadWord(models.Model):
         return self.word
 
 
+# register = template.Library()
 
+# @register.filter
+# def split(s, splitter=" "):
+#     return s.split(splitter)
    

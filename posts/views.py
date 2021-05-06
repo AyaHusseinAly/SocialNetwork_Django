@@ -17,6 +17,7 @@ from django import forms
 #@permission_required(["books.view_book"],raise_exception=True)
 
 def index(request):
+    
     query = request.GET.get('q', '')
     if(query):
         first_name_query1 = User.objects.filter(userprofile__first_name__contains=str(query))
@@ -47,11 +48,17 @@ def index(request):
             content=form_content, owner=request.user, image=form_image)
         post_obj.save()
         return redirect("index")
-
+    # else:
+       
+        # print(post.errors)
+        #  post = PostForm()
+        #  args['post'] = post
+        
+       
     return render(request, "posts/index.html", {
         "posts": posts,
-        "groups": groups
-
+        "groups": groups,
+        #  "post" : post
     })
 
 
@@ -99,15 +106,12 @@ def AddCommentView(request, id):
 
     })
 
-
-
-
-
 def delComment(request,id): 
     # post = Post.objects.get(pk=id)
     comment = Comment.objects.get(pk=id)
+    post=comment.post
     comment.delete()
-    return redirect("index")
+    return redirect("/posts/view/"+str(post.id))
 
 def like_post(request): 
     user = request.user
@@ -130,7 +134,16 @@ def like_post(request):
         like.save()            
         return redirect("index")
 
-    comment = Comment.objects.get(pk=id)
-    comment.delete()
-    return redirect("index")
+# def post_likes(request, id):
+#     post = post = Post.objects.get(pk=id)
+#     post_likes = post.liked.all()
+#     context = {'post_likes': post_likes,}
+
+#     return render(request, 'posts/post_likes.html', context)
+
+def post_likes(request, id):
+    post = Post.objects.get(pk=id)
+    return render(request, "posts/post_likes.html", {
+        "post": post
+    })    
 

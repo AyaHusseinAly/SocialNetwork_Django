@@ -1,4 +1,4 @@
-{% extends "layout.html"%}
+<!-- {% extends "layout.html"%}
 
 {% block body %} 
 <div class="container">
@@ -11,6 +11,81 @@
     <hr>
         <input class="post_input " name="content" placeholder="Add Comment" />            
         <button class="post btn" type="submit" >Comment</button>
+
+
+</div>
+{% endblock %}  -->
+
+
+
+{% extends "layout.html"%}
+
+{% block body %} 
+<div class="container">
+
+    <div style="margin-bottom: 50px;margin-top: 20px;border-radius: 20px;border: 2px solid #e44d3a;padding: 40px;">
+    
+    <strong><h5 style="display: inline-block;font-size: 20px;">{{post.owner}}</h5></strong> -{{post.created_at}}
+    <div style="width: 300px;height: 2px;background-color: #e44d3a;"></div>
+    <div class="row">
+        <div class="col-6">
+            <p style="margin-top: 20px;">{{post.content}}</p>
+        </div>
+        <div class="col-6">
+        {% if post.image != null and  post.image != ""%}
+            <img src="/images/{{post.image }}" width="400px"/>
+        {% endif %}
+        </div>
+
+    </div>
+    
+          
+
+     </div>
+    
+    <hr>
+        <!-- <input class="post_input " name="content" placeholder="Add Comment" />            
+        <button class="post btn" type="submit" >Comment</button> -->
+        {% if  post.liked.all.count > 0 %} 
+        <div style="color: #e44d3a;display: inline-block;margin-right: 20px;"><strong> likes : </strong></div> {{ post.liked.all.count }} likes from :
+        {% for user in post.liked.all %}
+           {% if forloop.last %}
+           <span style="color: #e44d3a;">{{ user.username }}</span> 
+        {% else %}  
+           <span style="color: #e44d3a;">{{ user.username }}</span><span > and </span>
+          {% endif %}
+        {% endfor %}
+         
+        {% else %} 
+        <div style="color: #e44d3a;display: inline-block;margin-right: 20px;"><strong> likes : </strong></div> {{ post.liked.all.count }} likes 
+        {% endif %} 
+        <!-- <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a> -->
+        <br>
+        <hr>
+        <h4>Comments</h4>
+        <div style="margin-bottom: 50px;">
+        <div class="comments"></div>
+        {% if not post.comments.all %} 
+        <br>
+        No Comments Yet ....  <a href="{% url 'add_comment' post.pk %}" class="add-comment"><strong>add one</strong></a>
+        {% else %} 
+        <br>
+        <a href="{% url 'add_comment' post.pk %}" class="add-comment"><strong>add comment</strong></a>
+            <br>
+            <br> 
+           {% for comment in post.comments.all %} 
+               <strong> {{comment.owner}} -- {{comment.created_at}} </strong>
+               <br>
+               {{comment.content}}
+               <br><br>
+               {% if request.user == comment.owner %}
+               <a href="{% url 'del_comment' comment.id %}" class="add-comment">delete</a>
+               {% endif %}
+               <hr>
+               {% endfor %} 
+        {% endif %} 
+    </div>
+        
 
 
 </div>

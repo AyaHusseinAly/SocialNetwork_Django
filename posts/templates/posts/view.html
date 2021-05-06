@@ -7,6 +7,13 @@
     
     <strong><h5 style="display: inline-block;font-size: 20px;">{{post.owner}}</h5></strong> -{{post.created_at}}
     <div style="width: 300px;height: 2px;background-color: #e44d3a;"></div>
+    {% if post.image == null or  post.image == "" %}
+    <div class="row">
+        <div class="col-12">
+            <p style="margin-top: 20px;">{{post.content}}</p>
+        </div>
+    </div>    
+    {% else %}
     <div class="row">
         <div class="col-6">
             <p style="margin-top: 20px;">{{post.content}}</p>
@@ -18,7 +25,7 @@
         </div>
 
     </div>
-    
+    {% endif %}
           
 
      </div>
@@ -26,8 +33,23 @@
     <hr>
         <!-- <input class="post_input " name="content" placeholder="Add Comment" />            
         <button class="post btn" type="submit" >Comment</button> -->
-        
-        <div class="likes"><strong> likes </strong></div> {{ post.liked.all.count }} likes 
+        <!-- {% if  post.liked.all.count > 0 %} 
+        <div style="color: #e44d3a;display: inline-block;margin-right: 20px;"><strong> likes : </strong></div> {{ post.liked.all.count }} likes from :
+        {% for user in post.liked.all %}
+            {% if forloop.last %}
+            <span style="color: #e44d3a;">{{ user.username }}</span> 
+            {% else %}  
+            <span style="color: #e44d3a;">{{ user.username }}</span><span > and </span>
+            {% endif %}
+        {% endfor %}
+         
+        {% else %} 
+        <div style="color: #e44d3a;display: inline-block;margin-right: 20px;"><strong> likes : </strong></div> {{ post.liked.all.count }} likes 
+        {% endif %}  -->
+
+        <div style="color: #e44d3a;display: inline-block;margin-right: 20px;"><strong> likes : </strong></div> {{ post.liked.all.count }} likes 
+       
+        <a href="{% url "post-likes" post.id%}" style="color:#e44d3a;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
         
         <!-- <a  href="#" style="color:#e44d3a;"><i class="fa fa-thumbs-up mx-4 fa-lg " aria-hidden="true"></i></a> -->
         <br>

@@ -39,7 +39,7 @@
     <!-- ----------------------------------------------------------- end side ----------------------------------- -->
         <div class="col-sm-8 mycard">
                 
-                <div class="post-topbar">
+                <div class="post-topbar" >
                     
                     <form action='{% url "index" %}' method="post" enctype="multipart/form-data" >
                         {% csrf_token %}
@@ -48,15 +48,26 @@
                                 {{ form.as_p}}
                                 <input class="post_input " name="content" placeholder="  What's in your mind?" />
                                 <input class="mt-2 " type="file" name="image"/>
-
-                            
+                                 </br>
                             </div>
+                            {% if form.errors %}
+                            {{ form.errors.content }}
+                            {% endif %}   
+                            
+                           
+                            
                             <div class="col-2">
                                 <button class="post btn" type="submit" >Post</button>
                             </div>   
-                        </div> 
-                    </form>
+                        </div>
                         
+                        <!-- {% if form.content.errors %}
+                        <div class="alert alert-danger mt-6 mb-2" role="alert">
+                        {{ form.errors.content  }}
+                        </div>
+                        {%endif%}  -->
+                    </form>
+                    
                     
                 </div>
                  
