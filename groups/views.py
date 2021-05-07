@@ -52,17 +52,28 @@ def create(request):
 def show(request, id):
     group = Group.objects.get(id=id)
     query = request.GET.get('q', '')
+    post = PostForm(request.POST or None)
+    if post.is_valid():
+        form_content = post.cleaned_data['content']
+        post_obj = Post.objects.create(
+            content=form_content, owner=request.user, group=group)
+        post_obj.save()
+        return redirect("/groups/show/"+str(group.id))
+
     if(query):
-        first_name_query1 = User.objects.filter(
-            first_name__contains=str(query))
-        first_name_query2 = User.objects.filter(first_name__in=[query])
-        last_name_query1 = User.objects.filter(last_name__contains=str(query))
-        last_name_query2 = User.objects.filter(last_name__in=[query])
-        users = first_name_query1.union(
-            first_name_query1, last_name_query1, last_name_query2)
-        return render(request, "users/index.html", {
+        first_name_query1 = User.objects.filter(userprofile__first_name__icontains=str(query)).filter(userprofile__groups__in=[group])
+        first_name_query2 = User.objects.filter(userprofile__first_name__in=[query]).filter(userprofile__groups__in=[group])
+        last_name_query1 = User.objects.filter(userprofile__last_name__icontains=str(query)).filter(userprofile__groups__in=[group])
+        last_name_query2 = User.objects.filter(userprofile__last_name__in=[query]).filter(userprofile__groups__in=[group])
+        username_query1 = User.objects.filter(username__in=[query]).filter(userprofile__groups__in=[group])
+        username_query2 = User.objects.filter(username__icontains=str(query)).filter(userprofile__groups__in=[group])
+
+        users = first_name_query1.union(first_name_query1,first_name_query2, last_name_query1, last_name_query2,username_query1,username_query2)
+        return render(request, "groups/searchResult.html", {
             "usersResult": users,
             "query": query,
+            "group":group,
+            "form":post
         })
     posts = Post.objects.filter(group=group).order_by('-created_at')
 
@@ -79,14 +90,7 @@ def show(request, id):
     members = []
     for user in users_in_group:
         members.append(user.user)
-    post = PostForm(request.POST or None)
-    if post.is_valid():
-        form_content = post.cleaned_data['content']
-        post_obj = Post.objects.create(
-            content=form_content, owner=request.user, group=group)
-        post_obj.save()
-        return redirect("/groups/show/"+str(group.id))
-
+    
     notifyCounter=len(  Notification.objects.filter(reciever=request.user).filter(read=False) )
         
     return render(request, "groups/show.html", {

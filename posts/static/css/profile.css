@@ -1,6 +1,9 @@
 body {
     background: #F1F3FA;
   }
+  a:hover{
+    color: #fff;
+  }
   
   .profile {
     margin: 20px 0;

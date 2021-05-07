@@ -1,3 +1,4 @@
+
 nav {
   background-color: #e44d3a;
   width: 100%;
@@ -91,6 +92,10 @@ img.icondrop {
   width: 100%;
   color: seashell;
 }
+.post:hover{
+  background-color: #812e23;
+}
+
 .btn-secondary {
   background-color: lightgray;
   padding-top: 13px;
