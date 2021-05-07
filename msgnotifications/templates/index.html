@@ -71,8 +71,6 @@
                 <hr>
                 
                 {% if msgto == friend.friendObj.username %}
-                
-
                 <a href="?id={{ friend.friendObj.id }}" style="color:black;">
                     <div class="d-flex justify-content-center align-items-center" style="background-color:#f88b7c;"
                         id="chatdiv">
@@ -90,9 +88,6 @@
                                     src="{% if friend.friendObj.userprofile.avatar %}{{friend.friendObj.userprofile.avatar.url}} {% else %} {% static 'images/avatars/profile.jpeg' %} {% endif %}">
                             </div>
                         </a>
-
-
-
 
                         <hr>
                         {% endfor %}
