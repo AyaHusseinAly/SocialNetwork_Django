@@ -32,7 +32,9 @@
     
     <hr>
         <div style="color: #e44d3a;display: inline-block;margin-right: 20px;"><strong> likes : </strong></div> {{ post.liked.all.count }} likes 
+        {% if post.liked.all.count > 0 %} 
         <a href="{% url "post-likes" post.id%}" style="color:#e44d3a;" class="mx-3"><i class="fa fa-eye" aria-hidden="true"></i></a>
+        {% endif %}
         <br>
         <hr>
         <h4>Comments</h4>
